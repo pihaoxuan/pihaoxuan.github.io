@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>20230505</title>
+    <url>/2023/05/05/20230505/</url>
+    <content><![CDATA[<h1 id="20230505"><a href="#20230505" class="headerlink" title="20230505"></a>20230505</h1><span id="more"></span>
+
+<h2 id="编译学习"><a href="#编译学习" class="headerlink" title="编译学习"></a>编译学习</h2><h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
+<p>解释器是逐句执行源程序。编译器是整个文件一块编译，因此，编译器比解释器快，但是出错率高；解释器的错误诊断效果好于编译器，但是速度比编译器慢。</p>
+<blockquote>
+<p>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器好，因为它逐个语句地执行源程序。——《编译原理》（第二版）</p>
+</blockquote>
+<h4 id="Java语言的处理"><a href="#Java语言的处理" class="headerlink" title="Java语言的处理"></a>Java语言的处理</h4><p>Java语言在机器内部处理时，是将编译和解释过程结合起来执行的。Java的运行环境是JDK虚拟机。Java源程序通过编译形成<strong>字节码</strong>，字节码再通过虚拟机进行解释和执行。</p>
+<p>形成字节码，Java源程序就可以在不同机器上执行，因为字节码可以通过网络在机器之间传播。</p>
+<h4 id="程序编译"><a href="#程序编译" class="headerlink" title="程序编译"></a>程序编译</h4><p>一个源程序可能会被分成多个模块进行存储，放在独立的文件中。有时，<strong>预处理器</strong>独立把源程序合并在一起；同时，预处理器还负责将宏转换为源语言的语句.</p>
+<p>经过预处理后的源程序作为输入传递给编译器。编译器可能会把这些编译之后输出一个汇编语言的程序：<strong>因为汇编语言比较容易输出和调试</strong>，然后，汇编语言由<strong>汇编器</strong>处理，并生成<strong>可重定向</strong>的机器代码。</p>
+<p>大型程序经常被分成多个部分进行编译，因此，可重定向的机器代码有必要和其他可重定向的目标文件以及库文件连接到一起，形成真正的在机器上运行的代码。而<strong>链接器</strong>能够解决外部内存地址问题。最后，<strong>加载器</strong>把所有可执行目标文件放到内存中执行。</p>
+<h4 id="编译器：将源程序映射成语义上等价的目标程序"><a href="#编译器：将源程序映射成语义上等价的目标程序" class="headerlink" title="编译器：将源程序映射成语义上等价的目标程序"></a>编译器：将源程序映射成语义上等价的目标程序</h4><p>这个映射过程可以分为<strong>分析部分</strong>和<strong>综合部分</strong></p>
+<p>分析部分：将报错信息（报错信息在符号表中）和代码的中间形式一起发送给综合部分。</p>
+<p>综合部分：之后再谈。</p>
+<h4 id="一个编译器的各个步骤"><a href="#一个编译器的各个步骤" class="headerlink" title="一个编译器的各个步骤"></a>一个编译器的各个步骤</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">字符流-&gt;(词法分析器)-&gt;符号流-&gt;(语法分析)-&gt;语法树-&gt;(语义分析)-&gt;语法树-&gt;(中间代码生成器)-&gt;中间表示形式-&gt;(机器无关代码优化器)-&gt;中间表示形式-&gt;(代码生成器)-&gt;目标机器语言-&gt;(机器相关代码优化器)-&gt;目标机器语言</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>以上括号内的内容是编译器各个功能块，无括号内容是输入输出流。</p>
+<h4 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h4><p>1、读入字符流，组织成有意义的<strong>词素</strong></p>
+<p>2、对于每个词素，输出<strong>词法单元（token）</strong>&lt;token-name.attribute-value&gt;</p>
+<p>​	例如：a &#x3D;  b + c * 30  可以被词法分析成</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&lt;id,<span class="number">1</span>&gt;&lt;=&gt;&lt;id,<span class="number">2</span>&gt;&lt;+&gt;&lt;id,<span class="number">3</span>&gt;&lt;*&gt;&lt;<span class="number">30</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>原表达式中的空格会被忽略，变量a,b,c，运算符&#x3D;，+，*以及数字30都是词素。</p>
+<h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>语法分析用词法分析生成的各个词法单元的第一个分量来创建树形的中间表示，常用的表示方法是语法树，树中的每一个父节点是运算符，它的左右子节点就是进行该运算的运算分量。</p>
+<p>上述例子的树形语法表示如下图：</p>
+<p><img src="/2023/05/05/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>编译</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>20230504</title>
     <url>/2023/05/04/20230504/</url>
     <content><![CDATA[<h1 id="20230504"><a href="#20230504" class="headerlink" title="20230504"></a>20230504</h1><span id="more"></span>
@@ -39,45 +78,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>20230505</title>
-    <url>/2023/05/05/20230505/</url>
-    <content><![CDATA[<h1 id="20230505"><a href="#20230505" class="headerlink" title="20230505"></a>20230505</h1><span id="more"></span>
-
-<h2 id="编译学习"><a href="#编译学习" class="headerlink" title="编译学习"></a>编译学习</h2><h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
-<p>解释器是逐句执行源程序。编译器是整个文件一块编译，因此，编译器比解释器快，但是出错率高；解释器的错误诊断效果好于编译器，但是速度比编译器慢。</p>
-<blockquote>
-<p>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器好，因为它逐个语句地执行源程序。——《编译原理》（第二版）</p>
-</blockquote>
-<h4 id="Java语言的处理"><a href="#Java语言的处理" class="headerlink" title="Java语言的处理"></a>Java语言的处理</h4><p>Java语言在机器内部处理时，是将编译和解释过程结合起来执行的。Java的运行环境是JDK虚拟机。Java源程序通过编译形成<strong>字节码</strong>，字节码再通过虚拟机进行解释和执行。</p>
-<p>形成字节码，Java源程序就可以在不同机器上执行，因为字节码可以通过网络在机器之间传播。</p>
-<h4 id="程序编译"><a href="#程序编译" class="headerlink" title="程序编译"></a>程序编译</h4><p>一个源程序可能会被分成多个模块进行存储，放在独立的文件中。有时，<strong>预处理器</strong>独立把源程序合并在一起；同时，预处理器还负责将宏转换为源语言的语句.</p>
-<p>经过预处理后的源程序作为输入传递给编译器。编译器可能会把这些编译之后输出一个汇编语言的程序：<strong>因为汇编语言比较容易输出和调试</strong>，然后，汇编语言由<strong>汇编器</strong>处理，并生成<strong>可重定向</strong>的机器代码。</p>
-<p>大型程序经常被分成多个部分进行编译，因此，可重定向的机器代码有必要和其他可重定向的目标文件以及库文件连接到一起，形成真正的在机器上运行的代码。而<strong>链接器</strong>能够解决外部内存地址问题。最后，<strong>加载器</strong>把所有可执行目标文件放到内存中执行。</p>
-<h4 id="编译器：将源程序映射成语义上等价的目标程序"><a href="#编译器：将源程序映射成语义上等价的目标程序" class="headerlink" title="编译器：将源程序映射成语义上等价的目标程序"></a>编译器：将源程序映射成语义上等价的目标程序</h4><p>这个映射过程可以分为<strong>分析部分</strong>和<strong>综合部分</strong></p>
-<p>分析部分：将报错信息（报错信息在符号表中）和代码的中间形式一起发送给综合部分。</p>
-<p>综合部分：之后再谈。</p>
-<h4 id="一个编译器的各个步骤"><a href="#一个编译器的各个步骤" class="headerlink" title="一个编译器的各个步骤"></a>一个编译器的各个步骤</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">字符流-&gt;(词法分析器)-&gt;符号流-&gt;(语法分析)-&gt;语法树-&gt;(语义分析)-&gt;语法树-&gt;(中间代码生成器)-&gt;中间表示形式-&gt;(机器无关代码优化器)-&gt;中间表示形式-&gt;(代码生成器)-&gt;目标机器语言-&gt;(机器相关代码优化器)-&gt;目标机器语言</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-
-<p>以上括号内的内容是编译器各个功能块，无括号内容是输入输出流。</p>
-<h4 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h4><p>1、读入字符流，组织成有意义的<strong>词素</strong></p>
-<p>2、对于每个词素，输出<strong>词法单元（token）</strong>&lt;token-name.attribute-value&gt;</p>
-<p>​	例如：a &#x3D;  b + c * 30  可以被词法分析成</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&lt;id,<span class="number">1</span>&gt;&lt;=&gt;&lt;id,<span class="number">2</span>&gt;&lt;+&gt;&lt;id,<span class="number">3</span>&gt;&lt;*&gt;&lt;<span class="number">30</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>原表达式中的空格会被忽略，变量a,b,c，运算符&#x3D;，+，*以及数字30都是词素。</p>
-<h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>语法分析用词法分析生成的各个词法单元的第一个分量来创建树形的中间表示，常用的表示方法是语法树，树中的每一个父节点是运算符，它的左右子节点就是进行该运算的运算分量。</p>
-<p>上述例子的树形语法表示如下图：</p>
-<p><img src="/2023/05/05/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
-<p>END</p>
-]]></content>
-      <categories>
-        <category>What I did today</category>
-      </categories>
-      <tags>
-        <tag>编译</tag>
       </tags>
   </entry>
   <entry>
@@ -177,6 +177,48 @@
       </tags>
   </entry>
   <entry>
+    <title>20230509</title>
+    <url>/2023/05/09/20230509/</url>
+    <content><![CDATA[<h1 id="20230509"><a href="#20230509" class="headerlink" title="20230509"></a>20230509</h1><span id="more"></span>
+
+<p>昨天没写，今天也混账</p>
+<p>都是水！！</p>
+<p>准备签证资料，烦得很</p>
+<p>装好了Ubuntu20.04版本，如果有些button显示不全，就是分辨率的问题，如果输入法奇怪，去设置里面吧全屏和双拼换一下，换成微软的输入法，其它都还可以。Ubuntu比Windows好用。</p>
+<p>操作系统，恶补</p>
+<p>无</p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>注册GPT</title>
+    <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="149542e96fe71c43b06fe047dbdc3c591a21df8b5325d7d29c239f5b1a0bb758">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f06ab21a1cb1a690fcd7ac3e2cc4f423a71b10a80b57f47de7bca4e96115f77258470d0b5b1d22b5757c1fa454513f29d60ff060982f9a7aa459980ede1b8698c66003941e94bf5cc6fc3034e3faade48863247be47368356716778de73d25cfc87829aa27b32cfbd433cfb62cc0719ca129202ce776c115ab7d4b28f5908f34303a478d37a8d12508b67a9d971bfda4f62943a2c77381ff2cf934fde9ef8e80728eb00531efe0de64ad456d6b23b4b33fa9e26df086201fbefeb45a6a98641c34cdfa82b1d083602e2739c3335c783e368f39b62499275ef64d2d31cb9cd163a6a9227530ed89a67f3cfea344e63766affa2b9c5c71c9ae08a11f8227216787d947756fcfde2b92c6bae1d94448e117ea03ea592c79170ea34b7b1d012a042df349bee51b3be4428d4a8ad250c3107ad7bca7495edcca321db80adca00b07a7b135acd70888ce1c123ba2ebcb2f72351434794300e7e91f6ef48dfd70d9363f71d7794ac193841b44686221c1e9a5cacdc13b1c1803894cc0521056e3ebf463c1a049884f2db5460b225c8468e4dea5af6ab7fabc00749340c30b28f1f599985106fbb9a34378d74f3f575c972674acb85ac1bfd003ad3aa20a6abbc349ff2635609db341f7b41caac98c6db13ca0f79785ddb5c9d95fcda28da705be6fc6c09db815bf98e05ade3ae45440dcf3ed19adfefde0036e6c94bc14431deee200d7165173bd1b5fd49947d2d052ac297c54cecc5fc59102c904ee89fc683a3094ebb5de6e524c3462fd104063cb63b5081078afd10b5b6be21ad72f7928f1997f8683ee87b261689b0ca6319afdee6cb618ee60a20cac228cccb6fca5fd205f12e45e8a166430760499d61ab6c3333b2347b8fad0b191bd7e8479186c747e9ac9591b58ef319e1f21d7c230095138708325e5738f55dd073c0e3acdcc2e23f5fbd4e535d3bcd3189cf659dac74b9457a854658e2a0b7aa8a553e33a4f1222e990abaf20874ad62b49b8a7fd22ae4f01e70b4d5ac1a3dc0850c1a6e66e33d41d0faee53f73c9c22a4b352414cde08989284ecb9871fac4f128ab6ecae3d94c31d0757a0dd76f6aca8c5786744ed735f365c1912bb2d10b29ac416c12ac424af487f67afae050d864b864f9c80cb008e2f8f1b8ba01d91c4f8e9d498ca34ba53bed540130dbe2eb29ae472e41658cb7ac0eacd2c6bc2d6474da45bc8d6534dcf1c3d8fb8efed4f07484227e9e6a183cae398d148e8a0d5c9c9a43965decabe2255bf01</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>chatgpt</category>
+      </categories>
+      <tags>
+        <tag>注册ChatGpt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>chatgpt镜像</title>
     <url>/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -199,28 +241,6 @@
       </tags>
   </entry>
   <entry>
-    <title>注册GPT</title>
-    <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="12416bc9a65a9f99716d06f590d871ed415fe4cb934241ff35927ec6278e828f">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f06ab21a1cb1a690fcd7ac3e2cc4f423a7c8da6d66d38516861a1e12528e305e39c91f0e84cc6944b4836918be9d10846ad100fdd29a68265961b69257825612e9e1f1e610c00eec5c9aa13ec18c66e79d3e0497350708a3b0f50a92299bf7e00d604dbc89dd1ff12383e92386975bf8e9763b3e63699f628d6931ac7b977cfe10024edfa118bcb1ca353640d595aa1b693ceeefabb644f3ddada62bce6a911cd5fcd30906cb35383034d0ca5031d67182e85129cb8764d023efe3d8a4b4c047858791d118fd2d6dc7a83472274118dab07f36caa914d93a58653d37dee6966f5771df8f3a07911aee470464483bc8ff640010ae810e57f716681e4941b487f0a0cc1233ada7e565cf6f907a019db799a759e40d7b980684127911fd37014f3834cae9d5e4363c35e5a2775884f4c4364ec4d857dad384f4f8bf55ab1be5ab8dce424e1eb31896a0dd26734667c9e93555a7522ac66b87c8cf0411f49ee5bca85d6ae7ba8a8d33a5ae915204cdc9e78fd7bb06214dfab31738690a5b317c2efbca130b6ed5cc4b3a8d0939722c8e8549b2b537740daf83aa3b9ef3709684e97420ff65003c2e999c0f6e10036ba8707b82756014520955d562bf58a05e478ad0eca4cd22fcbe9671cf79bbf382a98ffe3665f8ecb9a9aff971743a531051e26f17e6efd591ce70e082107250b49aae2a03f12aee3a689323a224ce8c8da0ccaa9450d3894d1a2b0664dbf208775b1cf0171412c1432a0060baa340ab3b90b7d06a4aa2d81bee9b021f8abccc57d6b6652fb4b368f4d6ee41a3545f14ed51350441ca2c461ec4c4347880098172eff71f17f6fa3d9832e12c25e875822d72482c1d803b81b3107db8d5fe9d7af4350e9aab83cb66edf105a75e227c5666b050417aa8b2de9f9e1d23820893b73d937c24d8d07d994bbdf72b3ef75fa90d657728e68819c6f41b5fb946f0157cdf942a2fe6dfe5c44159f2f5b77fc3048c3d73b675234a65c97b3277e1795bd5277838777ff124581df6dd0104f7ca9924a82d5f07383273d1e31795992c7c035747ee1e4bcc674f6a6ddeefd8df689b31fd65f2a75b18c53a2a351b63669d417ae4084ad8afd29422d2ef5c01f464358fdaa0e39621cfeec38b5cb6c202d3910c9d4267001b484c5d215cd6660748fc6d1cbb9ec51d8b27547d90236dce31ce690d298b99adb5421837e02d512afec8d7df45cae672522697ab00d19d93291280dbc5fc970801f10400356c7ec105c285caeebaa</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>chatgpt</category>
-      </categories>
-      <tags>
-        <tag>注册ChatGpt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>算法设计与分析-作业3</title>
     <url>/2023/05/04/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90-%E4%BD%9C%E4%B8%9A3/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -238,5 +258,29 @@
       <categories>
         <category>算法设计与分析作业</category>
       </categories>
+  </entry>
+  <entry>
+    <title>编译学习资源</title>
+    <url>/2023/05/09/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%BA%90/</url>
+    <content><![CDATA[<h1 id="编译学习"><a href="#编译学习" class="headerlink" title="编译学习"></a>编译学习</h1><span id="more"></span>
+
+<h4 id="两本书"><a href="#两本书" class="headerlink" title="两本书"></a>两本书</h4><p>《深入理解计算机系统》（第三版）可以看。中英文都有电子书，看着玩。</p>
+<p><a href="https://www.aliyundrive.com/s/bKVNaXMakYF">英文《深入理解计算机系统》</a></p>
+<p><a href="https://www.aliyundrive.com/s/vDQCkVCdThz">中文《深入理解计算机系统》</a></p>
+<p>《编译原理》（第二版），其实也就是龙书，偏原理，老师推荐我先写起来，自己写着玩玩。</p>
+<p><a href="https://pan.baidu.com/s/1_xTFRTalGZc_XiGfW7ND2A?pwd=zhao">《编译原理》（第二版）</a></p>
+<h4 id="三个网站"><a href="#三个网站" class="headerlink" title="三个网站"></a>三个网站</h4><p>①<a href="https://lotabout.me/2015/write-a-C-interpreter-0/">手把手教你构建 C 语言编译器</a></p>
+<p>②<a href="https://space.bilibili.com/296494084/channel/collectiondetail?sid=571708">编译器B站视频</a></p>
+<p>③<a href="https://github.com/rui314/chibicc/commits/main?before=90d1f7f199cc55b13c7fdb5839d1409806633fdb+315&branch=main&qualified_name=refs/heads/main">Commits · rui314&#x2F;chibicc (github.com)</a></p>
+<p>慢慢看吧，之后有新的资源会加进来的！</p>
+<p>收藏夹吃灰系列</p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>编译</category>
+      </categories>
+      <tags>
+        <tag>编译</tag>
+      </tags>
   </entry>
 </search>
