@@ -1,45 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>20230505</title>
-    <url>/2023/05/05/20230505/</url>
-    <content><![CDATA[<h1 id="20230505"><a href="#20230505" class="headerlink" title="20230505"></a>20230505</h1><span id="more"></span>
-
-<h2 id="编译学习"><a href="#编译学习" class="headerlink" title="编译学习"></a>编译学习</h2><h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
-<p>解释器是逐句执行源程序。编译器是整个文件一块编译，因此，编译器比解释器快，但是出错率高；解释器的错误诊断效果好于编译器，但是速度比编译器慢。</p>
-<blockquote>
-<p>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器好，因为它逐个语句地执行源程序。——《编译原理》（第二版）</p>
-</blockquote>
-<h4 id="Java语言的处理"><a href="#Java语言的处理" class="headerlink" title="Java语言的处理"></a>Java语言的处理</h4><p>Java语言在机器内部处理时，是将编译和解释过程结合起来执行的。Java的运行环境是JDK虚拟机。Java源程序通过编译形成<strong>字节码</strong>，字节码再通过虚拟机进行解释和执行。</p>
-<p>形成字节码，Java源程序就可以在不同机器上执行，因为字节码可以通过网络在机器之间传播。</p>
-<h4 id="程序编译"><a href="#程序编译" class="headerlink" title="程序编译"></a>程序编译</h4><p>一个源程序可能会被分成多个模块进行存储，放在独立的文件中。有时，<strong>预处理器</strong>独立把源程序合并在一起；同时，预处理器还负责将宏转换为源语言的语句.</p>
-<p>经过预处理后的源程序作为输入传递给编译器。编译器可能会把这些编译之后输出一个汇编语言的程序：<strong>因为汇编语言比较容易输出和调试</strong>，然后，汇编语言由<strong>汇编器</strong>处理，并生成<strong>可重定向</strong>的机器代码。</p>
-<p>大型程序经常被分成多个部分进行编译，因此，可重定向的机器代码有必要和其他可重定向的目标文件以及库文件连接到一起，形成真正的在机器上运行的代码。而<strong>链接器</strong>能够解决外部内存地址问题。最后，<strong>加载器</strong>把所有可执行目标文件放到内存中执行。</p>
-<h4 id="编译器：将源程序映射成语义上等价的目标程序"><a href="#编译器：将源程序映射成语义上等价的目标程序" class="headerlink" title="编译器：将源程序映射成语义上等价的目标程序"></a>编译器：将源程序映射成语义上等价的目标程序</h4><p>这个映射过程可以分为<strong>分析部分</strong>和<strong>综合部分</strong></p>
-<p>分析部分：将报错信息（报错信息在符号表中）和代码的中间形式一起发送给综合部分。</p>
-<p>综合部分：之后再谈。</p>
-<h4 id="一个编译器的各个步骤"><a href="#一个编译器的各个步骤" class="headerlink" title="一个编译器的各个步骤"></a>一个编译器的各个步骤</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">字符流-&gt;(词法分析器)-&gt;符号流-&gt;(语法分析)-&gt;语法树-&gt;(语义分析)-&gt;语法树-&gt;(中间代码生成器)-&gt;中间表示形式-&gt;(机器无关代码优化器)-&gt;中间表示形式-&gt;(代码生成器)-&gt;目标机器语言-&gt;(机器相关代码优化器)-&gt;目标机器语言</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-
-<p>以上括号内的内容是编译器各个功能块，无括号内容是输入输出流。</p>
-<h4 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h4><p>1、读入字符流，组织成有意义的<strong>词素</strong></p>
-<p>2、对于每个词素，输出<strong>词法单元（token）</strong>&lt;token-name.attribute-value&gt;</p>
-<p>​	例如：a &#x3D;  b + c * 30  可以被词法分析成</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&lt;id,<span class="number">1</span>&gt;&lt;=&gt;&lt;id,<span class="number">2</span>&gt;&lt;+&gt;&lt;id,<span class="number">3</span>&gt;&lt;*&gt;&lt;<span class="number">30</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>原表达式中的空格会被忽略，变量a,b,c，运算符&#x3D;，+，*以及数字30都是词素。</p>
-<h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>语法分析用词法分析生成的各个词法单元的第一个分量来创建树形的中间表示，常用的表示方法是语法树，树中的每一个父节点是运算符，它的左右子节点就是进行该运算的运算分量。</p>
-<p>上述例子的树形语法表示如下图：</p>
-<p><img src="/2023/05/05/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
-<p>END</p>
-]]></content>
-      <categories>
-        <category>What I did today</category>
-      </categories>
-      <tags>
-        <tag>编译</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>20230504</title>
     <url>/2023/05/04/20230504/</url>
     <content><![CDATA[<h1 id="20230504"><a href="#20230504" class="headerlink" title="20230504"></a>20230504</h1><span id="more"></span>
@@ -78,6 +39,45 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>20230505</title>
+    <url>/2023/05/05/20230505/</url>
+    <content><![CDATA[<h1 id="20230505"><a href="#20230505" class="headerlink" title="20230505"></a>20230505</h1><span id="more"></span>
+
+<h2 id="编译学习"><a href="#编译学习" class="headerlink" title="编译学习"></a>编译学习</h2><h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
+<p>解释器是逐句执行源程序。编译器是整个文件一块编译，因此，编译器比解释器快，但是出错率高；解释器的错误诊断效果好于编译器，但是速度比编译器慢。</p>
+<blockquote>
+<p>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器好，因为它逐个语句地执行源程序。——《编译原理》（第二版）</p>
+</blockquote>
+<h4 id="Java语言的处理"><a href="#Java语言的处理" class="headerlink" title="Java语言的处理"></a>Java语言的处理</h4><p>Java语言在机器内部处理时，是将编译和解释过程结合起来执行的。Java的运行环境是JDK虚拟机。Java源程序通过编译形成<strong>字节码</strong>，字节码再通过虚拟机进行解释和执行。</p>
+<p>形成字节码，Java源程序就可以在不同机器上执行，因为字节码可以通过网络在机器之间传播。</p>
+<h4 id="程序编译"><a href="#程序编译" class="headerlink" title="程序编译"></a>程序编译</h4><p>一个源程序可能会被分成多个模块进行存储，放在独立的文件中。有时，<strong>预处理器</strong>独立把源程序合并在一起；同时，预处理器还负责将宏转换为源语言的语句.</p>
+<p>经过预处理后的源程序作为输入传递给编译器。编译器可能会把这些编译之后输出一个汇编语言的程序：<strong>因为汇编语言比较容易输出和调试</strong>，然后，汇编语言由<strong>汇编器</strong>处理，并生成<strong>可重定向</strong>的机器代码。</p>
+<p>大型程序经常被分成多个部分进行编译，因此，可重定向的机器代码有必要和其他可重定向的目标文件以及库文件连接到一起，形成真正的在机器上运行的代码。而<strong>链接器</strong>能够解决外部内存地址问题。最后，<strong>加载器</strong>把所有可执行目标文件放到内存中执行。</p>
+<h4 id="编译器：将源程序映射成语义上等价的目标程序"><a href="#编译器：将源程序映射成语义上等价的目标程序" class="headerlink" title="编译器：将源程序映射成语义上等价的目标程序"></a>编译器：将源程序映射成语义上等价的目标程序</h4><p>这个映射过程可以分为<strong>分析部分</strong>和<strong>综合部分</strong></p>
+<p>分析部分：将报错信息（报错信息在符号表中）和代码的中间形式一起发送给综合部分。</p>
+<p>综合部分：之后再谈。</p>
+<h4 id="一个编译器的各个步骤"><a href="#一个编译器的各个步骤" class="headerlink" title="一个编译器的各个步骤"></a>一个编译器的各个步骤</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">字符流-&gt;(词法分析器)-&gt;符号流-&gt;(语法分析)-&gt;语法树-&gt;(语义分析)-&gt;语法树-&gt;(中间代码生成器)-&gt;中间表示形式-&gt;(机器无关代码优化器)-&gt;中间表示形式-&gt;(代码生成器)-&gt;目标机器语言-&gt;(机器相关代码优化器)-&gt;目标机器语言</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>以上括号内的内容是编译器各个功能块，无括号内容是输入输出流。</p>
+<h4 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h4><p>1、读入字符流，组织成有意义的<strong>词素</strong></p>
+<p>2、对于每个词素，输出<strong>词法单元（token）</strong>&lt;token-name.attribute-value&gt;</p>
+<p>​	例如：a &#x3D;  b + c * 30  可以被词法分析成</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&lt;id,<span class="number">1</span>&gt;&lt;=&gt;&lt;id,<span class="number">2</span>&gt;&lt;+&gt;&lt;id,<span class="number">3</span>&gt;&lt;*&gt;&lt;<span class="number">30</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>原表达式中的空格会被忽略，变量a,b,c，运算符&#x3D;，+，*以及数字30都是词素。</p>
+<h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>语法分析用词法分析生成的各个词法单元的第一个分量来创建树形的中间表示，常用的表示方法是语法树，树中的每一个父节点是运算符，它的左右子节点就是进行该运算的运算分量。</p>
+<p>上述例子的树形语法表示如下图：</p>
+<p><img src="/2023/05/05/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>编译</tag>
       </tags>
   </entry>
   <entry>
@@ -197,28 +197,6 @@
       </tags>
   </entry>
   <entry>
-    <title>注册GPT</title>
-    <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="149542e96fe71c43b06fe047dbdc3c591a21df8b5325d7d29c239f5b1a0bb758">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f06ab21a1cb1a690fcd7ac3e2cc4f423a71b10a80b57f47de7bca4e96115f77258470d0b5b1d22b5757c1fa454513f29d60ff060982f9a7aa459980ede1b8698c66003941e94bf5cc6fc3034e3faade48863247be47368356716778de73d25cfc87829aa27b32cfbd433cfb62cc0719ca129202ce776c115ab7d4b28f5908f34303a478d37a8d12508b67a9d971bfda4f62943a2c77381ff2cf934fde9ef8e80728eb00531efe0de64ad456d6b23b4b33fa9e26df086201fbefeb45a6a98641c34cdfa82b1d083602e2739c3335c783e368f39b62499275ef64d2d31cb9cd163a6a9227530ed89a67f3cfea344e63766affa2b9c5c71c9ae08a11f8227216787d947756fcfde2b92c6bae1d94448e117ea03ea592c79170ea34b7b1d012a042df349bee51b3be4428d4a8ad250c3107ad7bca7495edcca321db80adca00b07a7b135acd70888ce1c123ba2ebcb2f72351434794300e7e91f6ef48dfd70d9363f71d7794ac193841b44686221c1e9a5cacdc13b1c1803894cc0521056e3ebf463c1a049884f2db5460b225c8468e4dea5af6ab7fabc00749340c30b28f1f599985106fbb9a34378d74f3f575c972674acb85ac1bfd003ad3aa20a6abbc349ff2635609db341f7b41caac98c6db13ca0f79785ddb5c9d95fcda28da705be6fc6c09db815bf98e05ade3ae45440dcf3ed19adfefde0036e6c94bc14431deee200d7165173bd1b5fd49947d2d052ac297c54cecc5fc59102c904ee89fc683a3094ebb5de6e524c3462fd104063cb63b5081078afd10b5b6be21ad72f7928f1997f8683ee87b261689b0ca6319afdee6cb618ee60a20cac228cccb6fca5fd205f12e45e8a166430760499d61ab6c3333b2347b8fad0b191bd7e8479186c747e9ac9591b58ef319e1f21d7c230095138708325e5738f55dd073c0e3acdcc2e23f5fbd4e535d3bcd3189cf659dac74b9457a854658e2a0b7aa8a553e33a4f1222e990abaf20874ad62b49b8a7fd22ae4f01e70b4d5ac1a3dc0850c1a6e66e33d41d0faee53f73c9c22a4b352414cde08989284ecb9871fac4f128ab6ecae3d94c31d0757a0dd76f6aca8c5786744ed735f365c1912bb2d10b29ac416c12ac424af487f67afae050d864b864f9c80cb008e2f8f1b8ba01d91c4f8e9d498ca34ba53bed540130dbe2eb29ae472e41658cb7ac0eacd2c6bc2d6474da45bc8d6534dcf1c3d8fb8efed4f07484227e9e6a183cae398d148e8a0d5c9c9a43965decabe2255bf01</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>chatgpt</category>
-      </categories>
-      <tags>
-        <tag>注册ChatGpt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>chatgpt镜像</title>
     <url>/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -238,6 +216,130 @@
       </categories>
       <tags>
         <tag>chatgpt镜像</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>20230512</title>
+    <url>/2023/05/12/20230512/</url>
+    <content><![CDATA[<h1 id="20230512"><a href="#20230512" class="headerlink" title="20230512"></a>20230512</h1><span id="more"></span>
+
+<h4 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h4><p>学习<strong>手把手教你构建C语言编译器–设计</strong>部分</p>
+<p><a href="https://lotabout.me/2015/write-a-C-interpreter-1/">手把手教你构建 C 语言编译器（1）- 设计 </a></p>
+<p>试写了文章中的代码，虽然成功了，但是有点问题。</p>
+<h4 id="2、概念"><a href="#2、概念" class="headerlink" title="2、概念"></a>2、概念</h4><p>编写一个编译器一般为<strong>①词法分析器；②语法分析器；③目标代码生成</strong>。以下为手写这些构成部分。</p>
+<p>一个编译器的框架首先是有</p>
+<blockquote>
+<p>编译器包含四个函数：</p>
+<p>1、next()函数，用于读取下一个标记，会自动忽略掉空格；	&#x2F;&#x2F;读程序</p>
+<p>2、program()函数，语法分析的入口，分析整个程序。本部分不写；	&#x2F;&#x2F;做语法分析</p>
+<p>3、expression(level)函数，用于解析一个表达式。本部分不写；	&#x2F;&#x2F;做语义分析</p>
+<p>4、eval()函数，虚拟机接口，可以解释目标代码。</p>
+</blockquote>
+<h4 id="3、代码"><a href="#3、代码" class="headerlink" title="3、代码"></a>3、代码</h4><p>以下是代码块，和教程上的代码一模一样，，，，，</p>
+<p><code>code01</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> token;</span><br><span class="line"><span class="type">char</span> *src, *old_src;</span><br><span class="line"><span class="type">int</span> poolsize;</span><br><span class="line"><span class="type">int</span> line;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取src中下一个字符的ASCII码值</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">next</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    token = *src++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表达式分析pewpwd</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">expression</span><span class="params">(<span class="type">int</span> level)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环读取文件，直到token小于0（因为token是ASCII，所以没有小于0 的情况，等于0就是结束符）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">program</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    next(); <span class="comment">// get next token</span></span><br><span class="line">    <span class="keyword">while</span> (token &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;token is: %c\n&quot;</span>, token);</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟机接口</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">eval</span><span class="params">()</span></span><br><span class="line">&#123; <span class="comment">// do nothing yet</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i, fd;</span><br><span class="line"></span><br><span class="line">    argc--;</span><br><span class="line">    argv++;</span><br><span class="line"></span><br><span class="line">    poolsize = <span class="number">256</span> * <span class="number">1024</span>; <span class="comment">// arbitrary size</span></span><br><span class="line">    line = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((fd = open(*argv, <span class="number">0</span>)) &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open(%s)\n&quot;</span>, *argv);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(src = old_src = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for source area\n&quot;</span>, poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the source file</span></span><br><span class="line">    <span class="keyword">if</span> ((i = read(fd, src, poolsize - <span class="number">1</span>)) &lt;= <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read() returned %d\n&quot;</span>, i);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    src[i] = <span class="number">0</span>; <span class="comment">// add EOF character</span></span><br><span class="line">    close(fd);</span><br><span class="line"></span><br><span class="line">    program();</span><br><span class="line">    <span class="keyword">return</span> eval();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4、问题"><a href="#4、问题" class="headerlink" title="4、问题"></a>4、问题</h4><p>①第三行 include 的 memory.h 好像没用到</p>
+<p>②第52行，open函数中的参数，第一个参数是取用户输入的第一个参数，但是第二个参数不理解。</p>
+<p>翻看了函数原型，代码如下：</p>
+<p><code>code02</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">__fortify_function int</span><br><span class="line">open (const char *__path, int __oflag, ...)</span><br><span class="line">&#123;</span><br><span class="line">  if (__va_arg_pack_len () &gt; 1)</span><br><span class="line">    __open_too_many_args ();</span><br><span class="line"></span><br><span class="line">  if (__builtin_constant_p (__oflag))</span><br><span class="line">    &#123;</span><br><span class="line">      if (__OPEN_NEEDS_MODE (__oflag) &amp;&amp; __va_arg_pack_len () &lt; 1)</span><br><span class="line">	&#123;</span><br><span class="line">	  __open_missing_mode ();</span><br><span class="line">	  return __open_2 (__path, __oflag);</span><br><span class="line">	&#125;</span><br><span class="line">      return __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  if (__va_arg_pack_len () &lt; 1)</span><br><span class="line">    return __open_2 (__path, __oflag);</span><br><span class="line"></span><br><span class="line">  return __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二个参数是int类型没错，但是具体含义不知道。</p>
+<p>上网查后，解释是，第二个参数代表对该文件的操作权限，例如：只读，只写，读写。但是很神奇，这些权限的表示方法如下：</p>
+<blockquote>
+<table>
+<thead>
+<tr>
+<th align="center">flags 参数</th>
+<th align="center">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">O_RDONLY</td>
+<td align="center">只读模式</td>
+</tr>
+<tr>
+<td align="center">O_WRONLY</td>
+<td align="center">只写模式</td>
+</tr>
+<tr>
+<td align="center">O_RDWR</td>
+<td align="center">可读可写</td>
+</tr>
+<tr>
+<td align="center">O_APPEND</td>
+<td align="center">表示追加，如果原来文件里面有内容，则这次写入会写在文件的最末尾</td>
+</tr>
+<tr>
+<td align="center">O_CREAT</td>
+<td align="center">表示如果指定文件不存在，则创建这个文件</td>
+</tr>
+<tr>
+<td align="center">O_EXCL</td>
+<td align="center">表示如果要创建的文件已存在，则出错，同时返回 -1，并且修改 errno 的值</td>
+</tr>
+<tr>
+<td align="center">O_TRUNC</td>
+<td align="center">表示截断，如果文件存在，并且以只写、读写方式打开，则将其长度截断为0</td>
+</tr>
+</tbody></table>
+</blockquote>
+<p>如表所示，并没有数字，不理解。。。。。。</p>
+<p>③当我运行这个文件时，即执行下列命令</p>
+<p><code>code03</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$$$ gcc 01.c -o 01</span><br><span class="line">$$$ ./01 01.c</span><br></pre></td></tr></table></figure>
+
+<p>逐个字符读取只读到了第11行的&#x2F;&#x2F;和其后的一个空格，程序就中止了，不知道为什么。。。。。。</p>
+<h4 id="5、TIPS"><a href="#5、TIPS" class="headerlink" title="5、TIPS"></a>5、TIPS</h4><p>①先看第64行，src里面是读取的文件内容，和第69行联系起来看，第69行在 i 的位置加了个0，即为封口。于是 i 的值就有点耐人寻味了。</p>
+<blockquote>
+<p>read 函数 返回值有三种情况。</p>
+<p>1、读取出错，返回-1，即有如果 i 小于 0 ，那么直接print错误</p>
+<p>2、读取时，未达到第三个参数设置的大小就读完了。这是最正常的情况。此时返回的 i 就是大于0且小于第三参数。且为已经读到的字节数。（个人理解为就是EOF的下标，后面才可以在 i 处封口）</p>
+<p>3、读取时，文件大小超过第三参数大小，即没读完就读不下了，这时返回的仍然是已经读取到的字节数，但是比较特殊，其值等于第三参数。</p>
+</blockquote>
+<p>除了读取错误返回-1，其余两种情况都进行了封口操作，即便有一种情况是强制封口。</p>
+<p>②从51行开始，到55行，其实做了两件事：第一、open文件；第二、判断错误，如果文件描述符fd小于0，那么打开文件错误。</p>
+<blockquote>
+<p>文件描述符返回值：成功则返回0，失败返回-1</p>
+</blockquote>
+<p>同理，先两个if代码块也是如此，先进行相关操作，再判断操作是否错误</p>
+<p>任何错误都将直接返回-1</p>
+<p>③next() 函数中 token 读取的其实是ASCII码值，并且通过地址将值带出。</p>
+<p>④第46、47行，有个argc–和argv++</p>
+<blockquote>
+<p>argc– 意思是将参数减少。通过查资料可以知道，main函数自带的两个参数其实是本程序的输入参数个数（argc）和输入的参数构成的数组（argv）。值得注意的是，这两个参数都包含他们自己。所以argc初始值就是2，agrv[0]初始值是2，argv[1]初始值是argv（即首地址）</p>
+</blockquote>
+<p>运行时要解析命令，先把第一个用户输入参数去掉，argc–，因为第一个往往是调用编译程序的参数，当调用到正确文件时，就不需要第一个参数了。</p>
+<p>argv++是地址++，就是跳转到下一个命令参数，然后给程序读取，执行相应操作。</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>编译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>注册GPT</title>
+    <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="cc8d39f8a1380d45fdc353e341f5bd490176a809afbd31ca25e750c7b620145a">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f915fd8926fccc4d590100bb5b44aa9029bed63fe0eb94b7948ff40a8a801f73fc30daf9df192220b6544b4858ec0de4ab30d8735efb499ee1e16b7cc57150c55640dd531cb2bbe3191aa7e8dc184c683fd73a911c3d8b34bfce047dbf8fce5ad9bb93eae7829306d5ba7553cf422d5349676cda9c0e72beb042487d22c55c387d51603c04219a4030951e66c1b95356b55f2c0b3d02120c304486885c9e50c99ea1d7f66677e57635c1f8543d50a02411c2e3779b08c7e02221f341ad0c14143a3506755bd464a9596a4ab35d6fd50c6fd51dd4182cc6aadcb3156b3c848269d0bd9c02447ec25cb26b98eb6b1b7451cb55cab1da2cc08ea80e66c7160ed1ca180a0a5454dd77e3a2b5e687e784dc5ba56639330168e5a16e2691210d665999efd119bc9b0140885496dc1691e14b2409246debb805cef0b867a61c4252a9ed8bb04f206bb31f8a31234ae45c14b1736cb5cef2cf601520af9df12dc25bdd432ec875c2d7dbc8350d0014864a50633267cd2806dbe20c469a83d303cc14970b61882414c5fe4dc3a8647b7c2b8ca95ebe1b89e55b34c2628c4d220d2641df921ecafed9366ca9b91379d83f23bf3a0ed73143a8479b52e98e5dfbca12abbed9e61e7cbbbb9bd4cc600646fb8b681723aea702316545349eb25f21bd52cfcc2a5aa3f81e0410b4b3b64dfad996cf881f6d84e64596c0cd9214dca9b46e0416e717fbd3a534c879204511efd3a1b7b8fc6c66eb62039d706880f9d5cf0a04244513802ef7b345c2fa45437a4a6cf495ab9daa207cd8ed14374789cea7269c80a4bc02d46f4a3067eb3264a640485ddcc7b4fba044d858981fced4522c0054607bd46b8ebae6ddd10265cc027201c1e3b7da7da86c74d6ef690d401e53d54411c865bd48e571d74f0e56970888039cc1c96f2e9fcae6b5c65ecf6439bb5c189f61899a054be7efad96941e9bad6d9e24c5e90726af4b497c174c724399185aa38b90cb7ad48d6ae5dd3ef39cbe0d28f54a0a569b2ac875470d77ae709371d3ea13a54315fe5fb981f0e099b4f001a23fbbfe1702ca7f2f890da6ed4afe0ee9b2ba25d3210f5c53225d19f81bc8d71bf7d9fcda607d162b8f103fcb165a8595596276f98b7a48a17f5c49a5fd51d6e7bd665165feb5ed921a5f74a194479304dd765f59d4934d846034f8ca147f78934f1101617c8ab901406fc60157819f4488b6ab4f0c32c4d5d4c1666bde86a0b82ee89c61620870fcfdc3040fe5526e9d7c4a5</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>chatgpt</category>
+      </categories>
+      <tags>
+        <tag>注册ChatGpt</tag>
       </tags>
   </entry>
   <entry>
