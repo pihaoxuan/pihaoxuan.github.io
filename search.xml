@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>20230504</title>
+    <title>Java和算法</title>
     <url>/2023/05/04/20230504/</url>
-    <content><![CDATA[<h1 id="20230504"><a href="#20230504" class="headerlink" title="20230504"></a>20230504</h1><span id="more"></span>
+    <content><![CDATA[<h1 id="纯试手写第一篇文章"><a href="#纯试手写第一篇文章" class="headerlink" title="纯试手写第一篇文章"></a>纯试手写第一篇文章</h1><span id="more"></span>
 
 <h3 id="上午写java实验——内部类和自定义类实验"><a href="#上午写java实验——内部类和自定义类实验" class="headerlink" title="上午写java实验——内部类和自定义类实验"></a>上午写java实验——内部类和自定义类实验</h3><p>注意到了一个细节，try范围内的代码是只要有异常抛出，就不会执行下去了，直接跳转到catch，后面也不会跳回去，除非有while循环，才可以循环执行try范围内的代码。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    reald = Double.parseDouble(real);</span><br><span class="line">    virtuald = Double.parseDouble(virtual);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;格式不对，请重新输入:&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -42,11 +42,11 @@
       </tags>
   </entry>
   <entry>
-    <title>20230505</title>
+    <title>开始接触编译</title>
     <url>/2023/05/05/20230505/</url>
-    <content><![CDATA[<h1 id="20230505"><a href="#20230505" class="headerlink" title="20230505"></a>20230505</h1><span id="more"></span>
+    <content><![CDATA[<h1 id="编译学习"><a href="#编译学习" class="headerlink" title="编译学习"></a>编译学习</h1><span id="more"></span>
 
-<h2 id="编译学习"><a href="#编译学习" class="headerlink" title="编译学习"></a>编译学习</h2><h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
+<h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
 <p>解释器是逐句执行源程序。编译器是整个文件一块编译，因此，编译器比解释器快，但是出错率高；解释器的错误诊断效果好于编译器，但是速度比编译器慢。</p>
 <blockquote>
 <p>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器好，因为它逐个语句地执行源程序。——《编译原理》（第二版）</p>
@@ -81,12 +81,11 @@
       </tags>
   </entry>
   <entry>
-    <title>20230506</title>
+    <title>接上篇</title>
     <url>/2023/05/06/20230506/</url>
-    <content><![CDATA[<h1 id="20230506"><a href="#20230506" class="headerlink" title="20230506"></a>20230506</h1><span id="more"></span>
+    <content><![CDATA[<h2 id="今天学的有点散乱"><a href="#今天学的有点散乱" class="headerlink" title="今天学的有点散乱"></a>今天学的有点散乱</h2><span id="more"></span>
 
-<p>今天学的有点散乱</p>
-<p>上一篇文章：<a href="/2023/05/05/20230505/" title="20230505">20230505</a></p>
+<p>上一篇文章：<a href="/2023/05/05/20230505/" title="开始接触编译">开始接触编译</a></p>
 <h4 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h4><p>即使用语法树和符号表，检查源程序是否和语言定义的语义一致，同时收集类型信息，将它们放在语法树或者符号表中，后面的中间代码生成中会用到。</p>
 <p>同时，在语法树中，自动类型转换可以作为一个单独的节点表示，如下图</p>
 <p><img src="/2023/05/06/20230506/cast.jpg" alt="cast"></p>
@@ -133,9 +132,9 @@
       </tags>
   </entry>
   <entry>
-    <title>20230507</title>
+    <title>龙书的散件</title>
     <url>/2023/05/07/20230507/</url>
-    <content><![CDATA[<h1 id="20230507"><a href="#20230507" class="headerlink" title="20230507"></a>20230507</h1><span id="more"></span>
+    <content><![CDATA[<h1 id><a href="#" class="headerlink" title></a></h1><h1 id="龙书的皮屑"><a href="#龙书的皮屑" class="headerlink" title="龙书的皮屑"></a>龙书的皮屑</h1><span id="more"></span>
 
 <h4 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h4><p>挺有意思的。</p>
 <h5 id="静态作用域"><a href="#静态作用域" class="headerlink" title="静态作用域"></a>静态作用域</h5><p>在C语言中，代码的作用域是通过一对花括号**{}<strong>来决定的，一个花括号包围起来的部分叫做一个</strong>块<strong>而且C语言支持块的嵌套，这种嵌套特性叫做</strong>块结构**。</p>
@@ -177,9 +176,9 @@
       </tags>
   </entry>
   <entry>
-    <title>20230509</title>
+    <title>20230509（混账版）</title>
     <url>/2023/05/09/20230509/</url>
-    <content><![CDATA[<h1 id="20230509"><a href="#20230509" class="headerlink" title="20230509"></a>20230509</h1><span id="more"></span>
+    <content><![CDATA[<h1 id="混账版"><a href="#混账版" class="headerlink" title="混账版"></a>混账版</h1><span id="more"></span>
 
 <p>昨天没写，今天也混账</p>
 <p>都是水！！</p>
@@ -197,31 +196,9 @@
       </tags>
   </entry>
   <entry>
-    <title>chatgpt镜像</title>
-    <url>/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="20073c1d4ff73a9caacdf11fc212b9fe6e693abd301ba14f2cdc7aa6052a457e">4630436162ade97ba2718b7d0c4b3b63492810e13ad85be96e947ea4cb65291430a49bb22ad32d84514670596647149d7c92fe70cc097ce99432d6eddecce600fad1be98eebf5ebc7267d7570a201229361d4601678f68284fac1faa62f257283de9c1d84d76d52a5d274a0ee68cafbfb91d67d40a478ff73a1ad594d725f4da9498f1f68e505b55bf44b90b8ef5feae4de5a06f4d567e6c2d194242617d2bed2a2b0d60b841753c3e1dcc3f00300b27691e5ffc477dfa6bcd8f8cc6bce4d54cae1b1ca80b7220554bf03c25e69fb7a5073c4ba05eb2bd3c9e0f8eec510d1acecd510767dc145016e3a07d486ab66fb5493658d1c5ffc1b1fbbf8ce6c9ffb8a5e3e4d0e42004203d5db442eb2f7206fa4a31054912f2428aba3c5b62bbdf601b83c3e3434d481590219e979cfc12f1c02756d30174bccf981abc1edf19f8725f0bb920ad5eaca2ad404607adde4dee9aebb3be366203a4393a2b324c439a6e57407dc13a9b1ae9c375123f1645ea6268a5215d0fcc6dfc46d951222ed405e44e49e78104be5dd5674ca8def738053863480150529d69b87a45a8788ba517ecfd1ab5ac8e38e2741ac0f8c4383df5930be5bb8bcc284aa9aac5e434770a032dee240dc6549e8e800afd9954fd51663dcd15b735954903f2036daf0e434049f27dba3f3d143b614545f26acf5d161b6ccc96d5f471bda843facdf9ba37f0a02fde454aa6af0c81eec42693e0feae575e381303f41e1ed50dbc4fad93738baab316c2ada34affbfc44f9265fe4e0a85cf35b543bce952ed93f1d87af67d6b3617008373a081675e1c3d05747eff2051b5cb316c740d36132a263b302ce245f0079f2a23384a442ec7a4746039bea493700ae105d1b9f286e7ed9a8c670c9b377487e9193531853be2eb3499f7e64f5f415506ab41cea87d217068baf64dfd137e738c94050e3c44a040dc385eca0d360c3c88cb447d783ccbe0b46866f318d459677869888c33e16105042f9892b3897d8c16b92585978201d35cce7740821d2b915aa94d49735f7be058242dad461b4892442830e6344be389c0d965690e9a2d30f6b1c07db59756f3210947333da4e4bbf96cf05c3f7d41f0be38ba0dac374c4357393fa84b8a3da4acae8b698c67dedc8bba49db46fdcf0fda5203c83c0c6591f48790a4bd4c75168b0dea6117b176f83a9f0b59e68e3fec8f06c4ffa262028c1efcbacad7d0262b3151a45326fcb28b4b804c69333257e7aef59ee7fd732ca3cbf92e36cef2ed8624318fea85f562cf243988c9b90d5a503f004a8a8e88a96699285f7a54509ac44f289acf346a35b95444bb2621e0eff711f716d16618a370f295378f33307f77dc891a67db10c20d4debae8a802dfaf520412b0828d0aa017fde902b4d2851b83d35d9579d2b99a8d1caf2b6fd9544ff7f6c66af89e2e8972fe00693b388a24173bf42d2838f726bb97bec2a11e25ff8b3fd3668911c3c72c8db6030a98b67a313dc19ba6fed53f890a8c57617b7f07373b746a0bdd0e37fa0f7bcccaa93d601aa11d11cf4377628e19a975e2f40e0129629e90c737cf1d888677884a00a3ce04029b107a5dbf3ee711ff17ed73330d8f0e4d172ae40d6a5c4de55c8ede96ca5cf5eee9074c0594608bc128e59707ed59d3271bd2c9a0ba8b9a18082ffebe4c148bf1689c0a8e228e4d9d39a6e9c2b9fac311018a86da11b61c22c61a00100c5241ca8a5b2574382cea775aa17052d35ec6fe37d2389ce094a2da54a03c96112553f7c26d380d7f52f418f02298da6dfe829defd46dc1a0c5d31cbf8c28857fab294bcb458464e0586c26126cd61b98cf789848fe2783c811138feaffee580d032ce932cf7931540e20199ecfcd59b186fa1759ecd082ddb353226c2cea2404c467bd3ce30c8eeed473928ff4f27acbedfe26ce3ed4ecd4dc87f2d296602775c6733d7dd14ca6ae213845ffecd87c1bf45a0bb5263dbd20e8cd061a96f05aba4e770f963966d5aebc1ad14129f329d75cf262a71f100473e1b6ec3af60b283c033c5956dc965bbb9b90a076efb439eb604fe93579678595600dde7ac0d76551b4788633a841a6c3a230141187e6794460107230a69e017b0d35617a68002a3ccb06e183fb33a0b21e8e5783ddbed84e32b7f6c5883a98222583c24d03ceddec98873eada1fd0b61cd3f10f2c818ad40d9622f37c653facfff2824f2fca83d0c6ca07876339ed128c94faf29242101a79193c32304ebcaa1e3c5d865341ca8bbc0dab90f5f459c0bf0b0c50d5c0e2edbd79b0fe25e36c155cf2ff6f91814270f2e4d54950f7a249a919fd4cdea45b653e53676f6ac402e0c794b411023ae460a41edcfd24698ffcbf92e5c30cc5c6cdbf211fb64e74636d6de56bbdee88920fe87dfb59f534ddd98c5aac8aba9fb1243e1d0ff47a7fd4172cf1b0a9efd8f3af94354fa58da2deef458ba4ce6ad1778a93b8d7718f779ac3189c6be49e0edc2538082837f1f090beda0b0b3362943213f5c1aa9f6bbe28914b086988503ce1603c3627260c10f575a3481b31c630a94499da2c8f536aca35845bd4e50c9adfd6d32019502dd15d8e022e1d08e58ed17016cdab85062bb944b126c3325035c7656866e7a43acdece04acb3c047ec39d3f7d79eb3a1252153ebcb5b634b83527a7c5ee83b16216cd933eba78ff702b7762c46e27d3a4b3b06d53f55468200855f196b55b950ef8263cfa7369ad6a7dadcbdbdfd47dfc8262df36593c57a5134b41c6f33893f7cd6be779e421a752db43699113e88116d56882720ffec4ce60ed4c9d3527805e68e7531116121a59bd7127bb19904ff5dda9890099a1af873d0bb4fc6764d9006768da910b1e47b29250f2f71f9af553ab50330d29c02ab05471c67c138c2eafbd1b434c61bf368e14fef9c72b178b25b7dd35133ee9449c21ffa14f628117eccbac1bef9fbec90396376607bdbb07d8c747bf6a850a07a7e9a39f67ab4a4b5a54856e2c7a5624adb1d90b58a9fb7a0f46be6c7b5fe1126fa07b2d4294a5380d92b3ead6e89b5df0904eabce1e2bcc81b8b2d971dea3f8ab54c8c9d2f5c08a4127bd82eb261c4e1f669b4b0263d305ea150fea9adf8de76f5c0f2e87d41aee3158a0323b1cf064bb5e6b27bf2d19314d15d95d31042bc1b53378fe8dcfa2dc07dec0cd0e9c58a69ecc49ce1324a948622c6e06df79f1d0f1a244e943d42717afa77444349d269662995ce8c1911b9d08b2672bea8100f44dba184eaa1d5b0503026bd18ce078da7784d618660e6981cc4c0a00c52dc72d1cf374b8488889a82c15f2045818ab01c411996d0639baeca98c319a82f8d629da63e5995a92cd6d661ed550157e72cc171b98eb403d0e06bbed6ad50410922a88d501215f18e720abc8eee78c7cdb83ada8c55154344ace42e672606301d0436a1d8a0e91650345c3e824c71ab47329e308ab9ee1924046cb61cfa435d93431a3952622fc08e16b9af540288db1977d3e29bae3251e1faf322fbcb871ba4805766349e46be4284997af1eba3e907386b297a12e576b77c26a1912cf59bc0360a355fbd52345d10672748e6d400f8576fea29e9eb11b75d1e7ffe493b2d3f89f73105bcc3a3689d365f9a33b0074f4b953d3c34fdee141c1d628e859567264f95c0deb56b9ed81f59a61ae8802ba482ad0f685960459e4830c3a44f60183b8801edf3dc5f760abf813c28b07e0c8d9064d454db59fd51a38066d1bdc28074c9aed74d56aea87f91f5428595d607111b7b3e4d65d2fb021357b18411713</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>chatgpt</category>
-      </categories>
-      <tags>
-        <tag>chatgpt镜像</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>20230512</title>
+    <title>编译设计</title>
     <url>/2023/05/12/20230512/</url>
-    <content><![CDATA[<h1 id="20230512"><a href="#20230512" class="headerlink" title="20230512"></a>20230512</h1><span id="more"></span>
+    <content><![CDATA[<h1 id="着手设计"><a href="#着手设计" class="headerlink" title="着手设计"></a>着手设计</h1><span id="more"></span>
 
 <h4 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h4><p>学习<strong>手把手教你构建C语言编译器–设计</strong>部分</p>
 <p><a href="https://lotabout.me/2015/write-a-C-interpreter-1/">手把手教你构建 C 语言编译器（1）- 设计 </a></p>
@@ -291,6 +268,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$$$ gcc 01.c -o 01</span><br><span class="line">$$$ ./01 01.c</span><br></pre></td></tr></table></figure>
 
 <p>逐个字符读取只读到了第11行的&#x2F;&#x2F;和其后的一个空格，程序就中止了，不知道为什么。。。。。。</p>
+<p>开始觉得是因为后面是中文字符，于是在“读取”前面随便加了几个字母，发现读取成功，但是<strong>将后面的所有中文语句换成英文之后又行不通了</strong></p>
+<p>又试了一下，一读到注释就不行了。</p>
 <h4 id="5、TIPS"><a href="#5、TIPS" class="headerlink" title="5、TIPS"></a>5、TIPS</h4><p>①先看第64行，src里面是读取的文件内容，和第69行联系起来看，第69行在 i 的位置加了个0，即为封口。于是 i 的值就有点耐人寻味了。</p>
 <blockquote>
 <p>read 函数 返回值有三种情况。</p>
@@ -324,7 +303,7 @@
     <title>注册GPT</title>
     <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="cc8d39f8a1380d45fdc353e341f5bd490176a809afbd31ca25e750c7b620145a">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f915fd8926fccc4d590100bb5b44aa9029bed63fe0eb94b7948ff40a8a801f73fc30daf9df192220b6544b4858ec0de4ab30d8735efb499ee1e16b7cc57150c55640dd531cb2bbe3191aa7e8dc184c683fd73a911c3d8b34bfce047dbf8fce5ad9bb93eae7829306d5ba7553cf422d5349676cda9c0e72beb042487d22c55c387d51603c04219a4030951e66c1b95356b55f2c0b3d02120c304486885c9e50c99ea1d7f66677e57635c1f8543d50a02411c2e3779b08c7e02221f341ad0c14143a3506755bd464a9596a4ab35d6fd50c6fd51dd4182cc6aadcb3156b3c848269d0bd9c02447ec25cb26b98eb6b1b7451cb55cab1da2cc08ea80e66c7160ed1ca180a0a5454dd77e3a2b5e687e784dc5ba56639330168e5a16e2691210d665999efd119bc9b0140885496dc1691e14b2409246debb805cef0b867a61c4252a9ed8bb04f206bb31f8a31234ae45c14b1736cb5cef2cf601520af9df12dc25bdd432ec875c2d7dbc8350d0014864a50633267cd2806dbe20c469a83d303cc14970b61882414c5fe4dc3a8647b7c2b8ca95ebe1b89e55b34c2628c4d220d2641df921ecafed9366ca9b91379d83f23bf3a0ed73143a8479b52e98e5dfbca12abbed9e61e7cbbbb9bd4cc600646fb8b681723aea702316545349eb25f21bd52cfcc2a5aa3f81e0410b4b3b64dfad996cf881f6d84e64596c0cd9214dca9b46e0416e717fbd3a534c879204511efd3a1b7b8fc6c66eb62039d706880f9d5cf0a04244513802ef7b345c2fa45437a4a6cf495ab9daa207cd8ed14374789cea7269c80a4bc02d46f4a3067eb3264a640485ddcc7b4fba044d858981fced4522c0054607bd46b8ebae6ddd10265cc027201c1e3b7da7da86c74d6ef690d401e53d54411c865bd48e571d74f0e56970888039cc1c96f2e9fcae6b5c65ecf6439bb5c189f61899a054be7efad96941e9bad6d9e24c5e90726af4b497c174c724399185aa38b90cb7ad48d6ae5dd3ef39cbe0d28f54a0a569b2ac875470d77ae709371d3ea13a54315fe5fb981f0e099b4f001a23fbbfe1702ca7f2f890da6ed4afe0ee9b2ba25d3210f5c53225d19f81bc8d71bf7d9fcda607d162b8f103fcb165a8595596276f98b7a48a17f5c49a5fd51d6e7bd665165feb5ed921a5f74a194479304dd765f59d4934d846034f8ca147f78934f1101617c8ab901406fc60157819f4488b6ab4f0c32c4d5d4c1666bde86a0b82ee89c61620870fcfdc3040fe5526e9d7c4a5</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="d315243de587a39e3ea2f2d559629cce7c56a520592853ee77a3ade6e6481c13">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f915fd8926fccc4d590100bb5b44aa90252c7f7852fd6edc453aa314828b0bd2491c54193d46bbfd91e9ea672678d66f8e46a00e8eebb72904dd5828df7904be74195b1e753468f1bca3b7b0a46e9344765b524130496bef7adae788e49d8a1b8ef40bbb66e12e20403f4824c43939db715972c1dc1fe0b0b53c3ea85e8be5e49e11f49762425c204457a9a6a10b6c5252ce8a0fe6711a8cbce5c554de8006fa9688f95395b54f534b6052dd60bd2504ec9b5f51de0de6e025c8973334f5b7db919e422c914a4e6a8cccb96416308dcaf5d6094e68ca4e2fe78f7007244672962e7c17c27150eb2cbdb7668dbbb6e034c706e0e99c54cb05e2775b3e45a69857aec7db628c736a2c63f311d4c4007ecb89833f3a017aaf6f935fcdf59f9ba02ca9a1e5aa81bda72acb8a4922134f851b2a41a98ec2881f6aec422550068dc4b52791f326fc52c9458785f040455b94209759abfc417925c3f7148b16e6ab6872e9cf5ec399d10da9280ddf844d4a0a9a245ca53de207871c777842ce2be1ca6cd3eccd42ca089bc6a5415f947ceac11714d308fc49836fea871f5e6f6af2724b168c2d8c88fc0f71fc735b4599558fedcb9426d585f05d1f9852084dbdfcad61042a3b4b100c94401014b8b4ee07ba65bbcd19587b5970d247711d4b34c5a793da8268631e69233b120342accb62327f04f2504af314ba95ce3706bcd9cd7f344bf8c5561e7cb1b5fe452fc722bf9a972033e72cab4e553883d9bae107db607fba671177b92704818096b424d1b23fc370ba4920eadb0b1394ca6a2085087dfad5ad30460a6f217c343fe6e7cd5865e17c00d2a59d09183ebb73a9989a0d9218521383da9312ec4bf4225cf427074dfb6e36e36d3b12aaa2a680cb28f6bcade250e229d33228d0e0809d92588ced3269c4ff0782383f1f90e45344a2f32e2ac01c853ab0c02d1e0284ca842cf3d1f586c4bb230e080bf4faeec69832a9f720e655fa06da2bbe1b0e8fc33bcaa2e1be4da82b71482461acf5238b5781ed2866bc0094c5c4082f0fd4f0fdd3716fa4624b3259dd6561d5571cde72e77ca7a359b55a731b1c88c81ea05e2d23e1434da9efaddc3535a963a03b0ecccc5794ef9a3390a9f29c76a8ba567a1ba841902b9fee45b508de26cb8953a718ce055d02eafa929fd92d758bfd1dd8bb8fca66f369f3834005b1c4d94c98ae211ffb68d382026fdddff65ffef1d4b2f450a2842ac72a037723b12b9b7bb7ce52e18b68fbb884a</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -340,6 +319,28 @@
       </categories>
       <tags>
         <tag>注册ChatGpt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>chatgpt镜像</title>
+    <url>/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="20073c1d4ff73a9caacdf11fc212b9fe6e693abd301ba14f2cdc7aa6052a457e">4630436162ade97ba2718b7d0c4b3b63492810e13ad85be96e947ea4cb65291430a49bb22ad32d84514670596647149d7c92fe70cc097ce99432d6eddecce600fad1be98eebf5ebc7267d7570a201229361d4601678f68284fac1faa62f257283de9c1d84d76d52a5d274a0ee68cafbfb91d67d40a478ff73a1ad594d725f4da9498f1f68e505b55bf44b90b8ef5feae4de5a06f4d567e6c2d194242617d2bed2a2b0d60b841753c3e1dcc3f00300b27691e5ffc477dfa6bcd8f8cc6bce4d54cae1b1ca80b7220554bf03c25e69fb7a5073c4ba05eb2bd3c9e0f8eec510d1acecd510767dc145016e3a07d486ab66fb5493658d1c5ffc1b1fbbf8ce6c9ffb8a5e3e4d0e42004203d5db442eb2f7206fa4a31054912f2428aba3c5b62bbdf601b83c3e3434d481590219e979cfc12f1c02756d30174bccf981abc1edf19f8725f0bb920ad5eaca2ad404607adde4dee9aebb3be366203a4393a2b324c439a6e57407dc13a9b1ae9c375123f1645ea6268a5215d0fcc6dfc46d951222ed405e44e49e78104be5dd5674ca8def738053863480150529d69b87a45a8788ba517ecfd1ab5ac8e38e2741ac0f8c4383df5930be5bb8bcc284aa9aac5e434770a032dee240dc6549e8e800afd9954fd51663dcd15b735954903f2036daf0e434049f27dba3f3d143b614545f26acf5d161b6ccc96d5f471bda843facdf9ba37f0a02fde454aa6af0c81eec42693e0feae575e381303f41e1ed50dbc4fad93738baab316c2ada34affbfc44f9265fe4e0a85cf35b543bce952ed93f1d87af67d6b3617008373a081675e1c3d05747eff2051b5cb316c740d36132a263b302ce245f0079f2a23384a442ec7a4746039bea493700ae105d1b9f286e7ed9a8c670c9b377487e9193531853be2eb3499f7e64f5f415506ab41cea87d217068baf64dfd137e738c94050e3c44a040dc385eca0d360c3c88cb447d783ccbe0b46866f318d459677869888c33e16105042f9892b3897d8c16b92585978201d35cce7740821d2b915aa94d49735f7be058242dad461b4892442830e6344be389c0d965690e9a2d30f6b1c07db59756f3210947333da4e4bbf96cf05c3f7d41f0be38ba0dac374c4357393fa84b8a3da4acae8b698c67dedc8bba49db46fdcf0fda5203c83c0c6591f48790a4bd4c75168b0dea6117b176f83a9f0b59e68e3fec8f06c4ffa262028c1efcbacad7d0262b3151a45326fcb28b4b804c69333257e7aef59ee7fd732ca3cbf92e36cef2ed8624318fea85f562cf243988c9b90d5a503f004a8a8e88a96699285f7a54509ac44f289acf346a35b95444bb2621e0eff711f716d16618a370f295378f33307f77dc891a67db10c20d4debae8a802dfaf520412b0828d0aa017fde902b4d2851b83d35d9579d2b99a8d1caf2b6fd9544ff7f6c66af89e2e8972fe00693b388a24173bf42d2838f726bb97bec2a11e25ff8b3fd3668911c3c72c8db6030a98b67a313dc19ba6fed53f890a8c57617b7f07373b746a0bdd0e37fa0f7bcccaa93d601aa11d11cf4377628e19a975e2f40e0129629e90c737cf1d888677884a00a3ce04029b107a5dbf3ee711ff17ed73330d8f0e4d172ae40d6a5c4de55c8ede96ca5cf5eee9074c0594608bc128e59707ed59d3271bd2c9a0ba8b9a18082ffebe4c148bf1689c0a8e228e4d9d39a6e9c2b9fac311018a86da11b61c22c61a00100c5241ca8a5b2574382cea775aa17052d35ec6fe37d2389ce094a2da54a03c96112553f7c26d380d7f52f418f02298da6dfe829defd46dc1a0c5d31cbf8c28857fab294bcb458464e0586c26126cd61b98cf789848fe2783c811138feaffee580d032ce932cf7931540e20199ecfcd59b186fa1759ecd082ddb353226c2cea2404c467bd3ce30c8eeed473928ff4f27acbedfe26ce3ed4ecd4dc87f2d296602775c6733d7dd14ca6ae213845ffecd87c1bf45a0bb5263dbd20e8cd061a96f05aba4e770f963966d5aebc1ad14129f329d75cf262a71f100473e1b6ec3af60b283c033c5956dc965bbb9b90a076efb439eb604fe93579678595600dde7ac0d76551b4788633a841a6c3a230141187e6794460107230a69e017b0d35617a68002a3ccb06e183fb33a0b21e8e5783ddbed84e32b7f6c5883a98222583c24d03ceddec98873eada1fd0b61cd3f10f2c818ad40d9622f37c653facfff2824f2fca83d0c6ca07876339ed128c94faf29242101a79193c32304ebcaa1e3c5d865341ca8bbc0dab90f5f459c0bf0b0c50d5c0e2edbd79b0fe25e36c155cf2ff6f91814270f2e4d54950f7a249a919fd4cdea45b653e53676f6ac402e0c794b411023ae460a41edcfd24698ffcbf92e5c30cc5c6cdbf211fb64e74636d6de56bbdee88920fe87dfb59f534ddd98c5aac8aba9fb1243e1d0ff47a7fd4172cf1b0a9efd8f3af94354fa58da2deef458ba4ce6ad1778a93b8d7718f779ac3189c6be49e0edc2538082837f1f090beda0b0b3362943213f5c1aa9f6bbe28914b086988503ce1603c3627260c10f575a3481b31c630a94499da2c8f536aca35845bd4e50c9adfd6d32019502dd15d8e022e1d08e58ed17016cdab85062bb944b126c3325035c7656866e7a43acdece04acb3c047ec39d3f7d79eb3a1252153ebcb5b634b83527a7c5ee83b16216cd933eba78ff702b7762c46e27d3a4b3b06d53f55468200855f196b55b950ef8263cfa7369ad6a7dadcbdbdfd47dfc8262df36593c57a5134b41c6f33893f7cd6be779e421a752db43699113e88116d56882720ffec4ce60ed4c9d3527805e68e7531116121a59bd7127bb19904ff5dda9890099a1af873d0bb4fc6764d9006768da910b1e47b29250f2f71f9af553ab50330d29c02ab05471c67c138c2eafbd1b434c61bf368e14fef9c72b178b25b7dd35133ee9449c21ffa14f628117eccbac1bef9fbec90396376607bdbb07d8c747bf6a850a07a7e9a39f67ab4a4b5a54856e2c7a5624adb1d90b58a9fb7a0f46be6c7b5fe1126fa07b2d4294a5380d92b3ead6e89b5df0904eabce1e2bcc81b8b2d971dea3f8ab54c8c9d2f5c08a4127bd82eb261c4e1f669b4b0263d305ea150fea9adf8de76f5c0f2e87d41aee3158a0323b1cf064bb5e6b27bf2d19314d15d95d31042bc1b53378fe8dcfa2dc07dec0cd0e9c58a69ecc49ce1324a948622c6e06df79f1d0f1a244e943d42717afa77444349d269662995ce8c1911b9d08b2672bea8100f44dba184eaa1d5b0503026bd18ce078da7784d618660e6981cc4c0a00c52dc72d1cf374b8488889a82c15f2045818ab01c411996d0639baeca98c319a82f8d629da63e5995a92cd6d661ed550157e72cc171b98eb403d0e06bbed6ad50410922a88d501215f18e720abc8eee78c7cdb83ada8c55154344ace42e672606301d0436a1d8a0e91650345c3e824c71ab47329e308ab9ee1924046cb61cfa435d93431a3952622fc08e16b9af540288db1977d3e29bae3251e1faf322fbcb871ba4805766349e46be4284997af1eba3e907386b297a12e576b77c26a1912cf59bc0360a355fbd52345d10672748e6d400f8576fea29e9eb11b75d1e7ffe493b2d3f89f73105bcc3a3689d365f9a33b0074f4b953d3c34fdee141c1d628e859567264f95c0deb56b9ed81f59a61ae8802ba482ad0f685960459e4830c3a44f60183b8801edf3dc5f760abf813c28b07e0c8d9064d454db59fd51a38066d1bdc28074c9aed74d56aea87f91f5428595d607111b7b3e4d65d2fb021357b18411713</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>chatgpt</category>
+      </categories>
+      <tags>
+        <tag>chatgpt镜像</tag>
       </tags>
   </entry>
   <entry>
@@ -360,6 +361,74 @@
       <categories>
         <category>算法设计与分析作业</category>
       </categories>
+  </entry>
+  <entry>
+    <title>编译学习-虚拟机部分--20230518</title>
+    <url>/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/</url>
+    <content><![CDATA[<h1 id="编译学习虚拟机部分"><a href="#编译学习虚拟机部分" class="headerlink" title="编译学习虚拟机部分"></a>编译学习虚拟机部分</h1><span id="more"></span>
+
+<h3 id="1、支撑知识"><a href="#1、支撑知识" class="headerlink" title="1、支撑知识"></a>1、支撑知识</h3><h4 id="关于电脑内存"><a href="#关于电脑内存" class="headerlink" title="关于电脑内存"></a>关于电脑内存</h4><p>电脑中的内存是虚拟地址映射到实际的内存上，而非真是有这么多。</p>
+<h4 id="关于本次使用的内存段"><a href="#关于本次使用的内存段" class="headerlink" title="关于本次使用的内存段"></a>关于本次使用的内存段</h4><p>简单来讲，进程的内存会被分为以下几个段</p>
+<blockquote>
+<p>1.代码段（text），用于存放指令代码，位于较低地址。（可能是指令需要改动不多甚至不需要改动，放在一些低地址区域，该区域可能是只读的）</p>
+<p>2.数据段（data），用于存放<strong>已经初始化的数据</strong>，例如<code>int i = 10</code>就是已经初始化的数据，需要存储到改位置。</p>
+<p>3.未初始化数据段（bss），顾名思义，就是存放<strong>未初始化的数据</strong>的地方，例如<code>int i[1000]</code>就是属于只声明而未初始化的数据，存放在该段。</p>
+<p>4.堆（heap），用于为程序动态分配内存。</p>
+<p>5.栈（stack）用于处理函数调用的相关数据，例如调用帧或者函数的局部变量。</p>
+</blockquote>
+<p>在第一点中提到在代码段在内存中位于低地址区域，那么如下图所示：</p>
+<p><code>图一</code></p>
+<p><img src="/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg" alt="各部分地址分布"></p>
+<p>个人理解：在计算机内存中，低地址是不允许写入的，其中存放的数据都是一些系统级的或者是常量，例如数字（0-9），字符（a-zA-Z,.&#x2F;等），当程序需要时，就只能读取而不能写入。</p>
+<p>而在高地址字段，例如堆栈，可以实现内存的动态分配和数据的调用和修改，即可读可写，提高了与用户的交互性。</p>
+<p>为简单起见，本次只关心 <strong>①代码段 ②数据段 ③栈</strong></p>
+<h4 id="③寄存器"><a href="#③寄存器" class="headerlink" title="③寄存器"></a>③寄存器</h4><p>寄存器用于存放计算机的运行状态，真实计算机中有许多寄存器，本次只用4种。</p>
+<blockquote>
+<p>1.<code>PC（Program Counter）程序计数器</code> 存放内存地址，该地址中放着<strong>下一条</strong>要执行的计算机指令</p>
+<p>2.<code>SP（Stack Pointer）指针寄存器</code> 永远指向当前栈的栈顶。因为栈顶是由高地址扩张到低地址（可以参考图一，栈底在最顶端）所以当有数据入栈时，SP的地址值减小；当出栈时SP的地址值增大</p>
+<p>3.<code>BP（Base Pointer）基址指针</code> 也是用于指向栈的某些位置（不想确定的位置，也并不是不能指向栈顶）</p>
+<p>4.<code>AX（Accumulator Register）通用寄存器</code> 从英文上看出是累加寄存器，在虚拟机中，用于存放一条指令执行后的计算结果。</p>
+<p><strong>PS：前三个都是存放地址的，定义是要指针定义，而AX是存放结果的，不用定义成指针。在实际计算机中，PC的初始值应该指向main函数的地址，但是现在 还没到这一步，先不指定。</strong></p>
+</blockquote>
+<h4 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h4><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>可不可以用unsigned int？？？</p>
+<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><h4 id="类型问题"><a href="#类型问题" class="headerlink" title="类型问题"></a>类型问题</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> ax;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LC)   &#123;ax = *(<span class="type">char</span> *)ax;&#125;      <span class="comment">// load character to ax, address in ax</span></span><br></pre></td></tr></table></figure>
+
+<p>if中的操作是将ax中的值作为地址，并且按照char类型解析该地址指向的内容，然后将解析完后的char重新赋值给ax，应该会导致类型冲突的呀。</p>
+<h3 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h3><h4 id="关于指针"><a href="#关于指针" class="headerlink" title="关于指针"></a>关于指针</h4><p><code>int * </code>和<code>char *</code>本质上都是指针，而指针都是一个数字，而计算机内指针都是用数字表示的，为什么不统一用int或者是unsigned int，而是要分int char和其它？</p>
+<p>因为<code>int * </code>和<code>char *</code>指向的数字表示不同的数据类型，而且还是做指针运算时的重要依据，比如在int类型中，指针运算++是向后移动4个字节（大多数机器是这样的），而char类型在做指针运算时，往往只向后移动1个字节，计算机做出这样的依据就是所使用的指针类型。</p>
+<p>其次，在计算机编译阶段，这两种类型对应存储的数据需要不同，计算机在编译时会检查<code>int * </code>和<code>char *</code>所指向的数据是否正确，若不正确则报错，避免潜在的错误。</p>
+<p>GPT这样说：</p>
+<blockquote>
+<p>int *和char *在本质上的区别是指针所指向内存单元中存储的数据类型不同。</p>
+<p>int * 是一个指向整型变量的指针，它所指向的内存单元中存储的是一个整型数值，占用 4 字节（在大部分机器上）。而 char * 则是一个指向字符型变量的指针，它所指向的内存单元中存储的是一个字节大小的 ASCII 码或者 Unicode 码。</p>
+<p>在计算机编译时，int <em>和char * 在指针操作上会有所不同。在执行指针运算时，指针所指向的内存单元地址将根据数据类型的不同而发生改变。例如，对于一个 int</em> 指针变量 p，执行 p++ 操作时，p 的值将增加 4，因为一个 int 变量占用 4 个字节。而对于一个 char* 指针变量 q，执行 q++ 操作时，q 的值只会增加 1，因为一个 char 变量只占用一个字节。</p>
+<p>此外，在编译器生成目标代码时，对于 int * 和 char * 所指向的内存单元，编译器在生成代码时还会进行类型检查。这是为了确保程序不会访问不正确的内存地址，避免潜在的错误。例如，在使用 int * 指针时，我们只能访问整型变量的内存地址，不能访问 char 或其他类型变量的内存地址。</p>
+</blockquote>
+<h4 id="关于栈顶"><a href="#关于栈顶" class="headerlink" title="关于栈顶"></a>关于栈顶</h4><p><code>SP指针寄存器</code> 永远指向当前栈的栈顶  此处的栈顶是最顶端的元素，而非最顶端元素的上面一个。</p>
+<h4 id="一些骚操作"><a href="#一些骚操作" class="headerlink" title="一些骚操作"></a>一些骚操作</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SC)   &#123;ax = *(<span class="type">char</span> *)*sp++ = ax;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码的运算顺序是：</p>
+<p>①<em>sp  取栈顶地址指向的内容，*<em>即取栈顶数据</em></em></p>
+<p>②（char *）将<strong>栈顶数据</strong>转化为char类型指针</p>
+<p> ③&#x3D;ax  将ax赋值给<strong>栈顶数据指向的数据</strong></p>
+<p> ④sp自增1</p>
+<p>⑤取自增后sp的指向数据，因为sp总指向栈顶，所以④相当于POP了一下。</p>
+<p>⑥将栈顶数据转化为char类型指针</p>
+<p>⑦取栈顶数据所指的数据，此处为字符b</p>
+<p>⑧将字符b赋值给ax（其间需要自动强制转型，因为ax是int类型的）</p>
+<p>⑨sp再自增1</p>
+<p><img src="/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E7%90%86%E8%A7%A3SC.jpg" alt="理解SC"></p>
+<h4 id="pc-1和-int-pc"><a href="#pc-1和-int-pc" class="headerlink" title="pc+1和(int *)*pc"></a><code>pc+1</code>和<code>(int *)*pc</code></h4><p><code>pc = pc+1</code>是指顺序执行下一行代码（从上帝视角来看）</p>
+<p><code>pc = (int *) *pc</code>是指跳转到下一个语句块</p>
+<p>从JMP指令的实现是<code>pc = (int *) *pc</code>就能看出，如果if后面是0，那么则回执行<code>pc = (int *) *pc</code>，实质上是进行了一次JMP。</p>
+<p>20230518 END</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>编译</tag>
+      </tags>
   </entry>
   <entry>
     <title>编译学习资源</title>
