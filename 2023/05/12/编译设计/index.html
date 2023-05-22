@@ -23,17 +23,17 @@
   <meta name="description" content="着手设计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编译设计">
-<meta property="og:url" content="https://pi_haoxuan.gitee.io/2023/05/12/20230512/index.html">
+<meta property="og:url" content="https://pi_haoxuan.gitee.io/2023/05/12/%E7%BC%96%E8%AF%91%E8%AE%BE%E8%AE%A1/index.html">
 <meta property="og:site_name" content="PI WEBSITE">
 <meta property="og:description" content="着手设计">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-12T14:29:49.000Z">
-<meta property="article:modified_time" content="2023-05-18T16:38:42.156Z">
+<meta property="article:modified_time" content="2023-05-22T15:06:13.316Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="编译">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://pi_haoxuan.gitee.io/2023/05/12/20230512/">
+<link rel="canonical" href="https://pi_haoxuan.gitee.io/2023/05/12/%E7%BC%96%E8%AF%91%E8%AE%BE%E8%AE%A1/">
 
 
 <script id="page-configurations">
@@ -196,7 +196,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.gitee.io/2023/05/12/20230512/">
+    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.gitee.io/2023/05/12/%E7%BC%96%E8%AF%91%E8%AE%BE%E8%AE%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.png">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-19 00:38:42" itemprop="dateModified" datetime="2023-05-19T00:38:42+08:00">2023-05-19</time>
+                <time title="修改时间：2023-05-22 23:06:13" itemprop="dateModified" datetime="2023-05-22T23:06:13+08:00">2023-05-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -288,11 +288,11 @@
 <p><code>code01</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> token;</span><br><span class="line"><span class="type">char</span> *src, *old_src;</span><br><span class="line"><span class="type">int</span> poolsize;</span><br><span class="line"><span class="type">int</span> line;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取src中下一个字符的ASCII码值</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">next</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    token = *src++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表达式分析pewpwd</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">expression</span><span class="params">(<span class="type">int</span> level)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环读取文件，直到token小于0（因为token是ASCII，所以没有小于0 的情况，等于0就是结束符）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">program</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    next(); <span class="comment">// get next token</span></span><br><span class="line">    <span class="keyword">while</span> (token &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;token is: %c\n&quot;</span>, token);</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟机接口</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">eval</span><span class="params">()</span></span><br><span class="line">&#123; <span class="comment">// do nothing yet</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i, fd;</span><br><span class="line"></span><br><span class="line">    argc--;</span><br><span class="line">    argv++;</span><br><span class="line"></span><br><span class="line">    poolsize = <span class="number">256</span> * <span class="number">1024</span>; <span class="comment">// arbitrary size</span></span><br><span class="line">    line = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((fd = open(*argv, <span class="number">0</span>)) &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open(%s)\n&quot;</span>, *argv);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(src = old_src = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for source area\n&quot;</span>, poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the source file</span></span><br><span class="line">    <span class="keyword">if</span> ((i = read(fd, src, poolsize - <span class="number">1</span>)) &lt;= <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read() returned %d\n&quot;</span>, i);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    src[i] = <span class="number">0</span>; <span class="comment">// add EOF character</span></span><br><span class="line">    close(fd);</span><br><span class="line"></span><br><span class="line">    program();</span><br><span class="line">    <span class="keyword">return</span> eval();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="4、问题"><a href="#4、问题" class="headerlink" title="4、问题"></a>4、问题</h4><p>①第三行 include 的 memory.h 好像没用到</p>
+<h4 id="4、问题"><a href="#4、问题" class="headerlink" title="4、问题"></a>4、问题</h4><p>①第三行 include 的 memory.h 好像没用到（可能之后会用到吧）</p>
 <p>②第52行，open函数中的参数，第一个参数是取用户输入的第一个参数，但是第二个参数不理解。</p>
 <p>翻看了函数原型，代码如下：</p>
 <p><code>code02</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">__fortify_function int</span><br><span class="line">open (const char *__path, int __oflag, ...)</span><br><span class="line">&#123;</span><br><span class="line">  if (__va_arg_pack_len () &gt; 1)</span><br><span class="line">    __open_too_many_args ();</span><br><span class="line"></span><br><span class="line">  if (__builtin_constant_p (__oflag))</span><br><span class="line">    &#123;</span><br><span class="line">      if (__OPEN_NEEDS_MODE (__oflag) &amp;&amp; __va_arg_pack_len () &lt; 1)</span><br><span class="line">	&#123;</span><br><span class="line">	  __open_missing_mode ();</span><br><span class="line">	  return __open_2 (__path, __oflag);</span><br><span class="line">	&#125;</span><br><span class="line">      return __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  if (__va_arg_pack_len () &lt; 1)</span><br><span class="line">    return __open_2 (__path, __oflag);</span><br><span class="line"></span><br><span class="line">  return __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">__fortify_function <span class="type">int</span></span><br><span class="line"><span class="title function_">open</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *__path, <span class="type">int</span> __oflag, ...)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (__va_arg_pack_len () &gt; <span class="number">1</span>)</span><br><span class="line">    __open_too_many_args ();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (__builtin_constant_p (__oflag))</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> (__OPEN_NEEDS_MODE (__oflag) &amp;&amp; __va_arg_pack_len () &lt; <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	  __open_missing_mode ();</span><br><span class="line">	  <span class="keyword">return</span> __open_2 (__path, __oflag);</span><br><span class="line">	&#125;</span><br><span class="line">      <span class="keyword">return</span> __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (__va_arg_pack_len () &lt; <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> __open_2 (__path, __oflag);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>第二个参数是int类型没错，但是具体含义不知道。</p>
 <p>上网查后，解释是，第二个参数代表对该文件的操作权限，例如：只读，只写，读写。但是很神奇，这些权限的表示方法如下：</p>
@@ -357,11 +357,11 @@
 <p>同理，先两个if代码块也是如此，先进行相关操作，再判断操作是否错误</p>
 <p>任何错误都将直接返回-1</p>
 <p>③next() 函数中 token 读取的其实是ASCII码值，并且通过地址将值带出。</p>
-<p>④第46、47行，有个argc–和argv++</p>
+<p>④第46、47行，有个argc- -和argv++</p>
 <blockquote>
-<p>argc– 意思是将参数减少。通过查资料可以知道，main函数自带的两个参数其实是本程序的输入参数个数（argc）和输入的参数构成的数组（argv）。值得注意的是，这两个参数都包含他们自己。所以argc初始值就是2，agrv[0]初始值是2，argv[1]初始值是argv（即首地址）</p>
+<p>argc- - 意思是将参数减少。通过查资料可以知道，main函数自带的两个参数其实是本程序的输入参数个数（argc）和输入的参数构成的数组（argv）。值得注意的是，这两个参数都包含他们自己。所以argc初始值就是2，agrv[0]初始值是2，argv[1]初始值是argv（即首地址）</p>
 </blockquote>
-<p>运行时要解析命令，先把第一个用户输入参数去掉，argc–，因为第一个往往是调用编译程序的参数，当调用到正确文件时，就不需要第一个参数了。</p>
+<p>运行时要解析命令，先把第一个用户输入参数去掉，argc- -，因为第一个往往是调用编译程序的参数，当调用到正确文件时，就不需要第一个参数了。</p>
 <p>argv++是地址++，就是跳转到下一个命令参数，然后给程序读取，执行相应操作。</p>
 
     </div>
@@ -477,20 +477,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -575,7 +575,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13 分钟</span>
+    <span title="站点阅读时长">14 分钟</span>
 </div>
 
   <div class="powered-by">
