@@ -28,7 +28,7 @@
 <meta property="og:description" content="着手设计">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-12T14:29:49.000Z">
-<meta property="article:modified_time" content="2023-05-22T15:06:13.316Z">
+<meta property="article:modified_time" content="2023-05-24T15:03:32.367Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="编译">
 <meta name="twitter:card" content="summary">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-22 23:06:13" itemprop="dateModified" datetime="2023-05-22T23:06:13+08:00">2023-05-22</time>
+                <time title="修改时间：2023-05-24 23:03:32" itemprop="dateModified" datetime="2023-05-24T23:03:32+08:00">2023-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,14 +272,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -356,13 +356,26 @@
 </tbody></table>
 </blockquote>
 <p>如表所示，并没有数字，不理解。。。。。。</p>
-<p>③当我运行这个文件时，即执行下列命令</p>
+<blockquote>
+<p><strong>解答</strong>：这些flags参数是在一个枚举类型中的常量，如下代码所示：</p>
 <p><code>code03</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    O_RDONLY,   <span class="comment">// 只读打开</span></span><br><span class="line">    O_WRONLY,   <span class="comment">// 只写打开</span></span><br><span class="line">    O_RDWR,     <span class="comment">// 读写打开</span></span><br><span class="line">    O_APPEND,   <span class="comment">// 追加方式打开</span></span><br><span class="line">    O_CREAT,    <span class="comment">// 若文件不存在，则创建该文件</span></span><br><span class="line">    O_EXCL,     <span class="comment">// 与O_CREAT一同使用，如果文件已经存在则出错</span></span><br><span class="line">    O_TRUNC,    <span class="comment">// 截断文件长度为0</span></span><br><span class="line">    O_NOCTTY,   <span class="comment">// 不要把设备用作控制终端</span></span><br><span class="line">    O_NONBLOCK, <span class="comment">// 非阻塞模式</span></span><br><span class="line">    O_SYNC      <span class="comment">// 同步方式打开</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上述代码就是一个枚举类型（包括之后的指令集也是枚举类型），从第一个到最后一个按照自然数（0或许不是自然数？）顺序排列，比如<code>O_RDONLY</code>就是<code>0</code>，以此类推。。。</p>
+</blockquote>
+<p>③当我运行这个文件时，即执行下列命令</p>
+<p><code>code04</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$$$ gcc 01.c -o 01</span><br><span class="line">$$$ ./01 01.c</span><br></pre></td></tr></table></figure>
 
 <p>逐个字符读取只读到了第11行的&#x2F;&#x2F;和其后的一个空格，程序就中止了，不知道为什么。。。。。。</p>
 <p>开始觉得是因为后面是中文字符，于是在“读取”前面随便加了几个字母，发现读取成功，但是<strong>将后面的所有中文语句换成英文之后又行不通了</strong></p>
 <p>又试了一下，一读到注释就不行了。</p>
+<blockquote>
+<p><strong>解答</strong>：其实就是字符问题，因为在<code>next</code>函数中，读的是字符的ASCII码值，而中文字符在ASCII中是没有位置的，因此读不下去了，所以文件中避免出现中文。</p>
+<p>其原理是，读取函数根据数据类型（其实所有的都是这样的）决定本次读取往后读多少个字节单位，而char只有一个字节，但是中文字符占两个或者三个字节（根据编码不同而相异），因此不能继续读下去</p>
+<p>如果将第28行中的<code>token &gt; 0</code>改成<code>token != EOF</code>就可以成功读完文件，但是对应的中文都是乱码，而且由于前面中文出现了“断章取义”的现象，后面的英文大概率也是乱的。</p>
+<p>还有一个方法就是用wchar类型，也就是将第7行的<code>src</code>和<code>old_src</code>定义为<code>wchar*</code>类型，这样就可以正常读中文了。</p>
+</blockquote>
 <h4 id="5、TIPS"><a href="#5、TIPS" class="headerlink" title="5、TIPS"></a>5、TIPS</h4><p>①先看第64行，src里面是读取的文件内容，和第69行联系起来看，第69行在 i 的位置加了个0，即为封口。于是 i 的值就有点耐人寻味了。</p>
 <blockquote>
 <p>read 函数 返回值有三种情况。</p>
@@ -592,7 +605,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">15k</span>
+    <span title="站点总字数">16k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

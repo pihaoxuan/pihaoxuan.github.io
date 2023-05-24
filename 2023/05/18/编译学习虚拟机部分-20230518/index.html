@@ -28,9 +28,8 @@
 <meta property="og:description" content="编译学习虚拟机部分">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E7%90%86%E8%A7%A3SC.jpg">
 <meta property="article:published_time" content="2023-05-18T08:59:24.000Z">
-<meta property="article:modified_time" content="2023-05-22T03:14:21.422Z">
+<meta property="article:modified_time" content="2023-05-24T15:30:57.122Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="编译">
 <meta name="twitter:card" content="summary">
@@ -229,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-22 11:14:21" itemprop="dateModified" datetime="2023-05-22T11:14:21+08:00">2023-05-22</time>
+                <time title="修改时间：2023-05-24 23:30:57" itemprop="dateModified" datetime="2023-05-24T23:30:57+08:00">2023-05-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,7 +274,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -323,7 +322,15 @@
 <h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><h4 id="类型问题"><a href="#类型问题" class="headerlink" title="类型问题"></a>类型问题</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ax;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LC)   &#123;ax = *(<span class="type">char</span> *)ax;&#125;      <span class="comment">// load character to ax, address in ax</span></span><br></pre></td></tr></table></figure>
 
 <p>if中的操作是将ax中的值作为地址，并且按照char类型解析该地址指向的内容，然后将解析完后的char重新赋值给ax，应该会导致类型冲突的呀。</p>
+<blockquote>
+<p><strong>解答</strong>：在计算机内存中，不论是<code>int</code>还是<code>char</code>还是各种指针类型，其实都是一个数，而<code>int</code>，<code>char</code>或者是<code>int*</code>，<code>char*</code>是决定程序在解析这个数的时候的方式（往后读多少个内存单元，按照什么类型解析）。</p>
+<p>改代码中，如果ax不是很大的数（8位以内），可以正常运行，再大就会出现转换错误的情况。</p>
+</blockquote>
 <h4 id="sp-sp-pc"><a href="#sp-sp-pc" class="headerlink" title="sp = sp - *pc++"></a><code>sp = sp - *pc++</code></h4><p>将栈顶指针sp 减去下一个指令需要使用的空间大小，pc++是指下一个指令的地址，解引用后就是指下一个指令，同时是一个int值，为什么指的是下一个指令所需要的空间大小？</p>
+<blockquote>
+<p><strong>解答</strong>：在函数调用时，一个函数需要多大的空间运行，一般都会在函数内部用一个小空间存储这个内容。</p>
+<p>这里将这个内容取出来减去，就是回收之前为子函数开辟出来的子函数提前告知的需要的空间。</p>
+</blockquote>
 <h3 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h3><h4 id="关于指针"><a href="#关于指针" class="headerlink" title="关于指针"></a>关于指针</h4><p><code>int * </code>和<code>char *</code>本质上都是指针，而指针都是一个数字，而计算机内指针都是用数字表示的，为什么不统一用int或者是unsigned int，而是要分int char和其它？</p>
 <p>因为<code>int * </code>和<code>char *</code>指向的数字表示不同的数据类型，而且还是做指针运算时的重要依据，比如在int类型中，指针运算++是向后移动4个字节（大多数机器是这样的），而char类型在做指针运算时，往往只向后移动1个字节，计算机做出这样的依据就是所使用的指针类型。</p>
 <p>其次，在计算机编译阶段，这两种类型对应存储的数据需要不同，计算机在编译时会检查<code>int * </code>和<code>char *</code>所指向的数据是否正确，若不正确则报错，避免潜在的错误。</p>
@@ -338,16 +345,12 @@
 <h4 id="一些骚操作"><a href="#一些骚操作" class="headerlink" title="一些骚操作"></a>一些骚操作</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SC)   &#123;ax = *(<span class="type">char</span> *)*sp++ = ax;&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上述代码的运算顺序是：</p>
-<p>①<em>sp  取栈顶地址指向的内容，*<em>即取栈顶数据</em></em></p>
-<p>②（char *）将<strong>栈顶数据</strong>转化为char类型指针</p>
-<p> ③&#x3D;ax  将ax赋值给<strong>栈顶数据指向的数据</strong></p>
-<p> ④sp自增1</p>
-<p>⑤取自增后sp的指向数据，因为sp总指向栈顶，所以④相当于POP了一下。</p>
-<p>⑥将栈顶数据转化为char类型指针</p>
-<p>⑦取栈顶数据所指的数据，此处为字符b</p>
-<p>⑧将字符b赋值给ax（其间需要自动强制转型，因为ax是int类型的）</p>
-<p>⑨sp再自增1</p>
-<p><img src="/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E7%90%86%E8%A7%A3SC.jpg" alt="理解SC"></p>
+<p>①sp++申请新空间</p>
+<p>②*解引用</p>
+<p>③将ax的值存进去</p>
+<p>④char * 强转</p>
+<p>⑤*解引用</p>
+<p>⑥将值再赋给ax（如果ax中的数字小的话，其实没变）</p>
 <h4 id="pc-1和-int-pc"><a href="#pc-1和-int-pc" class="headerlink" title="pc+1和(int *)*pc"></a><code>pc+1</code>和<code>(int *)*pc</code></h4><p><code>pc = pc+1</code>是指顺序执行下一行代码（从上帝视角来看）</p>
 <p><code>pc = (int *) *pc</code>是指跳转到下一个语句块</p>
 <p>从JMP指令的实现是<code>pc = (int *) *pc</code>就能看出，如果if后面是0，那么则回执行<code>pc = (int *) *pc</code>，实质上是进行了一次JMP。</p>
@@ -559,7 +562,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">15k</span>
+    <span title="站点总字数">16k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
