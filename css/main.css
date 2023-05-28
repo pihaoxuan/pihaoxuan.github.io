@@ -1228,7 +1228,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #1ff9ff;
+  background: #ff67ff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2644,4 +2644,18 @@ a.category-list-link:before {
   font: normal normal normal 14px/1 FontAwesome;
   font-size: 15px;
   line-height: 18px;
+}
+.links-of-recent-posts {
+  font-size: 0.8125em;
+  margin-top: 10px;
+}
+.links-of-recent-posts-title {
+  font-size: 1.03em;
+  font-weight: 600;
+  margin-top: 0;
+}
+.links-of-recent-posts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
