@@ -47,9 +47,98 @@
       </tags>
   </entry>
   <entry>
+    <title>git</title>
+    <url>/2023/10/09/git/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="一些关于远程git使用的心得"><a href="#一些关于远程git使用的心得" class="headerlink" title="一些关于远程git使用的心得"></a>一些关于<strong>远程git</strong>使用的心得</h1><p><strong>说明：本文使用Ubuntu20.04系统和gitee操作，理论上来说Windows系统和github的操作方法是一样的，只是有些路径不太一样。</strong></p>
+<h3 id="预备条件"><a href="#预备条件" class="headerlink" title="预备条件"></a>预备条件</h3><p>首先需要有安装<code>git</code>（对于Windows平台来说，Linux应该是自带有git）</p>
+<p>其次需要有gitee账号和一个新建的仓库</p>
+<p>以上两项不会的自行查找资料，很简单的。(算了，我还是附上两（sì）个链接吧)</p>
+<p><a href="https://blog.csdn.net/mukes/article/details/115693833?ops_request_misc=%7B%22request_id%22:%22169682895716800182799938%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169682895716800182799938&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-115693833-null-null.142%5Ev95%5EchatgptT3_1&utm_term=git%E5%AE%89%E8%A3%85&spm=1018.2226.3001.4187">Windows下的Git 详细安装教程——详细到你不想看</a></p>
+<p><a href="https://blog.csdn.net/m0_70102063/article/details/132166986?ops_request_misc=&request_id=&biz_id=102&utm_term=Linux%E4%B8%8B%E7%9A%84git%E5%AE%89%E8%A3%85&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-132166986.142%5Ev95%5EchatgptT3_1&spm=1018.2226.3001.4187">Linux系统上安装Git详细步骤</a></p>
+<p><strong>gitee账号创建：对不起太简单了，找不到教程</strong></p>
+<p><a href="https://blog.csdn.net/qq_73805125/article/details/130659347?ops_request_misc=%7B%22request_id%22:%22169683556316800215058913%22,%22scm%22:%2220140713.130102334.pc_all.%22%7D&request_id=169683556316800215058913&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-130659347-null-null.142%5Ev95%5EchatgptT3_1&utm_term=gitee%E8%B4%A6%E5%8F%B7%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA&spm=1018.2226.3001.4187">怎么在Gitee中创建仓库</a></p>
+<h3 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h3><p><strong>第一步</strong>：初始化git</p>
+<p>在需要git管理的项目文件夹中执行命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>结果如下</p>
+<p><img src="/2023/10/09/git/init.jpg" alt="init"></p>
+<p>再执行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">la</span><br></pre></td></tr></table></figure>
+
+<p>就可以看见<code>.git</code>文件夹，证明初始化成功</p>
+<p><img src="/2023/10/09/git/la.jpg" alt="la"></p>
+<p><strong>第二步</strong>：生成公钥以连接远程git仓库</p>
+<p>执行命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;你的gitee账号的主邮箱&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果之前执行过，或者连过远程仓库，那么会报错说已经有了密钥</p>
+<p><img src="/2023/10/09/git/key_already_exists.jpg" alt="error"></p>
+<p>如果没有过，那么<strong>注意</strong>：命令行会问你三个问题，别搭理他，直接回车让他尴尬就好了。之后会出现如图所示的奇怪图像</p>
+<p><img src="/2023/10/09/git/key_ok.jpg" alt="key_succeed"></p>
+<p>然后去<code>/root/.ssh</code>下找到三个文件：<code>id_rsa</code>、<code>id_rsa.pub</code>和<code>known_hosts</code>。其中<code>id_rsa</code>是私钥，注意藏好，不要外泄；<code>id_rsa.pub</code>就是公钥，这个就有大用了。</p>
+<p>点开<code>id_rsa.pub</code>文件，将里面的东西全都复制（<code>ctrl + a</code> 全选，然后复制），打开你的<code>gitee</code>网站，点击你自己的可可爱爱的头像，找到设置，点击设置</p>
+<p><img src="/2023/10/09/git/click_setting.jpg" alt="click_setting"></p>
+<p>然后点击SSH公钥，输入标题，然后在公钥一栏种中粘贴刚刚复制的一堆东西</p>
+<p><img src="/2023/10/09/git/add_pub_key.jpg" alt="add_pub_key"></p>
+<p>确定然后验证密码，就好了</p>
+<p><strong>如果是之前有公钥的，可能会显示已经添加过，可以直接对仓库进行读写，可以直接忽略，问题不大</strong></p>
+<p><strong>第三步</strong>：建立账号连接</p>
+<p>直接在命令行输入以下指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@git.oschina.net</span><br></pre></td></tr></table></figure>
+
+<p>然后会显示啥呢？ 会和你问好，说你成功变成了作者balabala的，人还怪有礼貌的嘞！</p>
+<p><img src="/2023/10/09/git/successfully.jpg" alt="successfully"></p>
+<p>至此，就可以连接上你的**<code>gitee</code>账号<strong>了，但是！！！！</strong>仅仅是连接到了你的gitee账号，而非仓库**，你还不能像高手一样<code>clone</code>、<code>push</code>和<code>pull</code>。</p>
+<p><strong>第四步</strong>：连接仓库，芜湖！</p>
+<p>打开网页，进入你开头新建的仓库看右边有个<code>克隆/下载</code>的明显的按钮，点击，选择<code>http</code>然后点击复制，这样就把这个仓库的网址复制下来了（其实点击SSH也行）</p>
+<p>然后在切回命令行那边（<strong>注意，我们一直是在你需要用<code>git</code>管理的文件路径下操作的</strong>）输入以下指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote add origin 你刚刚复制的url地址</span><br></pre></td></tr></table></figure>
+
+<p>然后检查一下</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/10/09/git/git_remote_-v.jpg" alt="git_remote_-v"></p>
+<p>出现这个就是成功了！</p>
+<blockquote>
+<p>解释一下，其中origin不是一个指令参数，是一个别名，就是在之后的push和pull中，你的origin就代表着你的仓库的地址，也可以设计别的名字，比如小猫，小狗，大逼兜等等，当然最好是英文。</p>
+</blockquote>
+<p><strong>第五步</strong>：愉快地上传代码</p>
+<p>终于来到了经典的<code>push</code>三连了！</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m &quot;message&quot;</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
+<p>第一条：将需要push的代码加载到工作区（本地）<code>.</code>的意思是本级目录下所有文件，也可以换成文件名或者路径</p>
+<p>第二条：提交，但也是提交到本地，<code>message</code> 是你提交时候的备注，可以简要说明你做了啥，中英文都可以</p>
+<p>第三条：将本地的东西全都<code>push</code>到远程仓库去，就是<code>gitee</code>上你创建的仓库。</p>
+<blockquote>
+<p>如果出现报错说你仓库有东西，两种解决方法</p>
+<p><img src="/2023/10/09/git/push_error.jpg"></p>
+<p>①先将仓库里的东西clone下来，修改后成你想要的之后再push上去</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone origin</span><br></pre></td></tr></table></figure>
+
+<p>②如果仓库的东西不要，直接在<code>gitee</code>网站上清空仓库（<strong>慎重</strong>）然后再<code>push</code>上去</p>
+</blockquote>
+<p><img src="/2023/10/09/git/push_succeed.jpg"></p>
+<p>出现上图就是成功了。</p>
+<p>再去<code>gitee</code>上看，代码也成功push上去了！</p>
+<p>圆满！！</p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>OCR</title>
     <url>/2023/09/17/OCR/</url>
-    <content><![CDATA[<h1 id="初探OCR图片文字识别技术"><a href="#初探OCR图片文字识别技术" class="headerlink" title="初探OCR图片文字识别技术"></a>初探OCR图片文字识别技术</h1><p>图片文字识别 是 从一幅图片中通过一些算法，将图片中的文字识别提取出来。</p>
+    <content><![CDATA[<span id="more"></span>
+
+<h1 id="初探OCR图片文字识别技术"><a href="#初探OCR图片文字识别技术" class="headerlink" title="初探OCR图片文字识别技术"></a>初探OCR图片文字识别技术</h1><p>图片文字识别 是 从一幅图片中通过一些算法，将图片中的文字识别提取出来。</p>
 <p>通常图片中文字的检测分为比较简单的场景和比较复杂的场景</p>
 <p><img src="/2023/09/17/OCR/%E7%AE%80%E5%8D%95%E5%9C%BA%E6%99%AF%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB.jpg" alt="简单场景文字识别"></p>
 <p>简单场景文字识别</p>
@@ -669,7 +758,7 @@
     <title>注册GPT</title>
     <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="c7bb685a60ef10c0ff87b2c9fb7cdc75bcfe05ca662393dbcb261c5487efe0a5">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f0f62a401f11b665a0cc0ceb16e70d2642b87a8c060f3419ed2bf7bd16d360f89ebe5065876db4cd26ffb03b2e0294e2022090d2c4d935c04c320541ef713fcd17269388af791f8228f1e8d3666b93a11533e2e1e914f6a3db194599145be41e84c363df609de2d16b068d5e9830e82480f061a220848c46c652c7c30035135654c34283823fb1f494f4326474f8976047f088ac02d86e234a5437c1c1de7e4d99360e325085dd1d5c13fadf684564ec39c4ee9978f8f9825f379110049622a64f43c0e8c968d1f02adceb4a509378beb939d77d35f5153d941f448e2716557fc6a237804597ba456129a9c1f71bb9923911ff609ec8f99b66cdcc9526319ab554bd57a2e83161c7e0e25dc4ee8f0ef43d3af87d0509119c2a3567b0482e534d0fb89be17b79a8a91392e561fc546699323eaa2288076d3c2144f971bdb32f64615e6614b3284f2650406e82c7934d94fe7e11f458e3a6b5d30654cdd090cb5e97881bfdc57b1d9b12ccaa71e41705259a64a1de4d4fa852f0d7e1e6c8a1e76dd7a457993c8a3a73dc55efce5a37e71b66eb58cfebfee714c99f9a2a9c3cc63b19d845f977e1c100875aaf47f1cb9bd4dc6fe4b655b23e874ce3fc2a9d78849ada24b0b9be6ac42dd059b771c0abc4cc270a537daf78d7399960d44f42ae47d2bb21c47b74077a101ec60a6d8aa092e0ef652883a971edf69fd33e803ba30ca6ab596a7fef312457a5c3a2adeaf569cbe3362b6e9b18fabc213004f2ffc36ea3543ff076a8ff003467fe84e4e5bf4c32a2f13d2052fec850161590a2485d72efde329099fadfeb3b7d003586fcc552dd6a367a70eab8e3aab61041322965afb9b67aa0267c0a88a9ecc2e38683b90a48dbbc4b7665a027a1b6d066a471285503754594df1d39d2295d7adf03825467756672045845f7b18582a8dcbd04d9400dea96b7ea46aa6bcb75ea92944e09ed200a08ced523009623d03b149e147d90175613102af58c4cda65c9af527966aa54226b9020687c75eb8b8fdf1d7421efa220b24a16eafd1e7bbe8493da4b97c4e61aaf3427926a1c3bb11e5890381da36b807d5f1a221b9edc7e7efcc78799f4602f5f985a9e86c159e193fafb4b2d30056f07ee7450ba5bbe3d4fa89b832ba80224d271d6f4cac393b0bbae0f972db0f9a36289b350dd0a8b6ce194500835c5a4d11366c758d53bc90a6ac0967b5583803d908dffb531f1f00a054bc6b328145e4003ff17fceea85459349bda2b90553d08151161c8540b6f7f38fe3c343fb0083bf0dfa50a1a4a2f2012552d3a6df2c75497c395b0c51d31a861cc3c45a02c7a3fd49c2dc2e44d8b6776d2c74d968fbecffa1201f8ae93b1b01ea26315877e0489e13e46d8113f4626ec5ad449a8d5103a3daafc863a59feb4fe8c13d34b650c73d2555df3e828d67ca5130d72ecf4b90d8543e4b81a0e483fdfcecbcbb85132bd5c30bb2c8b744674e5dfb011461632285b7d42b1af7991ee955683f1827879237898903c1c4661820260701c5a26829c62dffee4d4e784c1ba22fc809b61f80a676f6d07936b5d062f95bd9220df44d366297dd525e20143014344ebb38da50279d87c88acfc37bc7bc7a4a8575ef35414b94b6e612aabf780ccbf322f597088d3cebe60748da7d3302a9d2ff018a59dd3dbaae7a7b9ec21af7669bc774939e564abd6302dcee92a42dd2a9ac39a665d68dec210404179791777b51503b9276cdd0d8ab60cdfa3821c4e60deaa43ce36d7fc33553ef604029bf05ce8762ac1bf96dd25f1d40135ae9847f645e639cc14381c1dbd5339ced0730535ec7b5884fe175ab9dd44ef9506d16bb6991164a55</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="b24a9e56b87f941c3b86f4808cccc282d29e7b44f0a07185dd1b2b87a2989ec9">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba7d7c3cefb52498e6f76dcf2048ded3df12caf6ade1677a8cd745f776bb6e5e9e579665c6c2ef09bd9b00a8b27069695014531bd325a3370ee0c64088a044daa0eb9d711c25fd5a44de3bd56ec6beb2fe5862173bc2c720bea8fda58482670cf265856c6081ec0200032ff26a99a16c6004ce3631aaf3a5847c283e615eb32aef4ea27c18633a7550877630dd522a42542ea549e27ceb85bbc2e10f3618acefdb70f29aa551b6bcef47d7896c1ac7d09f0f62a401f11b665a0cc0ceb16e70d2640a74a24980961dba6f7d01f5c0d734e48c8dec523d03558dbe6ca4e137d98971c44d806a4d8145f569844ab8cfccc27848f7a22898f330f94a626afa640dd3749adee37eeea9c2670a44eb4c74268d3b38c41b0be74b29da5e9992726ca6cc2f70946f9a370c214cab722c528eb61ca8500b48e1a2ef9ff2a71b1a4809e63b2effe24a0a0300e7772dd3e990ff4fce2066c6ac85fe4e9c3e2a003f90baca0192cbc4d3c6cd830423632ea54c3ecb793cd1dc90cfb26561e34a96dec546b6daf83713f656bf9cf92df301e3733e44a445c34b4886b567ab44c421e66abfd1aa0808ecf8d7d32ae754a1ab5f7ad034436319f472fcbdf65a2a119eb76d296f0c0e5745811206b261fe6646219d7356c931894af6e245e3a9bfdcc7ff261c4a37d372d28f96f2897a8e4db48309881f9f3abaef9d3daafd5e883e1733bd9b7c1abdd64cbdf18a00d83f7f0404dade0466962fd651a9ca34c70d72c42ffc7dc78cf37991a8419e83f2ebb372a8caa5c81010c0fe77a53852edd25b69f6c138fd6957e10c4bf6e9e1e62e2d40005630aded95d42bd737c046b00cc88681a7f3d5d6e36fa873eb939be9860e4344cd9b9122659c465697f0a7f5397bb510e49eb9e118afc9b0efab60c375f066f23f04819ef1e031284c75e9814f7666a345c4a296c7722361b7123117a385122226e0d95313b027212e084a418b7567113027c41b86814f0a244831fad5a71108cf485769ca61423887219a1b9629f5aea5263c145da4325cbeb70accdefc21052873aa8eb57dd1403bd6181ab0a8e89f5898b1bd65fac2c4e4ba6a96d43e55adc542f93b2cc147959bc28839b839ce01a23cd826c37d11348ca2b7a91b26a94794177f4723bf8269bedd5a38325325997b5813d4177d0dff05f0dc9e1ad72cac23dc522e0477a6eabcba15e65b68023c44409d2f2af34e8a298c294636874856e35820117e9170ece4df8e31303b9cf87956c03cde36a0f28a0ddda29fba8dc3f2590bee2341057cfc60b953aa34d47bab55674cdc0541b548f74800aa181eba98ac0584484f33a99b7d51ea5014f3dfc9c584a13ee0b80e1c5d631a03c5ecc70a30ac482460adfae2c3193f2d1c0aa0c6e38cbe84de3d8116c9870e8f0c0f3411eed15154460c8069c49d425592efce389bc5aa86f3f6c11772c853495cb0d6742bd33cd2af0758eead34ec98677c919b9600569e9ea5910cc947d5bfd537e89bfcc043bdd578c47e653a72e3576d35064610c7ff27b2c87c50274f2d5745498cc233d0eb52ec8e2409655923859a40151d6d88b913e219575af47d588f048069fa2ec07e7331459d0d7b884d2fc46baaf959500ebd101efbe5c9ba6c637563939f1f77e11d53531fc146dca77295ffc5766a36a7e804d36635c8653f68a92ac01b9283f047f1b502b27e83b437c536f4d89c26fc618c99cfe6db52e8d75ef0e85c9ff08d71abb566f65f3175e34c14859a71fc78cd869e029ac1d55bc029c14fc4dc62741cc73c3f22f2dc387f610cd3fb402822d7d8aafb7290590f06e69bf091fdf0c69991ff24b0cdd1c33f1d7d65e781de5f29b49b9b34073d054561cc83e752f6160b27b4a088cfaccbc5318f44691a5c5fe3c5f70a8905b4cf8341d322e868387cbb07e97832369c3d9ac3312d4ee10c28a3f07117a632c27cd0b3616ac3e59ccc763ed8fc01e66fe7ce9a4cd028fa7d203295a79f0900107c711d3d30477267030877cdd0e8f1d99f8be5207825a53c6fdd0a982cc22acf7eadf1f3bafef0ac65f4f63a7a8661c54a9bdcf8a398190e90f690b653429abab53efa504846216c8b</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
