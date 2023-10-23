@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-20 11:00:16" itemprop="dateModified" datetime="2023-10-20T11:00:16+08:00">2023-10-20</time>
+                <time title="修改时间：2023-10-23 20:01:48" itemprop="dateModified" datetime="2023-10-23T20:01:48+08:00">2023-10-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,7 +260,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>819</span>
+              <span>825</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -452,7 +452,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-23 19:58:20" itemprop="dateModified" datetime="2023-10-23T19:58:20+08:00">2023-10-23</time>
+                <time title="修改时间：2023-10-23 20:00:22" itemprop="dateModified" datetime="2023-10-23T20:00:22+08:00">2023-10-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -503,32 +503,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="一些其它git的使用方法"><a href="#一些其它git的使用方法" class="headerlink" title="一些其它git的使用方法"></a>一些其它git的使用方法</h1><h2 id="⚠⚠⚠"><a href="#⚠⚠⚠" class="headerlink" title="⚠⚠⚠"></a>⚠⚠⚠</h2><p>在多人协作开发中，自己在改代码的时候一定要先<code>git pull origin master</code>对远程仓库的代码进行最新版同步后再自己修改，避免在自己修改之后<code>push</code>不上去。（如果实在是忘记了，应该可以有命令解决，解决方法在下文）</p>
-<h2 id="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："><a href="#当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算：" class="headerlink" title="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："></a>当<code>pull</code>代码时出现报错，描述为：本地代码有修改，<code>git</code>不知道怎么办，你打算：</h2><p><img src="/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%BD%93%60pull%60%E4%BB%A3%E7%A0%81%E6%97%B6%E5%87%BA%E7%8E%B0%E6%8A%A5%E9%94%99%EF%BC%8C%E6%8F%8F%E8%BF%B0%E4%B8%BA%EF%BC%9A%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%E6%9C%89%E4%BF%AE%E6%94%B9%EF%BC%8C%60git%60%E4%B8%8D%E7%9F%A5%E9%81%93%E6%80%8E%E4%B9%88%E5%8A%9E.jpg" alt="当`pull`代码时出现报错，描述为：本地代码有修改，`git`不知道怎么办"></p>
-<p>上图就是本地有修改后想<code>pull</code>远程仓库的代码下来，<code>git</code>的做法</p>
-<h3 id="①放弃本地修改，直接照抄远程仓库代码"><a href="#①放弃本地修改，直接照抄远程仓库代码" class="headerlink" title="①放弃本地修改，直接照抄远程仓库代码"></a>①放弃本地修改，直接照抄远程仓库代码</h3><p>使用指令</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>将本地的<code>HEAD</code>指针指向了上一个版本，重置了暂存区的内容，而且还修改重置了本地工作区的内容。</p>
-</blockquote>
-<p>简单来说就是将本地的<code>add</code>和<code>commit</code>全部撤销，并且清空工作区的内容，像是将<code>git</code>恢复到了上一级的“出厂设置”。</p>
-<p>执行指令后，就会看到类似于这样一段话</p>
-<blockquote>
-<p>HEAD is now at 某某版本 test hd_sn</p>
-</blockquote>
-<p>这样就是成功了！</p>
-<p>之后正常<code>pull</code>就能成功了，之后就会出现下图的反馈<br><img src="/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/pull%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84%E5%8F%8D%E9%A6%88.jpg" alt="`pull`成功后的反馈"></p>
-<h3 id="②保留本地修改，不要远程仓库的修改（即以本地为准）"><a href="#②保留本地修改，不要远程仓库的修改（即以本地为准）" class="headerlink" title="②保留本地修改，不要远程仓库的修改（即以本地为准）"></a>②保留本地修改，不要远程仓库的修改（即以本地为准）</h3><h3 id="③合并两者的修改，并将其中冲突处人工检测解决冲突"><a href="#③合并两者的修改，并将其中冲突处人工检测解决冲突" class="headerlink" title="③合并两者的修改，并将其中冲突处人工检测解决冲突"></a>③合并两者的修改，并将其中冲突处人工检测解决冲突</h3><h2 id="git-add-指令"><a href="#git-add-指令" class="headerlink" title="git add 指令"></a><code>git add</code> 指令</h2><h3 id="①git-add-指令"><a href="#①git-add-指令" class="headerlink" title="①git add _____指令"></a>①<code>git add _____</code>指令</h3><p><code>git add .</code>：将所有 <strong>修改过的 新增的</strong> 文件添加到暂存区，但是不会管<strong>被删除的</strong>文件。</p>
-<p><code>git add -u</code>：即<code>git add -update</code>，只管被监控了的文件，就是将已经被<code>add</code>了的文件（即暂存区的文件）如果有修改，就会更新。所以它<strong>不会管新文件</strong>，因为新文件没有被监控。会管<strong>修改过的</strong>和<strong>删除的</strong>文件。</p>
-<p><code>git add -a</code>：即<code>git add -all</code>，是上面两个<code>git</code>的集合，会提交所有<strong>被删除</strong>、<strong>被修改</strong>、和<strong>新增的</strong>文件到数据暂存区</p>
-<p>PS：如何查看自己项目目录下的文件的状态？</p>
-<blockquote>
-<p>使用<code>git status</code>命令就可以，下面复制</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-
-
+          <h1 id="一些其它git的使用方法"><a href="#一些其它git的使用方法" class="headerlink" title="一些其它git的使用方法"></a>一些其它git的使用方法</h1>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1482,12 +1465,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">33k</span>
+    <span title="站点总字数">34k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">30 分钟</span>
+    <span title="站点阅读时长">31 分钟</span>
 </div>
 
 <span id="sitetime"></span>
