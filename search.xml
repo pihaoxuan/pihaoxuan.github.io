@@ -83,7 +83,7 @@
 <p>①对图像遍历，统计出每个像素的出现次数（即频率），形成直方图</p>
 <p>②对所有频率求和</p>
 <p>③对直方图的每个频率除以所有频率的和，求出归一化到0-255的范围</p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/digitalImageProcessing-lab1/%E5%85%AC%E5%BC%8F1.jpg"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/digitalImageProcessing-lab1/%E5%85%AC%E5%BC%8F1.jpg"></p>
 </blockquote>
 <h3 id="对数图像增强"><a href="#对数图像增强" class="headerlink" title="对数图像增强"></a>对数图像增强</h3><blockquote>
 <p>s &#x3D; c * log(1+r)</p>
@@ -102,17 +102,17 @@
 <h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>说明：第一行左边为原图，右边为直方图均衡化后的图；第二行左边为log变换后的图，右边为幂次变换后的图，参数会在对应位置说明</p>
 <p>上传到网页，排版很可能出现问题，如果出问题，那么从上到下依次是 原图、直方图均衡化、log、幂次</p>
 <p>下图log变换底数为300，幂次变换指数为5</p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/bright.bmp" alt="bright" style="zoom: 50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/bright_my.bmp" alt="bright_my" style="zoom: 50%;"></p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/log_transform/bright_my_300_.bmp" alt="bright_my_30_" style="zoom:50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/power_transform/bright_my_5_.bmp" alt="bright_my_5_" style="zoom:50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/bright.bmp" alt="bright" style="zoom: 50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/bright_my.bmp" alt="bright_my" style="zoom: 50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/log_transform/bright_my_300_.bmp" alt="bright_my_30_" style="zoom:50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/power_transform/bright_my_5_.bmp" alt="bright_my_5_" style="zoom:50%;"></p>
 <p>下图log变换底数为100，幂次变换指数为2</p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/clear.bmp" alt="clear" style="zoom:50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/clear_my.bmp" alt="clear_my" style="zoom:50%;"></p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/log_transform/clear_my_100_.bmp" alt="clear_my_100_" style="zoom:50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/power_transform/clear_my_2_.bmp" alt="clear_my_2_" style="zoom:50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/clear.bmp" alt="clear" style="zoom:50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/clear_my.bmp" alt="clear_my" style="zoom:50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/log_transform/clear_my_100_.bmp" alt="clear_my_100_" style="zoom:50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/power_transform/clear_my_2_.bmp" alt="clear_my_2_" style="zoom:50%;"></p>
 <p>下图log变换底数为50，幂次变换指数为0.5</p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/dark.bmp" alt="dark" style="zoom:50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/dark_my.bmp" alt="dark_my" style="zoom:50%;"></p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/log_transform/dark_my_50_.bmp" alt="dark_my_50_" style="zoom:50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/power_transform/dark_my_0.5_.bmp" alt="dark_my_0.5_" style="zoom:50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/dark.bmp" alt="dark" style="zoom:50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/dark_my.bmp" alt="dark_my" style="zoom:50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/log_transform/dark_my_50_.bmp" alt="dark_my_50_" style="zoom:50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/power_transform/dark_my_0.5_.bmp" alt="dark_my_0.5_" style="zoom:50%;"></p>
 <p>下图log变换底数为100，幂次变换指数为2</p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/unclear.bmp" alt="unclear" style="zoom:50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/unclear_my.bmp" alt="unclear_my" style="zoom:50%;"></p>
-<p><img src="/about/2023/11/17/digitalImageProcessing-lab1/log_transform/unclear_my_100_.bmp" alt="unclear_my_100_" style="zoom:50%;"><img src="/about/2023/11/17/digitalImageProcessing-lab1/power_transform/unclear_my_2_.bmp" alt="unclear_my_2_" style="zoom:50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/unclear.bmp" alt="unclear" style="zoom:50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/historgram_result/unclear_my.bmp" alt="unclear_my" style="zoom:50%;"></p>
+<p><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/log_transform/unclear_my_100_.bmp" alt="unclear_my_100_" style="zoom:50%;"><img src="/about/about/2023/11/17/digitalImageProcessing-lab1/power_transform/unclear_my_2_.bmp" alt="unclear_my_2_" style="zoom:50%;"></p>
 <p>下图log变换底数为100，幂次变换指数为2 （tif文件不能插入到markdown中，请看PDF文件）</p>
 <p>PDF文件略有不同，影响不大</p>
 <br>
@@ -137,7 +137,7 @@
 
 <p>⚠⚠⚠</p>
 <p>在多人协作开发中，自己在改代码的时候一定要先<code>git pull origin master</code>对远程仓库的代码进行最新版同步后再自己修改，避免在自己修改之后<code>push</code>不上去。（如果实在是忘记了，应该可以有命令解决，解决方法在下文）</p>
-<h2 id="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："><a href="#当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算：" class="headerlink" title="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："></a>当<code>pull</code>代码时出现报错，描述为：本地代码有修改，<code>git</code>不知道怎么办，你打算：</h2><p><img src="/about/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%BD%93%60pull%60%E4%BB%A3%E7%A0%81%E6%97%B6%E5%87%BA%E7%8E%B0%E6%8A%A5%E9%94%99%EF%BC%8C%E6%8F%8F%E8%BF%B0%E4%B8%BA%EF%BC%9A%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%E6%9C%89%E4%BF%AE%E6%94%B9%EF%BC%8C%60git%60%E4%B8%8D%E7%9F%A5%E9%81%93%E6%80%8E%E4%B9%88%E5%8A%9E.jpg" alt="当`pull`代码时出现报错，描述为：本地代码有修改，`git`不知道怎么办"></p>
+<h2 id="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："><a href="#当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算：" class="headerlink" title="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："></a>当<code>pull</code>代码时出现报错，描述为：本地代码有修改，<code>git</code>不知道怎么办，你打算：</h2><p><img src="/about/about/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%BD%93%60pull%60%E4%BB%A3%E7%A0%81%E6%97%B6%E5%87%BA%E7%8E%B0%E6%8A%A5%E9%94%99%EF%BC%8C%E6%8F%8F%E8%BF%B0%E4%B8%BA%EF%BC%9A%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%E6%9C%89%E4%BF%AE%E6%94%B9%EF%BC%8C%60git%60%E4%B8%8D%E7%9F%A5%E9%81%93%E6%80%8E%E4%B9%88%E5%8A%9E.jpg" alt="当`pull`代码时出现报错，描述为：本地代码有修改，`git`不知道怎么办"></p>
 <p>上图就是本地有修改后想<code>pull</code>远程仓库的代码下来，<code>git</code>的做法</p>
 <h3 id="①放弃本地修改，直接照抄远程仓库代码"><a href="#①放弃本地修改，直接照抄远程仓库代码" class="headerlink" title="①放弃本地修改，直接照抄远程仓库代码"></a>①放弃本地修改，直接照抄远程仓库代码</h3><p>使用指令</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git reset --hard</span><br></pre></td></tr></table></figure>
@@ -151,7 +151,7 @@
 <p>HEAD is now at 上一版本号 上一版本<code>commit</code>内容</p>
 </blockquote>
 <p>这样就是成功了！</p>
-<p>之后正常<code>pull</code>就能成功了，之后就会出现下图的反馈<br><img src="/about/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/pull%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84%E5%8F%8D%E9%A6%88.jpg" alt="`pull`成功后的反馈"></p>
+<p>之后正常<code>pull</code>就能成功了，之后就会出现下图的反馈<br><img src="/about/about/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/pull%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84%E5%8F%8D%E9%A6%88.jpg" alt="`pull`成功后的反馈"></p>
 <h3 id="②保留本地修改，不要远程仓库的修改（即以本地为准）"><a href="#②保留本地修改，不要远程仓库的修改（即以本地为准）" class="headerlink" title="②保留本地修改，不要远程仓库的修改（即以本地为准）"></a>②保留本地修改，不要远程仓库的修改（即以本地为准）</h3><h3 id="③合并两者的修改，并将其中冲突处人工检测解决冲突"><a href="#③合并两者的修改，并将其中冲突处人工检测解决冲突" class="headerlink" title="③合并两者的修改，并将其中冲突处人工检测解决冲突"></a>③合并两者的修改，并将其中冲突处人工检测解决冲突</h3><h2 id="git-add-指令"><a href="#git-add-指令" class="headerlink" title="git add  _____ 指令"></a><code>git add  _____</code> 指令</h2><p><code>git add .</code>：将所有 <strong>修改过的 新增的</strong> 文件添加到暂存区，但是不会管<strong>被删除的</strong>文件。</p>
 <p><code>git add -u</code>：即<code>git add -update</code>，只管被监控了的文件，就是将已经被<code>add</code>了的文件（即暂存区的文件）如果有修改，就会更新。所以它<strong>不会管新文件</strong>，因为新文件没有被监控。会管<strong>修改过的</strong>和<strong>删除的</strong>文件。</p>
 <p><code>git add -a</code>：即<code>git add -all</code>，是上面两个<code>git</code>的集合，会提交所有<strong>被删除</strong>、<strong>被修改</strong>、和<strong>新增的</strong>文件到数据暂存区</p>
@@ -224,25 +224,25 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 
 <p>结果如下</p>
-<p><img src="/about/2023/10/09/git/git/init.jpg" alt="init"></p>
+<p><img src="/about/about/2023/10/09/git/git/init.jpg" alt="init"></p>
 <p>再执行</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">la</span><br></pre></td></tr></table></figure>
 
 <p>就可以看见<code>.git</code>文件夹，证明初始化成功</p>
-<p><img src="/about/2023/10/09/git/git/la.jpg" alt="la"></p>
+<p><img src="/about/about/2023/10/09/git/git/la.jpg" alt="la"></p>
 <p><strong>第二步</strong>：生成公钥以连接远程git仓库</p>
 <p>执行命令</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;你的gitee账号的主邮箱&quot;</span><br></pre></td></tr></table></figure>
 
 <p>如果之前执行过，或者连过远程仓库，那么会报错说已经有了密钥</p>
-<p><img src="/about/2023/10/09/git/git/key_already_exists.jpg" alt="error"></p>
+<p><img src="/about/about/2023/10/09/git/git/key_already_exists.jpg" alt="error"></p>
 <p>如果没有过，那么<strong>注意</strong>：命令行会问你三个问题，别搭理他，直接回车让他尴尬就好了。之后会出现如图所示的奇怪图像</p>
-<p><img src="/about/2023/10/09/git/git/key_ok.jpg" alt="key_succeed"></p>
+<p><img src="/about/about/2023/10/09/git/git/key_ok.jpg" alt="key_succeed"></p>
 <p>然后去<code>/root/.ssh</code>下找到三个文件：<code>id_rsa</code>、<code>id_rsa.pub</code>和<code>known_hosts</code>。其中<code>id_rsa</code>是私钥，注意藏好，不要外泄；<code>id_rsa.pub</code>就是公钥，这个就有大用了。</p>
 <p>点开<code>id_rsa.pub</code>文件，将里面的东西全都复制（<code>ctrl + a</code> 全选，然后复制），打开你的<code>gitee</code>网站，点击你自己的可可爱爱的头像，找到设置，点击设置</p>
-<p><img src="/about/2023/10/09/git/git/click_setting.jpg" alt="click_setting"></p>
+<p><img src="/about/about/2023/10/09/git/git/click_setting.jpg" alt="click_setting"></p>
 <p>然后点击SSH公钥，输入标题，然后在公钥一栏种中粘贴刚刚复制的一堆东西</p>
-<p><img src="/about/2023/10/09/git/git/add_pub_key.jpg" alt="add_pub_key"></p>
+<p><img src="/about/about/2023/10/09/git/git/add_pub_key.jpg" alt="add_pub_key"></p>
 <p>确定然后验证密码，就好了</p>
 <p><strong>如果是之前有公钥的，可能会显示已经添加过，可以直接对仓库进行读写，可以直接忽略，问题不大</strong></p>
 <p><strong>第三步</strong>：建立账号连接</p>
@@ -250,7 +250,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -T git@git.oschina.net</span><br></pre></td></tr></table></figure>
 
 <p>然后会显示啥呢？ 会和你问好，说你成功变成了作者balabala的，人还怪有礼貌的嘞！</p>
-<p><img src="/about/2023/10/09/git/git/successfully.jpg" alt="successfully"></p>
+<p><img src="/about/about/2023/10/09/git/git/successfully.jpg" alt="successfully"></p>
 <p>至此，就可以连接上你的**<code>gitee</code>账号<strong>了，但是！！！！</strong>仅仅是连接到了你的gitee账号，而非仓库**，你还不能像高手一样<code>clone</code>、<code>push</code>和<code>pull</code>。</p>
 <p><strong>第四步</strong>：连接仓库，芜湖！</p>
 <p>打开网页，进入你开头新建的仓库看右边有个<code>克隆/下载</code>的明显的按钮，点击，选择<code>http</code>然后点击复制，这样就把这个仓库的网址复制下来了（其实点击SSH也行）</p>
@@ -260,7 +260,7 @@
 <p>然后检查一下</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
 
-<p><img src="/about/2023/10/09/git/git/git_remote_-v.jpg" alt="git_remote_-v"></p>
+<p><img src="/about/about/2023/10/09/git/git/git_remote_-v.jpg" alt="git_remote_-v"></p>
 <p>出现这个就是成功了！</p>
 <blockquote>
 <p>解释一下，其中origin不是一个指令参数，是一个别名，就是在之后的push和pull中，你的origin就代表着你的仓库的地址，也可以设计别的名字，比如小猫，小狗，大逼兜等等，当然最好是英文。</p>
@@ -274,13 +274,13 @@
 <p>第三条：将本地的东西全都<code>push</code>到远程仓库去，就是<code>gitee</code>上你创建的仓库。</p>
 <blockquote>
 <p>如果出现报错说你仓库有东西，两种解决方法</p>
-<p><img src="/about/2023/10/09/git/git/push_error.jpg"></p>
+<p><img src="/about/about/2023/10/09/git/git/push_error.jpg"></p>
 <p>①先将仓库里的东西clone下来，修改后成你想要的之后再push上去</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone origin</span><br></pre></td></tr></table></figure>
 
 <p>②如果仓库的东西不要，直接在<code>gitee</code>网站上清空仓库（<strong>慎重</strong>）然后再<code>push</code>上去</p>
 </blockquote>
-<p><img src="/about/2023/10/09/git/git/push_succeed.jpg"></p>
+<p><img src="/about/about/2023/10/09/git/git/push_succeed.jpg"></p>
 <p>出现上图就是成功了。</p>
 <p>再去<code>gitee</code>上看，代码也成功push上去了！</p>
 <h3 id="圆满！！"><a href="#圆满！！" class="headerlink" title="圆满！！"></a>圆满！！</h3><p>PS:第一次push的时候会让你登录<code>gitee</code>，需要输入用户名和密码；用户名就是<code>gitee</code>的用户名,密码就是<code>gitee</code>账户的密码</p>
@@ -304,20 +304,20 @@
 
 <p>图片文字识别 是 从一幅图片中通过一些算法，将图片中的文字识别提取出来。</p>
 <p>通常图片中文字的检测分为比较简单的场景和比较复杂的场景</p>
-<p><img src="/about/2023/09/17/OCR/OCR/%E7%AE%80%E5%8D%95%E5%9C%BA%E6%99%AF%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB.jpg" alt="简单场景文字识别"></p>
+<p><img src="/about/about/2023/09/17/OCR/OCR/%E7%AE%80%E5%8D%95%E5%9C%BA%E6%99%AF%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB.jpg" alt="简单场景文字识别"></p>
 <p>简单场景文字识别</p>
-<p><img src="/about/2023/09/17/OCR/OCR/%E5%A4%8D%E6%9D%82%E5%9C%BA%E6%99%AF%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB.jpg" alt="复杂背景文字识别"></p>
+<p><img src="/about/about/2023/09/17/OCR/OCR/%E5%A4%8D%E6%9D%82%E5%9C%BA%E6%99%AF%E6%96%87%E5%AD%97%E8%AF%86%E5%88%AB.jpg" alt="复杂背景文字识别"></p>
 <p>复杂场景文字识别</p>
 <p>对于简单场景文字识别，可以使用比较简单的两种方法：<strong>形态学操作法</strong> 和 <strong>MSER+NMS</strong>。</p>
 <p>对于复杂场景的文字识别，则有<strong>CTPN</strong>、<strong>Seglink</strong> 和 <strong>EAST</strong> 三种主流方法。</p>
 <h3 id="形态学操作法"><a href="#形态学操作法" class="headerlink" title="形态学操作法"></a>形态学操作法</h3><p>①先将图片灰度化，及转换为灰度图</p>
 <p>②将图片降噪后进行二值化</p>
-<p><img src="/about/2023/09/17/OCR/OCR/%E4%BA%8C%E5%80%BC%E5%8C%96%E5%90%8E.jpg"></p>
+<p><img src="/about/about/2023/09/17/OCR/OCR/%E4%BA%8C%E5%80%BC%E5%8C%96%E5%90%8E.jpg"></p>
 <p>③通过膨胀，腐蚀等方法突出文本框范围</p>
-<p><img src="/about/2023/09/17/OCR/OCR/%E8%86%A8%E8%83%80%E5%90%8E.jpg" alt="膨胀后的图片"></p>
+<p><img src="/about/about/2023/09/17/OCR/OCR/%E8%86%A8%E8%83%80%E5%90%8E.jpg" alt="膨胀后的图片"></p>
 <p>④进行可信度分析，即判断哪些范围是不属于文本的</p>
 <p>⑤得到文本范围的坐标</p>
-<p><img src="/about/2023/09/17/OCR/OCR/%E5%9D%90%E6%A0%87.jpg"></p>
+<p><img src="/about/about/2023/09/17/OCR/OCR/%E5%9D%90%E6%A0%87.jpg"></p>
 <h3 id="MSER-NMS"><a href="#MSER-NMS" class="headerlink" title="MSER+NMS"></a>MSER+NMS</h3>]]></content>
       <categories>
         <category>OCR</category>
@@ -681,7 +681,7 @@
 </blockquote>
 <p>在第一点中提到在代码段在内存中位于低地址区域，那么如下图所示：</p>
 <p><code>图一</code></p>
-<p><img src="/about/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg" alt="各部分地址分布"></p>
+<p><img src="/about/about/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg" alt="各部分地址分布"></p>
 <p>个人理解：在计算机内存中，低地址是不允许写入的，其中存放的数据都是一些系统级的或者是常量，例如数字（0-9），字符（a-zA-Z,.&#x2F;等），当程序需要时，就只能读取而不能写入。</p>
 <p>而在高地址字段，例如堆栈，可以实现内存的动态分配和数据的调用和修改，即可读可写，提高了与用户的交互性。</p>
 <p>为简单起见，本次只关心 <strong>①代码段 ②数据段 ③栈</strong></p>
@@ -886,7 +886,7 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> a  =<span class="number">3</span>;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> b = <span class="number">4</span>;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以在任何编译器上执行，执行结果一定是如下图所示</p>
-<img src="/about/2023/05/07/20230507/scope.jpg" alt="scope" style="zoom:150%;">
+<img src="/about/about/2023/05/07/20230507/scope.jpg" alt="scope" style="zoom:150%;">
 
 <p>第11行中的 a 是第10行的 a ，并且，观察第九行和第十位行，得知，a &#x3D; 3只在这个区域有效，而在此之前，观察第八行 int b &#x3D; 2，也只在第七行的 { 和第十八行的 } 之间有效。因此，最后一次的输出结果正是最初定义的数值。以此类推也就不难理解作用域了。</p>
 <p>例如Java语言，定义了关键字来表示一个或者一些成员变量的作用域。其中<strong>private</strong>表示私有的，即只有该类能够访问该成员变量；<strong>protected</strong>表示被保护的，即该类及其子类可以访问；<strong>public</strong>表示公共的，即不论在程序的哪个部分都可以访问。</p>
@@ -926,7 +926,7 @@
 <p>上一篇文章：<a href="/about/2023/05/05/20230505/" title="开始接触编译">开始接触编译</a></p>
 <h4 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h4><p>即使用语法树和符号表，检查源程序是否和语言定义的语义一致，同时收集类型信息，将它们放在语法树或者符号表中，后面的中间代码生成中会用到。</p>
 <p>同时，在语法树中，自动类型转换可以作为一个单独的节点表示，如下图</p>
-<p><img src="/about/2023/05/06/20230506/20230506/cast.jpg" alt="cast"></p>
+<p><img src="/about/about/2023/05/06/20230506/20230506/cast.jpg" alt="cast"></p>
 <p>inttofloat 表示把一个整型转换成一个浮点型。当上述（上篇文章）中的a，b，c都是浮点型时，30必须转换成浮点型才能和它们进行运算，因此发生了自动类型转换。且从低精度到高精度的转换是自然的。</p>
 <h4 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h4><p>其实，上述文章中一直在讲的<strong>语法树</strong>已经是一种中间代码了。</p>
 <p>中间代码需要满足两点：①<strong>易于生成</strong>     ②<strong>易于被翻译成目标机器的语言</strong></p>
@@ -973,7 +973,7 @@
     <title>注册GPT</title>
     <url>/about/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="f8e6d96fbe2dec53eb381e3411c4fbe10afbd20b15c6815167594fe1d837e83d">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba9edc0dce9c599a5185ee68769cce05c6ebaf76cabb277c7820af135fe5a6d42a05a91e5cfc1d351cb836f815121ef9e485d637960ab13117fc37d804c90d142f7fceacb2ec9125c329591f78b83a3ad159981e65d41a482bc6ba8922b08dd9e7cd741265b10d908adecdb51594901ae9d7663c8483153c44702435316eeaa27f1fff546488d4daeb8d1c95ecc1c9e30cbcad1588dfacac86028c064fa79b5f6507143e4f9eba5e1c6e13fa629715fc84914ac731946828ec6187ca7bf943cd3d56b494a58f84526cb058080118dbe593638e94923197c7861030ea1c80bc6132681ad9e2410f49df620ff19769a4b271c3abc9bd49963437de26b26fee04571584590211512bbfc51fb8572080ff63b6457fc418f99f4617f552fe58fc279162e2c4c8f847ee17b261b857eae94e257b4cd954afb65949254376f7399b37929b772af68125e252f0c65f88efbc6ee0d5ed5ab31f6a068c8ad272d711aefe1b29c3e15516ce48f6b9af7e2822c8a0c52eac3ceb3ff412f66e7ae68e148aaf32f03429ea82149081b4cb080538bd9b61bea98aabc37e982db383d88db3a75216eabb02bf49f31c82af178275025d0656c0038ccf6a2fdcaeb5f8bc98eb0ef79a14710e251e2c9d343b1996931b0d2ed1ced9a199ac823b828ee22457c8c2a7631ee96dc940f906e13bb63f3fe0cd64407a9bb837d5ee6a0a6cfec8096549e169b6f023d5ccc12473312ed02ac440c7d8fe2ba930c1dcc9f785ef7a3cd9d68e7dd37d2a56f77a7aac42b2bc2c3994eb6d0b700bbf179fdcf2bf4354c672ed680bad294b475d4cc8607b222b304a059adece499782900e4bc6bae948e094f7fa832514fe448e3199c334b22c7b85b135f908c548fb1ed3c26c76919199a668b4561171f26174877563c658e123ef8bacb682bff48f2c18a2af5036a94237e00bf43590d76e00d7f11ee1a9b4da56b4dd757ce9154fedd2024426d965a38b2f85bb5f3b5a58f2c2921520ec5ef158e59b21fcf46b7defb25564b0707ad187c9b7325a68b5ad7b640095d7841d778db556bde54b1b41df39bfc518610752b334e9c83816a3cad7f08cef9483d083894c10d367ed321ca1409b699fd57bfed07175cfecac907b4144b09da1a5f25585ada14cfd2cebbd28ce7269c8400b8d10714709d7eb87b235d73ced0aeb9a037004f6b9223db9e0753ac2da5c2a741763de5574598ab82283cad8d35f4b72a59bf20aed2467ddef571311bc02d13fa3e69a7eeaee76f79eeb02d5dbfd35ad950de4fd697dd60217d40a5fff9d286e8372b0ff55d337ba2d7fe3001a65602aabcbf6fbd3dfebfac223bbb17c364d6dc1013d880b07299b9260346b2223c4f25c9e71ebca1bb01d3d92cfc6611412967c9206757c8d5f71b9d701f36631cb89b2311bac533ee4aa85f80ea57093f9c22327e7040d67de209ad72ca4947dac9acec29c178ff7e390678cb2cef411a32e561dffe0ca37ebb9a953c92e0ebfe0a116f75486d04a0ab4f3af925478c331c9ae94905cf6bcee93f4bd52c1f1ea558afdad034eeebecaf621428330f2e9960af71e2517957bf95a7df7d6a342453b4fd980f9e6a9148eef7f87a5f91ccdee86b42d746039672b6fad82917dcdf2c1e32920debb2b25e07f6c2e0c7ec65be652fceb3b08b888d063e6ef39b1c275016da387ebf457ca6225e3774c3baa672fd01222cdc3546fb95267d3ebb4524c6a30adec379b759842037da442386542c2e32c8873aac63ac564fce8d28e714ef76000648edf38c5fd45d90d8038e14793da4b997eb7ef626e3569de640c9e685403adc758ba943ae387445e7a05f04299d71f27b15d9bfabd8b95c87bb549614c037f5e3196799691a9e8fccbcf50003d589134f5f7794d88bbf531e7422d528c525132cc0515f99983fb02aacc3dd96e0d811d90b96484f04d18254b8bb83404c6b7919b891ad687e5d74b876ff7436fce78c4836b4e37fb4f271e7c5f0759e658aa533094c9bfddcc30ac29ca95afd6172fbb0afbe0fa9c30585306dd07a48ccce85c3882bd9c274eb882975bb5e06445f74c763693a354e0c655f9d1f6addba80161c3508690621db3e6c28df4357f1721e064ed1208455020db583097d019a1df109ee6e3e4</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="9dac6243b2795824e74f5e055eff89761ca887e236be84477f2622d8bc01ff7d">4630436162ade97ba2718b7d0c4b3b63cb3a3f659c5ca08b4bca0f5845928186df8f2756c43971a118e851709297bccf155b395cf773d208ccb8a172a2b7fdb59343265437c52df6e148cfb73903a85bd7775e486d959713845b7c0d63c0c2daa8fb39a105bea6d9085ea460c8f9e730fb6331b31088000e2538cabf7de26b07fce0a9b71381b480b63b934406caa07ffa2ab87798be35f5fbdbfa8907a37509422eb7724fc428acb5a0b8770bd3968ff160a13472fb09413da2cc4af69aeafdd7db9c8d4c6e7242aa01610a7ad737b86629be436cb906f1ff3bc49db88ffc4efaf3c50f147484826af90623732b10cea9e6fb89552ab84306df23712a88057cac6409fe2de37cd8568cc00573d7d1a15e5560d500aa0007b54cce85c64697aef818d4dc97ade896b89973f473430f46daa7a27749373c43a175a1f7e398d55dabaa30d4d4372fb2627c73052a4568f071038f010283bd9749c96b03cf3cb4a5bb88facf1dd6343a8b8250e995d4758d97ddbc79b858ee9d1980c205937a1ae4328ad1f65cf96b6c071283685057fd23301687882d3a8d941df173eb5e6ca1dc1cfca66f8b0e808799f3ff2525bfa2c3f322d51dfa3331056403a804186eafa4893a52175da8ea68abb48bbf727b08e18b4eb6b3ebf86d23eed107e9d0daaf926badb1db3345071d9b88c8bfc536731e990be76dc058a392b75aa7d67c6fbe46be802aa8b156102cfe8be18f762f3630bc3552e194bd4958a84c05ae4711e6bc07fb34c9eaf2012daeb74c85aed326ba9edc0dce9c599a5185ee68769cce05c68f44fca48e72b9794db0ef2c1fcc9e9c73b83bdfe52e533811027c76afad745a3ed6267e4c27c266a6a50e194af2f2d4abb8337a6b985e73bed83368b520be927792b6352c486a24713381132d5725363743db74396b140c366b6029bfcc55f6aad29888c8241e1c27c9945f69e346b27f04e4c173b20f46c7dc4dcfb2f6c8343c9314a46f60cc70ede71126cc706b334a7a63b2b3e0e5d5622dc50b8aa4e00cd0ad7463f248d9175b46dce348d63f466498e991d080e16559e272a03cd3781a72cbd774eef9d09c4168fcd8cb971ca55450c49e33ab0faf2a85c74a2b0ca16d5c9674d7dd1eacb8fa1b983968f61957fa48ec5da877bf6090012f5d333c68896d5dd5574cdee4ffe53ee7f538a831143078a00c94f60ade0ec56bffdb6bf89fc1dedc1036f4a1692f37e21f6c32acfb0f54d4122c48986006bd121bfc72ed22a9afebc1a57d08fb195997d182bae00e7048fcbd127a041de7bcc9b8e44c939ab6e801f20f6a61d1f9f6be01053e5cd881f9d905da796510964e3d21368c5ff666c06888ae2cab6bca08f9908bbf4522a76b2504ed5abdfa448db0397bfa01884421b16c20502fbcda0002189835374a2a231e87c066fbb53324102e919d4e23cff94e612d6acec918e872bb3d3c0ca34509d84ff5f3ce505a0d03e81352085f720801798e9d3cffacdcd1601ec863f742878257c0f1ed4a0902d77c46d9f80fee8d1a5b9cb246365e7b087d28e08bd9a51145811f7660c43fe55e56367387de61332ae1127d18460bcc24bf624032ff9b022ec6aab69477f0fe4fe878a9fd60e743155ed3e5b2510a179c47a4aa41b23d4a083bca9085e5630af62bb3b4d23e38a92e63446aa3836bec78a7241fe115df99e252a9561eff40bfd0ee279aca84d79a59e48d44f8ed5b5255ed1ae341a738eee0be4df755479d3040ce3d11fb689a03686caf5ce22944744ed7f6405dabef54925cca479942d173261341c3e3d0da700e7cf18d25b9bf6d0b343e8322d9380d5f501a9a76127783d38dc2661861087b28720b02cea6fd2fb418a83943959e68d32cb5207a37c011c76bde3638883f65fcd57418e644188ddca6356b87de8bf2f165daf82a4b129d7c16f93888e02ae077d9e775b2ed4e12f21f57761699469821d12c32a5414e8b43ce30e8da6e57f3741d5710a15a7193876de09932a09249706c8382d733caf0e173c3aa7fd4b58c6ed522677ae38bffac1145d96e702e6690966dccc9b12b6e5ab788b0caa6215fa333f74a2e956b8ab36b375ccfbfa92e8370621348ae0a1a5127b864dc277d1f18a0bf1ddd36228fce6f7773dc6320c56543a11f8c42228a62a93cccc7265421432df0355561ee63416f828e30b7b018f9ece4fccfac7f722b435908361c6de6cb664ae387584a549c9c95c74e5c894bd3cd3ec0eb4afdd069b40c64c00df3fe5b3620ca095a49d82315c014ed49cdc67c55e46de8b43b215fd01ad89b740b0b2dd825b9a2fe0036f51783986bd976dd49b3bfbc58468c55ec6225524bcbed9adaad7efa0638731e53a63a950637ffc4d0b2dfe7136a24ee399e853922cbd7d9e0afc3924ce646a86127cbce37bd029b3ea611278524e980a929733fe3733698a1816bcb610e5e012df2a7f90396c212fbee9280cd7d0efabdf7b3b9f32d98fcbb3a5beeb930e3217939b361cc71c2c0bc547f2344873a7d55b92ad693e3fd298e37f3c327e4109c1b68e7852378d72aaae17774fc53ac2888370628734e64753315f05928cabb63bd7609c1b590bc9375ea207fb687d9fe00ad2831361c01ebd228ac0fb2331fe8e55877d6f99e5e8fc140be8e4cbec04657af0d3b49fdf9157241f07ab852aa043c86bc0dd4a7f96e7fb44e0c5c47d4b3aac77bc2fe684a283e4bd1d0a7a12799b07ef51c11ec4f51cdc22bee828c6029a51c151b622f51bf11b294b415edac9a84a4c54e2277f7da8c65347a85302053fc45510cff637cd96b22316939520f29d34900b51b05b2d0888f96e31fd711042289c03bfefc2515c1e45c1b83c450d6e1dfc172d20c38069f6cc7ea624f4865454007582729ae972185f82825707ceaf19fce10a8dd6445506192b6b98f103e6d66d6c8dcf72900b8385a4eb14820ec395909dd6863</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -1020,7 +1020,7 @@
 <p>原表达式中的空格会被忽略，变量a,b,c，运算符&#x3D;，+，*以及数字30都是词素。</p>
 <h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>语法分析用词法分析生成的各个词法单元的第一个分量来创建树形的中间表示，常用的表示方法是语法树，树中的每一个父节点是运算符，它的左右子节点就是进行该运算的运算分量。</p>
 <p>上述例子的树形语法表示如下图：</p>
-<p><img src="/about/2023/05/05/20230505/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
+<p><img src="/about/about/2023/05/05/20230505/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
 <p>END</p>
 ]]></content>
       <categories>
@@ -1066,7 +1066,7 @@
 
 <p>即将 ff 和 1 转型为 double 类型，显然，ff 不能转型为 double 类型，因此捕获异常，直接跳转到第 6 行，其中第 4 行的 break 并不会执行，但是第 10 行的 println 确执行了。</p>
 <h6 id="finally-关键字只有在退出虚拟机的时候才会被中断，否则不会中断。"><a href="#finally-关键字只有在退出虚拟机的时候才会被中断，否则不会中断。" class="headerlink" title="finally 关键字只有在退出虚拟机的时候才会被中断，否则不会中断。"></a>finally 关键字只有在退出虚拟机的时候才会被中断，否则不会中断。</h6><p>执行代码结果如下图</p>
-<p><img src="/about/2023/05/04/20230504/20230504/20230504_01.jpg" alt="20230504_01"></p>
+<p><img src="/about/about/2023/05/04/20230504/20230504/20230504_01.jpg" alt="20230504_01"></p>
 <h3 id="算法设计与分析作业-3"><a href="#算法设计与分析作业-3" class="headerlink" title="算法设计与分析作业  3"></a>算法设计与分析作业  3</h3><p>晚上写了一下 算法设计与分析作业 3</p>
 <p>求最长不下降序列的代码</p>
 <p>例如：</p>
