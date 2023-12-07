@@ -48,6 +48,122 @@
       </tags>
   </entry>
   <entry>
+    <title>digitalImageProcessing-lab3</title>
+    <url>/2023/12/07/digitalImageProcessing-lab3/</url>
+    <content><![CDATA[<p>实验三：拉普拉斯变换、变体拉普拉斯变换、高斯-拉普拉斯变换</p>
+<span id="more"></span>
+
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>掌握基于拉普拉斯变换的图像锐化算法</p>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><p>基本拉普拉斯变换图像增强<br>拉普拉斯变体变换图像增强<br>高斯-拉普拉斯变换图像增强</p>
+<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><h4 id="基本拉普拉斯变换图像增强"><a href="#基本拉普拉斯变换图像增强" class="headerlink" title="基本拉普拉斯变换图像增强"></a>基本拉普拉斯变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image.png" alt="Alt text"></p>
+<h4 id="拉普拉斯变体变换图像增强"><a href="#拉普拉斯变体变换图像增强" class="headerlink" title="拉普拉斯变体变换图像增强"></a>拉普拉斯变体变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image-1.png" alt="Alt text"></p>
+<h4 id="高斯-拉普拉斯变换图像增强"><a href="#高斯-拉普拉斯变换图像增强" class="headerlink" title="高斯-拉普拉斯变换图像增强"></a>高斯-拉普拉斯变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image-2.png" alt="Alt text"></p>
+<h3 id="算法解释说明"><a href="#算法解释说明" class="headerlink" title="算法解释说明"></a>算法解释说明</h3><p><strong>基本原理</strong></p>
+<p>以模板<img src="/2023/12/07/digitalImageProcessing-lab3/image-3.png" alt="Alt text">为例，用$g(x,y)$代表变换后的像素值，$f(x,y)$代表变换前的像素值，则有如下公示：<br>$g(x,y) &#x3D; -4 × f(x,y) + [f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]$<br>如果该区域为平坦区域，则 $g(x,y)$ 结果为0，即对平坦区域实现0响应。<br>如果该区域为边缘，则在$[f(\text{上})、f(\text{下})、f(\text{左})、f(\text{右})]$中有一个与其它像素值不同，那么$g(x,y)$的值主要取决于该边缘值，所以对边缘有强烈的响应。</p>
+<p>以模板<img src="/2023/12/07/digitalImageProcessing-lab3/image.png" alt="Alt text">为例：<br>$g(x,y) &#x3D; 5 × f(x,y) - [f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]$<br>化简后得<br>$g(x,y) &#x3D; f(x,y) + [4 × f(x,y)-[f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]]$</p>
+<p>如果该区域为平坦区域，则 $g(x,y)$ 结果为$f(x,y) + 0$，即对平坦区域实现0响应,该店像素值不变。</p>
+<p>如果该区域为边缘，则在$[f(\text{上})、f(\text{下})、f(\text{左})、f(\text{右})]$中有一个与其它像素值不同，那么$g(x,y) &#x3D; f(x,y) + [f(x,y) - f(\text{边缘像素值差值})]$，所以对边缘有强烈的响应，并且锐化增强图像。</p>
+<p>对于上述的<strong>基本</strong>拉普拉斯变换图像增强和拉普拉斯<strong>变体</strong>变换图像增强，其卷积核中间系数与其它系数相加不等于0是因为需要加上原图，而系数等于0则是该卷积核对边缘区域的响应非常剧烈而对平坦区域（即非边缘区域）响应为0。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">progress_img</span>(<span class="params">image,kernel</span>):</span><br><span class="line">    width,height = image.size</span><br><span class="line">    reslut_pixels = []</span><br><span class="line">    kernel_size = <span class="built_in">len</span>(kernel)</span><br><span class="line">    offset = kernel_size // <span class="number">2</span></span><br><span class="line">                        </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 计算卷积后的像素值</span></span><br><span class="line">            pixel_sum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> m <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(kernel)):</span><br><span class="line">                <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(kernel[<span class="number">0</span>])):</span><br><span class="line">                    <span class="keyword">if</span>(((x + n - <span class="number">1</span>)&gt;=width <span class="keyword">or</span> (x + n - <span class="number">1</span>)&lt;<span class="number">0</span>) <span class="keyword">or</span> ((y + m - <span class="number">1</span>)&gt;=height <span class="keyword">or</span> (y + m - <span class="number">1</span>)&lt;<span class="number">0</span> )):</span><br><span class="line">                        pixel_sum+=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        pixel_sum += image.getpixel((x + n - <span class="number">1</span>, y + m - <span class="number">1</span>)) * kernel[m][n]</span><br><span class="line">                           </span><br><span class="line">            reslut_pixels.append(pixel_sum)  </span><br><span class="line">            </span><br><span class="line">    <span class="comment"># 形成新图像</span></span><br><span class="line">    result_img = Image.new(<span class="string">&quot;L&quot;</span>,(width,height))</span><br><span class="line">    result_img.putdata(reslut_pixels)</span><br><span class="line">    <span class="keyword">return</span> result_img</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    input_filepath = <span class="string">&#x27;./img1/img1.tif&#x27;</span></span><br><span class="line">    output_fielpath = <span class="string">&#x27;./img1/bGaussian_lpls_17.bmp&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拉普拉斯变换卷积核</span></span><br><span class="line">    basic_lpls_kernel = [[<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                         [-<span class="number">1</span>,<span class="number">4</span>,-<span class="number">1</span>],</span><br><span class="line">                         [<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    variant_lpls_kernel = [[<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                           [<span class="number">1</span>,-<span class="number">4</span>,<span class="number">1</span>],</span><br><span class="line">                           [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    Gaussian_lpls_kernel = [[<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">                            [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                            [-<span class="number">1</span>,-<span class="number">2</span>,<span class="number">17</span>,-<span class="number">2</span>,-<span class="number">1</span>],</span><br><span class="line">                            [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                            [<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 读取图片</span></span><br><span class="line">    origin_img = read_image(input_filepath)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 处理并获得基本拉普拉斯变换图片</span></span><br><span class="line">    <span class="comment"># basic_lpls_img = progress_img(origin_img,basic_lpls_kernel)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># # 变体拉普拉斯变换图像</span></span><br><span class="line">    <span class="comment"># variant_lpls_img = progress_img(origin_img,variant_lpls_kernel)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 高斯拉普拉斯变换图像</span></span><br><span class="line">    Gaussian_lpls_img = progress_img(origin_img,Gaussian_lpls_kernel)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 展示图片</span></span><br><span class="line">    origin_img.show(title=<span class="string">&#x27;Origin image&#x27;</span>)</span><br><span class="line">    Gaussian_lpls_img.show(title=<span class="string">&#x27;variant_lpls5_image&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 保存图片</span></span><br><span class="line">    save_image(Gaussian_lpls_img,output_fielpath)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="图1"><a href="#图1" class="headerlink" title="图1"></a>图1</h3><div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/img1.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 1: Original Image</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/basic_lpls5.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 2: Basic Laplacian</em></p>
+  </div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/variant_lpls_9.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 3: Variant Laplacian</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/bGaussian_lpls_17.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 2: Gaussian Laplacian</em></p>
+  </div>
+
+
+<h3 id="图2"><a href="#图2" class="headerlink" title="图2"></a>图2</h3><div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/img2.bmp" alt="bright" style="zoom: 40%;">
+    <p><em>Image 5: Original Image</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/basic_lpls_5.bmp" alt="bright" style="zoom: 40%;">
+    <p><em>Image 6: Basic Laplacian</em></p>
+  </div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">  
+<div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/variant_lpls_9.bmp" alt="bright" style="zoom: 40%;">
+    <p><em>Image 7: Variant Laplacian</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/Gaussian_lpls_17.bmp" alt="bright" style="zoom: 40%;">
+    <p><em>Image 8: Gaussian Laplacian</em></p>
+  </div>
+</div>
+
+
+
+
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h5 id="对于图一："><a href="#对于图一：" class="headerlink" title="对于图一："></a>对于图一：</h5><p><strong>基本拉普拉斯变换</strong>,图像在原图的基础上，额外增加了如<em>Image 9</em>的细节,实现了边缘的锐化</p>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/basic_lpls4.bmp" alt="bright" style="zoom: 80%;">
+    <p><em>Image 9: 基本拉普拉斯变换增强的细节</em></p>
+  </div>
+
+
+<p><strong>变体拉普拉斯变换</strong>，与基本拉普拉斯变换相比，更加强调了中心像素值的贡献程度，从而使得图像在变换后更加突出。</p>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/variant_lpls_-8.bmp" alt="bright" style="zoom: 80%;">
+    <p><em>Image 10: 变体拉普拉斯变换增强的细节</em></p>
+  </div>
+
+
+<p>上述两种变换都是$3×3$的卷积核，对细节的增强较少</p>
+<p><strong>高斯拉普拉斯变换</strong>与上述两种变换相比，采用了$5×5$的卷积核，对细节增强更多，从<em>Image 11</em>即可体现，且因为拉普拉斯变换对噪声非常敏感，采用高斯拉普拉斯变换后会先除去部分噪声，再增强细节，效果会好上很多。</p>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/Gaussian_lpls16.bmp" alt="bright" style="zoom: 80%;">
+    <p><em>Image 11: 高斯拉普拉斯变换增强的细节</em></p>
+  </div>
+
+
+<h5 id="对于图二："><a href="#对于图二：" class="headerlink" title="对于图二："></a>对于图二：</h5><p>基本拉普拉斯便函和变体拉普拉斯变换对图二的细节增强如图<em>Image 12</em> 和 <em>Image 13</em> 和 <em>Image 14</em></p>
+  <div style="margin: 10px; text-align: center; flex:0 0 30%">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/basic_lpls_4.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 12: 基本拉普拉斯变换增强的细节</em></p>
+  </div>
+
+  <div style="margin: 10px; text-align: center; flex:0 0  30%">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/variant_lpls_-8.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 13: 变体拉普拉斯变换增强的细节</em></p>
+  </div>
+
+<div style="margin: 10px; text-align: center; flex:0 0  30%">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/Gaussian_lpls_16.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 14: 高斯拉普拉斯变换增强的细节</em></p>
+  </div>
+
+
+
+
+<p>可以看出效果与图一基本一致</p>
+<p><a href="https://pi_haoxuan.gitee.io/2023/12/07/digitalImageProcessing-lab3/lab3.pdf">this is a preview</a></p>
+<div class="pdfobject-container" data-target="https://pi_haoxuan.gitee.io/2023/12/07/digitalImageProcessing-lab3/lab3.pdf" data-height="500px"></div>
+</div></div>]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>数字图像处理实验三</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>digitalImageProcessing-lab2</title>
     <url>/2023/12/07/digitalImageProcessing-lab2/</url>
     <content><![CDATA[<p>实验二：算术均值滤波、几何均值滤波、逆谐波均值滤波、修正阿尔法均值滤波、中值滤波</p>
@@ -1105,7 +1221,7 @@
     <title>注册GPT</title>
     <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="1c123f9a962a6a0df61c93aabed73a2c21963ffdf07640dfdc09db4e0a53e0d0">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998ca0cec4e196ca4e989eb9210ca333b3782c69f8007a48de74beb63c2df8b7b1bb32337af5936b95a1fa6a98911fe36f1a4a13b36344c17f1e647d4b7abf51fbc06e384cadfacbfb04ad4cd9b494bd9962e941c65335fe41aca01e9a666974098325bef0c5779253ac9377b964e2765a4c520be5be6ec130a25f774b97194b976207fecddd9d7da72de4345b82702e00d7b92b40bd737bb36a39e072857f936904a262a6d8ff7f18dc71553b99bf168800c3ee288099a435199b4880ca11401197206f4338b0aba72996fbd7385953d57406a7d1394ea22975bcefc6990042228547172f47c70259ac7793585b9c892820fad4add5fee0d611462f0d5f218a42e608d94edfc215c3b29689f716cab20ec147eb25568b4c9b3b9b1ae7e755bdaed44aee225a6bf73157914f8f4f33c136cb015e0555d86c741cc7dc487534af44672b42eb603ce73dd8c489bebc5dc75aea4974607411cf9ff51e77e65c6f1760daa40ca7f7e23ad732e80dac3562a7e2829e0d87dff8d313185ee1e1dbba9f2c4c04bf9d2a28a09fc8ae277679fbfcc10bb626562194863b4b974b404abdfdacc16d13cd17f6cca1be85723c428ec2ab9571c154a000e7b18dea089f3a62795cf38cee71856de738a1974ca1f316bd586f5553ae1ce000f800ac7c97b1c93c9e47a82d22cb8eb03d18a3a07b45742242c485822ff72386cb181f2df98d7f6a9413487c4fc81c9721898005502184dace9ef90ad07dfc5fecd8cbbaca96abfbdcf4120b4a3f493ba2542a0c5bdace0a54167d6b4243a2e005d4f03fe724badff72f08be27ba67b517eed2c00f25c419fc8a64ae734973a5b6d560c76c98af915842060db025f5457cd2b2fd62fe3cb111fb653e700f56c185c6901e0c4f7221b50e32b78706c8479c6370c4fe97d4f1748b5e9095a34914e1841ad42dc0087f350ecefb8a214f3bef571ef885fac75e6dc61db4a39299e60222d360872cd85007197d25f5733c40b593cbf40e3fd01da7f73a9fe56adf9f883201617b1abc46158e7b34eac2c1c5b99fb93f3448d0ec2bbf3c3abe1b96811f95b66a1470f5ab4a1017231d455ac7fdddee73323db7a0f9dab70c0e98580aadbf9c7268727eb114f64a246f5d6d5c0c1bf7d12ffe6ac1333c6b687a8e335c406d30645463659383b3421f21492e80f1564852ccd85d05d16bddaacde2e296c542f198d9670c2e0d2c427f17ddd24d9ce727adf8fde2aaba31ebe27f71bd9bff6a22fadf5f6492bf50a556061b2295537e1e97943009aa53ac4fed9807d2e57ad510d61a8cc78ba21f93e614591f66aa6aefbc6145b3c1ffd42f42b6ebcf2fcb2fc670dcc97cc2bd323597642de42259f6f619cb1159e4939832757ee6e163044fb65d8caa277ca4a6626177180875c6e2f75c5736db983db392708a50ff265401d632acab95fbd90ea084ff1f21852eee2a3d956e9d80caa768f51d6e6e6f86f4e4ab360303102d88ad1c220c77c1086ec9c8761b5db49d4fa63776ef1c61233483d37d92c4d21d26b85997b0a303b6e281023d86120aa784359b9f855ef1a2d488710a3bf5abb5f0af68e05ab946c63ab85b0d1a34d517410a4a5bfd4fff72ccbb28b34d9f7c3ea3c0075c087c153243ed733393daf9590322e9593aa6767eb13977b6f0835017f52be92846cbad29e322429c67664d29ed73d8910791531451021af614e07333b7f3ff24706365f6c89237e41bde450ab67359de2f568e909caf7e825522cbce3a0898238de7a440002ef2a759b056b7514e45d7a2cb885dfccc6b7dce038a2b059f50c4ab832c9646e8dad69089e43678951051eecd0b3fc1d03d7e69e1ec4bbe</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="f61455166e1ec684751a4f85fcb74a47170b4bf98a79f9369973ab10902b3424">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998c8312daf012b6dd35bf875ef43be127baaf0ce034e6f31cd502c71660abff019b31775bc9fdf48e388edb3834b4b8319bffe104c4327c2dd5685f98ae7695d4317e20f6cb8775ff75e8f54372fec11ee4c6c1ccb75fc26a6020b64dea2a973de3f5d528b4cc159c84fe8ed298c85c2924e0d4882364c00e7600c0c5a8264bd2042f808872c8864628b7cf2c6bcdcfa5a087bc6d0eafc58be0aeb226037d8ce6f3d360ff01b87d9351b6fba9714f6bbf2a46311f3a20540288034e5c715a15729e8c1c429121d53da849fbd3d0d8c9ffcfccfc6abcfb4cf2dc92d8ffe30031d35418a58d0d867265c111ae6bd5cefab6a739a706b3cb6b01820bf75ec89b78a3a2243f35b115a2da37fca1af0eb2ceedefc9e20029101acbd8db23567beeff428a4fc794b3f26941e2687cd81f8a3f5c61aa56ead7f4469a99052bec44240bfea025d92ddce69e6a9d50c40ea488e8cd6f10845a76842c552592f20cc1207318b3379d9257b8a25ce56a1c32a1927121b9406491646d6da445c230dbcd47249250e8d4a33e488b5070a5ededf96ad0b9da334054772a3f456491a05e1909f3304ce7ead193c71f78b859f4eada95d03d9226dc2a8a772b8ce14a224ca8d6c6998c36089550a1b5abdc7aa4438081a29a882a730dd92bf6a664fe8c21da2b81079fbc1a80170efdcc95fbd6cfa857559cd30dcf550539caabe6a10370413cfb809dde0c8bf4ff9c41a60277d21eceb7f83c843df0a5a4160c66e0f8be2f56b725be8612fd29d54067b722d68fe6d44630c175085a88266647a721dc83613a785dcfeee9348fab55b4366fb4650f2cae173ea1f76fc48f6edc3b6c6d100aac2198c26afb0056f310442be600d1980ff69f76feab1200075f0c14dec7dbe018156cd8b2a9fad0f8df49d182e5d6b2c1c205275e74517d82d3d6c72230905b81c45e7d9957d0ad4db2ff289e0ad2bf9fa937bdfea5f4214569e6b2e5ff035f8cd3e1fab7fb76550ca8cac0df66beb34e4403af0117a1756f5573c60ba66f94ddff04a3e7e2f3c3a4da2b4ef5dfcd568ceefdec16776c4f97f45e9887a35eed693e70390d85ce75cdb00f77c194a2dd6db52f05b472bd4ac7e29d4c85b68d46285d731f7b1023f9cef27aed16e40d72fd56da533b3ef33c2b762a0b2a1cefcf66613d353d61f62e36917e1a000510d4740856a04b0284e1d49687bd1f0d94999f03bcdea2edd8561e2638cfb2f3697cf9385abcdf8cdef88622a0e29e707576515227996212a4edeedca883f1c12e1716ff5c1fbc93a7fc33f73d4a630f5f6e91b524307586115b94fc13232771a69dd4f765ac95de1f41a75ad146e8cd0ec45e8fcdf870846bfe7de6fb872ac06faa981255aad9b1ed9e94a8fa8175637c804610d82470bcea8e2286caa1e1a14d9bbfe634fc7e6779abe385015be3f46341250ff743857c35233ae19a30f8e3c0725d1851a14c531edb032823272e61daf2b01df946870e7ac32c144afad20d1e336d45ec9d990a4b508a0ad4a0c349a36a68753fa3c201fdba15f683ff53a9dbaa7f0940969a9d6c29d38cae542527606a2b80911d3faeb5cefdf62169af6a5b7c5d647073551976134ee1b5dbcdf69b733d8f5ff1b2bf6ee384dedee1a7c377e1c45b70a711a507056fd30a62556c41c120281b10005309e713f85ff8409fc98aa8f9b3ab0fb0022ac1aeaf8da37d155b7dffb6e6ede76fb053f5b5d853869032d799f0eb742d129a7c40963227c8330891efce1a41b75f7f19dba6d4a34b9b63a7ed61f344a48742d461d5d1e6c8fb0a61358f0cd835e20d329d3dcae2843d5fda2d656c1e727d581924bec82ef7fdc0947f7a6438c796068f9a07313a423951b8f1f4aa</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
