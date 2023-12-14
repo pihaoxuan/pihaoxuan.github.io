@@ -48,6 +48,209 @@
       </tags>
   </entry>
   <entry>
+    <title>digitalImageProcessing-lab4</title>
+    <url>/2023/12/14/digitalImageProcessing-lab4/</url>
+    <content><![CDATA[<p>Roberts算子边缘检测、Sobel算子边缘检测、Prewitt算子边缘检测、拉普拉斯算子边缘检测</p>
+<span id="more"></span>
+
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>掌握基本边缘检测算法</p>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><ol>
+<li>Roberts算子边缘检测</li>
+<li>Sobel算子边缘检测</li>
+<li>Prewitt算子边缘检测</li>
+<li>拉普拉斯算子边缘检测（由于拉普拉斯算子检测过暗，本实验换为高斯-拉普拉斯算子）</li>
+</ol>
+<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><ol>
+<li><p>Roberts算子边缘检测<br><img src="/2023/12/14/digitalImageProcessing-lab4/image.png" alt="Alt text"><br><strong>算法分析：</strong><br>Roberts算子的模板分为水平方向和垂直方向，如上图所示，从其模板可以看出，Roberts算子能较好的增强正负45度的图像边缘。根据上图可以得出下面算法：<br>图中某点经过罗伯特交叉梯度算子边缘检测后，获得响应主要依赖于对角上写的像素值$ f(\text右下角)-f(\text左上角) $ 或者是 $f(\text左下角) - f(\text右上角)$，即左边图对负45°为0响应，右边图对正45°为0响应，两图合并实现对正负45°边缘的检测。</p>
+</li>
+<li><p>Prewitt算子边缘检测<br><img src="/2023/12/14/digitalImageProcessing-lab4/image-2.png" alt="Alt text"><br><strong>算法分析：</strong><br>Prewitt算子边缘检测利用两个卷积核（一个用于水平方向，一个用于垂直方向)分别对图像进行卷积，然后通过求两个方向的梯度幅值和方向来检测边缘。<br>Prewitt算子对边缘的响应比较敏感，但也容易受到噪声的影响。<br>Prewitt算子的卷积核对边缘的响应较为敏感，是因为卷积核中的权重值对边缘的梯度有较强的反应，也正是因为这个，卷积核中的权重也对图像中的噪声敏感，当图像受到噪声的影响时，Prewitt算子可能会放大噪声，导致在边缘以外的区域产生较强的响应。</p>
+</li>
+<li><p>Sobel算子边缘检测<br><img src="/2023/12/14/digitalImageProcessing-lab4/image-1.png" alt="Alt text"><br><strong>算法分析：</strong><br>Sobel算子类似于Prewitt算子，也是通过两个卷积核（一个用于水平方向，一个用于垂直方向）来计算梯度。<br>但是Sobel算子在距离中心像素点较近的四个点位（上下左右)采取了较其他像素点双倍权重的方法，使得靠近中心像素点的点占比更大，能有效较低较远处的噪声的影响。也就是在一定程度上能够让图片降噪，使得结果更加精确真实。</p>
+</li>
+<li><p>拉普拉斯算子边缘检测以及高斯拉普拉斯算子边缘检测<br>拉普拉斯算子：<img src="/2023/12/14/digitalImageProcessing-lab4/image-3.png" alt="Alt text"><br><strong>算法分析：</strong><br>对于拉普拉斯算子边缘检测，如果结果 &lt; 0，说明滤波中心是局部极大值，可能是噪声点，也可能是边缘上的点；结果 &#x3D; 0，说明滤波中心很可能处于平坦区域；结果 &gt; 0，说明滤波中心是局部极小值，可能是噪声点，也可能是边缘。<br>即拉普拉斯算子对含有噪声的图像极容易检测出假边缘，从而对噪点做出高响应。<br>于是引入高斯拉普拉斯算子边缘检测</p>
+<br></li>
+</ol>
+<p>高斯拉普拉斯算子：<img src="/2023/12/14/digitalImageProcessing-lab4/image-4.png" alt="Alt text"><br><strong>算法分析：</strong><br>先对有噪声的图像高斯平滑处理，然后再使用拉普拉斯算子进行边缘检测，也可以将两个步骤 集成在如上图所示的一个卷积核中处理。。<br>在图像中，平坦的区域的拉普拉斯响应为0， 在边缘处的响应值较为剧烈，可以检测边缘的存在。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    <span class="comment"># 读取图片</span></span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image, file_path</span>):</span><br><span class="line">    <span class="comment"># 保存图片</span></span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">display_image</span>(<span class="params">image</span>):</span><br><span class="line">    <span class="comment"># 显示图片</span></span><br><span class="line">    image.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">roberts_operator</span>(<span class="params">image</span>):</span><br><span class="line">    <span class="comment"># Roberts算子边缘检测</span></span><br><span class="line">    width, height = image.size</span><br><span class="line">    result_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width - <span class="number">1</span>):</span><br><span class="line">            pixel1 = image.getpixel((x, y))</span><br><span class="line">            pixel2 = image.getpixel((x + <span class="number">1</span>, y + <span class="number">1</span>))</span><br><span class="line">            pixel3 = image.getpixel((x+ <span class="number">1</span> ,y))</span><br><span class="line">            pixel4 = image.getpixel((x,y + <span class="number">1</span>))</span><br><span class="line">            <span class="comment"># 边缘处理</span></span><br><span class="line">            <span class="keyword">if</span>(x+<span class="number">1</span>&gt;=width):</span><br><span class="line">                pixel2 = <span class="number">0</span></span><br><span class="line">                pixel3 = <span class="number">0</span></span><br><span class="line">            <span class="keyword">if</span>(y+<span class="number">1</span>&gt;=height):</span><br><span class="line">                pixel2 = <span class="number">0</span></span><br><span class="line">                pixel4 = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># 使用Roberts算子进行边缘检测</span></span><br><span class="line">            gradient1 = <span class="built_in">abs</span>(pixel1 - pixel2)</span><br><span class="line">            gradient2 = <span class="built_in">abs</span>(pixel3-pixel4)</span><br><span class="line">            gradient = sqrt(<span class="built_in">pow</span>(gradient1,<span class="number">2</span>)+<span class="built_in">pow</span>(gradient2,<span class="number">2</span>))</span><br><span class="line">            </span><br><span class="line">            result_pixels.append(gradient)</span><br><span class="line"></span><br><span class="line">    result_image = Image.new(<span class="string">&quot;L&quot;</span>, (width - <span class="number">1</span>, height - <span class="number">1</span>))</span><br><span class="line">    result_image.putdata(result_pixels)</span><br><span class="line">    <span class="keyword">return</span> result_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">sobel_operator</span>(<span class="params">image</span>):</span><br><span class="line">    <span class="comment"># Sobel算子边缘检测</span></span><br><span class="line">    width, height = image.size</span><br><span class="line">    result_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, height - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, width - <span class="number">1</span>):</span><br><span class="line">            <span class="comment"># Sobel算子权重</span></span><br><span class="line">            weights1 = [</span><br><span class="line">                [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">                [-<span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>],</span><br><span class="line">                [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">            ]</span><br><span class="line">            weights2 = [</span><br><span class="line">                [-<span class="number">1</span>, -<span class="number">2</span>, -<span class="number">1</span>],</span><br><span class="line">                [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">                [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br><span class="line">            ]</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算Sobel算子的梯度</span></span><br><span class="line">            gradient1 = <span class="built_in">sum</span>(<span class="built_in">sum</span>(weights1[i][j] * image.getpixel((x + j - <span class="number">1</span>, y + i - <span class="number">1</span>)) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>))</span><br><span class="line">            gradient2 = <span class="built_in">sum</span>(<span class="built_in">sum</span>(weights2[i][j] * image.getpixel((x + j - <span class="number">1</span>, y + i - <span class="number">1</span>)) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>))</span><br><span class="line">            gradient = sqrt(<span class="built_in">pow</span>(gradient1,<span class="number">2</span>)+<span class="built_in">pow</span>(gradient2,<span class="number">2</span>))</span><br><span class="line">            </span><br><span class="line">            result_pixels.append(<span class="built_in">abs</span>(gradient))</span><br><span class="line"></span><br><span class="line">    result_image = Image.new(<span class="string">&quot;L&quot;</span>, (width - <span class="number">2</span>, height - <span class="number">2</span>))</span><br><span class="line">    result_image.putdata(result_pixels)</span><br><span class="line">    <span class="keyword">return</span> result_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">prewitt_operator</span>(<span class="params">image</span>):</span><br><span class="line">    <span class="comment"># Prewitt算子边缘检测</span></span><br><span class="line">    width, height = image.size</span><br><span class="line">    result_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, height - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, width - <span class="number">1</span>):</span><br><span class="line">            <span class="comment"># Prewitt算子权重</span></span><br><span class="line">            weights1 = [</span><br><span class="line">                [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">                [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">                [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]</span><br><span class="line">            ]</span><br><span class="line">            weights2 = [</span><br><span class="line">                [-<span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>],</span><br><span class="line">                [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">                [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line">            ]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算Prewitt算子的梯度</span></span><br><span class="line">            gradient1 = <span class="built_in">sum</span>(<span class="built_in">sum</span>(weights1[i][j] * image.getpixel((x + j - <span class="number">1</span>, y + i - <span class="number">1</span>)) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>))</span><br><span class="line">            gradient2 = <span class="built_in">sum</span>(<span class="built_in">sum</span>(weights2[i][j] * image.getpixel((x + j - <span class="number">1</span>, y + i - <span class="number">1</span>)) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>)) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>))</span><br><span class="line">            gradient = sqrt(<span class="built_in">pow</span>(gradient1,<span class="number">2</span>)+<span class="built_in">pow</span>(gradient2,<span class="number">2</span>))</span><br><span class="line">            result_pixels.append(<span class="built_in">abs</span>(gradient))</span><br><span class="line"></span><br><span class="line">    result_image = Image.new(<span class="string">&quot;L&quot;</span>, (width - <span class="number">2</span>, height - <span class="number">2</span>))</span><br><span class="line">    result_image.putdata(result_pixels)</span><br><span class="line">    <span class="keyword">return</span> result_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">laplacian_operator</span>(<span class="params">image</span>):</span><br><span class="line">    <span class="comment"># 拉普拉斯算子边缘检测</span></span><br><span class="line">    width, height = image.size</span><br><span class="line">    result_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, height - <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, width - <span class="number">1</span>):</span><br><span class="line">            <span class="comment"># 拉普拉斯算子权重</span></span><br><span class="line">            weights = [</span><br><span class="line">                [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">                [<span class="number">1</span>, -<span class="number">4</span>, <span class="number">1</span>],</span><br><span class="line">                [<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>]</span><br><span class="line">            ]</span><br><span class="line">            weights2 = [</span><br><span class="line">                [<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">                [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                [-<span class="number">1</span>,-<span class="number">2</span>,<span class="number">17</span>,-<span class="number">2</span>,-<span class="number">1</span>],</span><br><span class="line">                [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                [<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">           ]</span><br><span class="line">            </span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算拉普拉斯算子的梯度</span></span><br><span class="line">            <span class="comment"># gradient = sum(sum(weights[i][j] * image.getpixel((x + j - 1, y + i - 1)) for j in range(3)) for i in range(3))</span></span><br><span class="line">            <span class="comment"># 高斯拉普拉斯算子</span></span><br><span class="line">            gradient = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">                temp = <span class="number">0</span></span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">                    <span class="keyword">if</span>(x+j-<span class="number">2</span>&gt;=width <span class="keyword">or</span> x+j-<span class="number">2</span>&lt;<span class="number">0</span> <span class="keyword">or</span> y+i-<span class="number">2</span>&gt;=height <span class="keyword">or</span> y+i-<span class="number">2</span>&lt;<span class="number">0</span>):</span><br><span class="line">                        pixel1 = <span class="number">0</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        pixel1 = image.getpixel((x + j - <span class="number">2</span>, y + i - <span class="number">2</span>))</span><br><span class="line">                    temp += weights2[i][j] * pixel1</span><br><span class="line">                gradient  +=temp   </span><br><span class="line">                    </span><br><span class="line">                        </span><br><span class="line">            <span class="comment"># gradient = sum(sum(weights2[i][j] * image.getpixel((x + j - 2, y + i - 2)) for j in range(5)) for i in range(5))</span></span><br><span class="line"></span><br><span class="line">            result_pixels.append(<span class="built_in">abs</span>(gradient))</span><br><span class="line"></span><br><span class="line">    result_image = Image.new(<span class="string">&quot;L&quot;</span>, (width - <span class="number">2</span>, height - <span class="number">2</span>))</span><br><span class="line">    result_image.putdata(result_pixels)</span><br><span class="line">    <span class="keyword">return</span> result_image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    dir_path = <span class="string">&quot;./img3/&quot;</span></span><br><span class="line">    <span class="comment"># 读取图片</span></span><br><span class="line">    input_image = read_image(dir_path+<span class="string">&quot;img3.tif&quot;</span>)</span><br><span class="line">    display_image(input_image)</span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Roberts算子边缘检测</span></span><br><span class="line">    roberts_result = roberts_operator(input_image)</span><br><span class="line">    save_image(roberts_result, dir_path+<span class="string">&quot;robert.bmp&quot;</span>)</span><br><span class="line">    display_image(roberts_result)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Sobel算子边缘检测</span></span><br><span class="line">    sobel_result = sobel_operator(input_image)</span><br><span class="line">    save_image(sobel_result, dir_path+<span class="string">&quot;sobel.bmp&quot;</span>)</span><br><span class="line">    display_image(sobel_result)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Prewitt算子边缘检测</span></span><br><span class="line">    prewitt_result = prewitt_operator(input_image)</span><br><span class="line">    save_image(prewitt_result, dir_path+<span class="string">&quot;prewitt.bmp&quot;</span>)</span><br><span class="line">    display_image(prewitt_result)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拉普拉斯算子边缘检测</span></span><br><span class="line">    midValue_result = midValue(inpunt_image,kernel_size)</span><br><span class="line">    display_image(midValue_result)</span><br><span class="line">    laplacian_result = laplacian_operator(input_image)</span><br><span class="line">    display_image(laplacian_result)</span><br><span class="line">    save_image(laplacian_result, dir_path+<span class="string">&quot;laplacian_gaosi_result.bmp&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>对于图一：</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img1/robert.bmp" alt="bright" style="zoom: 70%;">
+    <p><em>Image 1: robert_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img1/prewitt.bmp" alt="bright" style="zoom: 70%;">
+    <p><em>Image 2: prewitt_result</em></p>
+  </div>
+  </div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img1/sobel.bmp" alt="bright" style="zoom: 70%;">
+    <p><em>Image 3: sobel_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp" alt="bright" style="zoom: 70%;">
+    <p><em>Image 4:LoG_result</em></p>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>对于图二：</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img2/robert.bmp" alt="bright" style="zoom: 55%;">
+    <p><em>Image 5: robert_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img2/prewitt.bmp" alt="bright" style="zoom: 55%;">
+    <p><em>Image 6: prewitt_result</em></p>
+  </div>
+  </div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img2/sobel.bmp" alt="bright" style="zoom: 55%;">
+    <p><em>Image 7: sobel_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp" alt="bright" style="zoom: 55%;">
+    <p><em>Image 8:LoG_result</em></p>
+  </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>对于图三：</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img3/robert.bmp" alt="bright" style="zoom: 45%;">
+    <p><em>Image 9: robert_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img3/prewitt.bmp" alt="bright" style="zoom: 45%;">
+    <p><em>Image 10: prewitt_result</em></p>
+  </div>
+  </div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img3/sobel.bmp" alt="bright" style="zoom: 45%;">
+    <p><em>Image 11: sobel_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp" alt="bright" style="zoom: 45%;">
+    <p><em>Image 12:LoG_result</em></p>
+  </div>
+  </div>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p> 对于图四：</p>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img4/robert.bmp" alt="bright" style="zoom: 20%;">
+    <p><em>Image 13: robert_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img4/prewitt.bmp" alt="bright" style="zoom: 20%;">
+    <p><em>Image 14: prewitt_result</em></p>
+  </div>
+  </div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img4/sobel.bmp" alt="bright" style="zoom: 20%;">
+    <p><em>Image 15: sobel_result</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp" alt="bright" style="zoom: 20%;">
+    <p><em>Image 16:LoG_result</em></p>
+  </div>
+  </div>
+
+
+
+<h2 id="实验结论"><a href="#实验结论" class="headerlink" title="实验结论"></a>实验结论</h2><h4 id="对于图一："><a href="#对于图一：" class="headerlink" title="对于图一："></a>对于图一：</h4><p>robert算子边缘检测模板大小只有$2×2$大小，对于原图而言，可能会损失一些细节，从而使图一的robert算子检测出来的图像看起来过暗，看不到太多细节，其次，由于该算子对于水平或者垂直的边缘响应不是很剧烈，也容易丢弃一些细节，是图片看起来过于简单。</p>
+<p>prewitt算子边缘检测的算子相对于robert算子所囊括的面积更大，能够保留更多的细节，所以图片看起来细节增多，一些较为不明显的边缘也能够被检测出来。</p>
+<p>soobel算子相较于prewitt算子加大了中间部分的权重，使得更加突出边缘，所以图一的soobel算子检测结果比prewitt算子的边缘更加明显，更加明亮。</p>
+<p>拉普拉斯算子由于对噪声过于敏感，将边缘信息覆盖，使得拉普拉斯算子检测出来的结果如下图所示<br><img src="/2023/12/14/digitalImageProcessing-lab4/img1/laplacian.bmp"><br>几乎看不见检测出来的边缘。<br>于是用高斯拉普拉斯算子检测得出如下结果：<br><img src="/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp"><br>此结果相较于单纯的拉普拉斯算子边缘检测较好，但是还是收到噪声影响，损失了过多的细节，只能看到些许轮廓。</p>
+<h4 id="对于图二："><a href="#对于图二：" class="headerlink" title="对于图二："></a>对于图二：</h4><p>robert算子同样因为卷积核过小，不能体现细节部分，只有大概的轮廓，即月亮的最边缘部分，月球表面上的边缘并不是很明显</p>
+<p>prewitt算子相较于robert算子的卷积核较为复杂，能保存的月球表面的细节更多</p>
+<p>sobel算子在prewitt算子的基础上增加了核心像素周围的权重，使得核心像素占比更大，边缘突出明显</p>
+<p>拉普拉斯算子由于受噪声影响太大，检测结果如图：<br><img src="/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_result.bmp"><br>上图所见几乎看不清月球表面的边缘细节，于是换成高斯拉普拉斯边缘检测<br><img src="/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp"><br>可以看出边缘明显增强，但是由于噪声影响依旧在，没有完全消除，导致假边缘出现过多。</p>
+<h4 id="对于图三："><a href="#对于图三：" class="headerlink" title="对于图三："></a>对于图三：</h4><p>robert算子同样因为卷积核过小，不能体现细节部分，只有大概的轮廓，即建筑物的最边缘部分，建筑物上的边缘细节并不是很明显</p>
+<p>prewitt算子相较于robert算子的卷积核较为复杂，能保存表面的细节更多</p>
+<p>sobel算子在prewitt算子的基础上增加了核心像素周围的权重，使得核心像素占比更大，边缘突出明显，也增多了一些边缘细节</p>
+<p>拉普拉斯算子边缘检测由于受噪声影响，检测结果如下图：<br><img src="/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_result.bmp"><br>可以看出，只有较为明显的边缘能检测出来，并且检测出的结果也很模糊，受噪声影响过大<br>换用高斯拉普拉斯算子检测得到结果如下：<br><img src="/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp"><br>也能看出噪声污染严重，但是能检测出一些细节部分，相较于原拉普拉斯算子效果变好</p>
+<h4 id="对于图四："><a href="#对于图四：" class="headerlink" title="对于图四："></a>对于图四：</h4><p>robert算子同样因为卷积核过小，不能体现细节部分，只有大概的轮廓。且robert算子对于水平和垂直部分检测效果不是很好，从图中可以看出房子的垂直的边缘检测效果不好，几乎检测不出房子的垂直边缘和水平边缘，最明显的就是倾斜边缘。</p>
+<p>prewitt算子相较于robert算子的卷积核较为复杂，能保存表面的细节更多，并且其垂直边缘和水平边缘明显强于robert算子检测结果。</p>
+<p>sobel算子在prewitt算子的基础上增加了核心像素周围的权重，使得核心像素占比更大，边缘突出明显</p>
+<p>拉普拉斯算子因为对噪声过于敏感，检测出的图像几乎都是很明显的边缘，对于房子墙体的边缘则没有过大响应<br><img src="/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_result.bmp"><br>于是改用高斯拉普拉斯算子检测，结果如图：<br><img src="/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp"><br>上图虽然对墙体的边缘有了较大的响应，但是整体有过重的噪声污染，较拉普拉斯算子检测效果好。</p>
+<p><a href>pdf preview</a></p>
+]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>数字图像处理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>digitalImageProcessing-lab3</title>
     <url>/2023/12/07/digitalImageProcessing-lab3/</url>
     <content><![CDATA[<p>实验三：拉普拉斯变换、变体拉普拉斯变换、高斯-拉普拉斯变换</p>
@@ -1219,7 +1422,7 @@
     <title>注册GPT</title>
     <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="9b1de36f586a03b12f2c09006c4d91db2a033fa5cdd48ea4d1a42f274691445e">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998ca0cec4e196ca4e989eb9210ca333b378470d6b1c4079ca8abdf70feefe2953db2319de970f4f9e04ebdc818a9cd21126b4e919b8452570018cd0adbd213dc46f7f0104537f11c8d47360a3cbbeb8bbff27c299230cd195ebd91fb5dd81a62cae413dba015d666a4858b36c4810c16c4f639d95da16db456234dcab28d20cf257fd811bfd6596cc20d1cac6f25540a5a01930fcf36171f15a922f90c4d02a98de9c991615f47474fa9fe8bdfd288ae6144514b959cd3f85848ba9256aca5c8e31db1f8821a29ba0545cf107ad5beef1caf57c840700a1b4b46d55d2aa3458dde8aad7c4b22cfadf443cb4b9085e77b9f8eb83715d0541a7c0fccdaec09ef9e4bfd0a91610bf0c45241683e8c77666fd3a676c8e1f976adc0e598044647717c22a9f06d0104e8fde43b075e54a549c85ca0eef478c08f3498e004a3b560e1b1a86512665c4c6798e39e0d3fe28db816824fa7b3580d29a9f7e6977a111ff92ac8ef159f222aa7d25600d920eb660c8be5a65c54cf0427fbce174d7fcab5c893af7f3b187f8f3306d1b6e5270a19131949ad2385e4caeb8767e83aa3c5947b8ad3cfaefcc21d9cd248e453a8b20df3770a09060257b4db401732069dfe6aa5ab5573bb19b310442abf570845549d3800bae3130c53eeaecd5c087353b779284cbff88147fa1c3e0f17c7e00db029d85b556404a0537ef030796a3f3eb3e2da44829775592aa9ae80fbfcf59d93e229f8fd7aad3b99343bd3928be71f4d6d3bc7db73898739d654e3fe0105c33c210b6486f7e1a7bad59e737d441b565f7ab63c197888a3e1ec5326c6c61dd109ca0b138551a6f98ed6866694e5959d0a7db00f194f53e89730cca48bf68b35a9a70186a86123506bb6cdf55557bed931ba0c027ce6118c795339a98294c720130d0ca5e0fafc96f506968f2006613cef1964b72f5059ca5128f60095c56346e877eeeccb6058ed334e64d8d51d51b12f6fbc9efc2913e97e66da9c99472309ac969b27aca8dd9f96425254faaac7ecba00130ea6d1443a7e9b0476ceedcbf3bcbaa6b131d9cc8ee3bbdbed5b51d1c960193339f25287603c5e2b8e6653da1106e94271a1d908494d0e607f443a1f8094ff729c2fb7a2e8574d7981416e6199ed4b97778de01e6c5f58262df7b36388f2f99c08742ceae290fb4a82d603812bac3c08ad907adde363634f94a3c44de3e5a14eb97b310c019a7c0588a372fe095dbad3debdaa61848df67cf2be0830add6bfa1c3ef772e7441e34d6971c8c7f84c298b20012cd7fe6340214d260018dd7654c98e95293f45c86ffce633190668c20f0ea9df7fde619d381ad9ad8cf940763a4e03277d2e90a017551c129154137eff9ade5cb4b6f6920348db5b4a235bd11384d4cd55029dc370c4c8a44604f965d324d110863b014501231c552e16633303f925a1992b5c7b143f2046cc9b3b3eda72ee673649bf74f493bad1d061412cbfe4433c04372fb4a6457d59871356789fe78e0ca69eb456ecc15788c72ce29db7dc344170b54de44b0bcaca91f0130997c32ac8688dd144662ee59be966abf7eb4573a401ba9c6a803b9965456c63075cf4a5ba7c8a54130a37c9bbebcedb9e201078f6a9ab316375374bccc6b238adfe92f9ac379e49a17e7088da6a360f3077f0ff01c01bee10b3e4f0d7e1b562f2a28cfa77cae3629c31f2e0543bf30b45321cb75e41b552b6beca67ced423abe9c040df9dabf4009ee0323ba1f103827e69503d2e81613b0b8b7aae0e07c8c0f40478a585a3df3dd0c21a408d7868b8c8b37933a3627c37f6b147cb5931e54440a7255d1b006e448ef9f8781278f26e283c0a12172775c0e0662bc9e55e3907d35852a9196</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="2316f6617d3c53430ec3149d115c0b6c28e6b269b23dd86a4e3b73be020fb8cc">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998c9555a16d483816e9a9565a6f144fc816c4f9c45fc4ae24fba0b47d276a9520c5892e362cc982c5d6324324d13cfc8fb9aab983358933b4f551dbc149563c98270b354ebbb171cd628be237406f09a219deb00e43cfa370d079b9c9602a4acc296201d4484aa821d1102dd5a35272123dad3abf5fdb98ed5e9f42deb3c335f8358ce94736d5a9719b085d3067642585837d82c4515e43a847655af88dfb8b660c5f571f123e8614930487c30dac1dbfc52f59d218a1abfd61bbd838158c1d2ecf616b079ba887e99673a7be4df660d6c7592e6f9e4791aed948aa8b70129d500bcaa670d6c4ce2e08d34cbecc40d99a3ca05dbc2bc83ace832100afdf040d2832b71ccaa7b6046d6ae5627e468bfc468e5d766f12c4feb738c6b870c86d98adb5ccc6ff2268ad9b48214e1203a3397e2f95fea0d30d2cc29178872e616abe7a087fcefb0d357fe8b028ae05c4e719cc45102d8e1e4b7b3eae04af421d44d8b8c26e74be65776ceeed28e9a52100c047004c306cafc184a556134fb973155e8acdf2d4a0611109753efa3022039b5657d6b771e9a57986e6d4241ecfd68e73d522656c103b59251d37016b82ed2448c413f3ab4f34d9a60eba25724d4e9e9f678da990587a211e283a48090d77bc3acc5a24ae61e8201d317814a2e3fd84fd7470e4aac47ed5bc81e37335fc79fe826410d21db6f882b0f5c75dd52e0291e94e4f2269b21b0ddce7abad5531f344546d1d6771a72be5d3b6795b0d38cab0df3388079452adf7bcaa6ec1cd130a91fbdc5cd58ce2ee6c2c634fa8a0f7fd35881c799a60afd0f02fe0ccd47795ca494c61a14f8dbd1070b3b8d4d2fed4012b3a8378e636e19375801845829a956f327487496395dc95e1e94dd871b707e7d0c90bb24999993b38a657d565f4d95627478958ac6446257658973a0429bf9a82d34a69c84ac3695351aae3ba3e0a1774b77afc6958401601055d74d0aa80292f107cd7bad22e23d4e7876ce6c9007490c505adf4d40b3c9c291a19db12726cbe20af9cab1806d4fadf72d4340db07860408611b7a64cfb4ad7c3cfabba94c3bbf06456f63c3bd6ed8c3da34563f931365207a70e56416062c7d9bf9a4828142fb46cce556f8664e0cec5c892b1d333efc58f14088fd5d6c6cbe3137c89073da5c95ad63e09365ba96678cc21902f1b69e82248a1186efe441da8aa659cc02f9f402c953e26d07d4cb3f78c973895feb272949a66754709452f0f950f5eb75887a256a721e6390aa053380f036c11c3505324f287cff05c95ae24e89cd68ecafcf72b8780fcd68f87520b0c961ad78a897d61032faea47e7e63efd5a31de1774ff5cee89c6a11d7d916f0caa35250b7f2267116a0543330710bbfa9ba6179681a6addcc51d0b0190f1ddd2680ec1765a87bdb1d70f63c7751c40bc1403d5f05b408947adf459351cf907d01843616e9af26e92acc2bfaa636db8aa570b2a3aba71657fc4b76a861db9a9ffe7ca203260a7f020357313860ad1f0475453c249502c70fc3abc797ec387401a4e650792afd51a184b7225063511f78c6d72e588dbd9194121a9d5388f20e14c7b966bb8bf2e1afbd06bd34020f275b46e3db328ac3770c6a48d6a6d6b18cf76b633653ddd680869151caab33a999c569ac59354e1d9ad82b88af9d4e073963ac4adc89243cdb70aea29f074100036a7d3a754cabc5ea905a5bd1598c3e297362faa87e8c5ac90e93f91591b7661d58fc56faf477442fd1c37071e8ceb41c76e3634359949901217a1eff770802327c093e6afca4ad9d0937bb25a9717e70fb9349ed7038775f1b9727714138ba25dabd81d2924016d1c9c3f84d0f682a69fb0d96a0235ddb857cc1</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
