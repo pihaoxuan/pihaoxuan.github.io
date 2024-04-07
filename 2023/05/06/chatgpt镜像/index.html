@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/pen.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/pen.png">
+  <link rel="mask-icon" href="/images/website.svgs" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"pi_haoxuan.gitee.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chatgpt镜像">
+<meta property="og:url" content="https://pi_haoxuan.gitee.io/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/index.html">
+<meta property="og:site_name" content="SPINNING PEN">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-06T11:27:24.000Z">
+<meta property="article:modified_time" content="2023-11-21T16:07:54.984Z">
+<meta property="article:author" content="Pi Haoxuan">
+<meta property="article:tag" content="chatgpt镜像">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://pi_haoxuan.gitee.io/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>chatgpt镜像 | SPINNING PEN</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SPINNING PEN</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">WRITE BY PIHAOXUAN</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.gitee.io/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SPINNING PEN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          chatgpt镜像
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+                    <i class="fa fa-thumb-tack"></i>
+                    <font color=7D26CD>置顶</font>
+                    <span class="post-meta-divider">|</span>
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-06 19:27:24" itemprop="dateCreated datePublished" datetime="2023-05-06T19:27:24+08:00">2023-05-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-22 00:07:54" itemprop="dateModified" datetime="2023-11-22T00:07:54+08:00">2023-11-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/chatgpt/" itemprop="url" rel="index"><span itemprop="name">chatgpt</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/06/chatgpt镜像/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>835</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="f1e2d44b7ea9148ae82b5fb0703dae5ac4c59eae670b1767ebe5d0b56a944bfa">4630436162ade97ba2718b7d0c4b3b63ba14fddec24548de4277f1f33a597321f24f44e78ac9d94280c8542e47b5703b6242ada298b0b8c286c2b2d09cf81fd0390d415c2152579fa81f78ec60b6cc17432ca298a0fcffff22fb5ed9d74041740b3fc14ec45480034353a0abce97664691b4e96de052683f7e2b9be95929c23b2b3649124dd588c84e9e7d5f0a6bb51d545c08bd9a5663d371675318de41808ed8f26d33325df3d1820fb611acf4c4014ed546718a8bb26e4e007998873b3d7932c9a7a95cf59d6c11a9631bac5bd52367ea72cfc9482e529f68691ed42f99d76d0a70ab4612b503b733ef5478c76928c1075e9bcd19b1ff5823b5e3926312d32ae700de4f3e117d75b42b64976102510c3dfeefbdebf4fde08b103dd716c664cb0919ae4a0c6b0cb87b4ebcf0052a5f7135bcf1abac7401457bdb0f3d70f9b2e182d65d9ad7c21ec415bf7cad11497cd6fa1c73f41a1f1db876c8d5cccf2fa3ca4a407c2b9b71a4296b7e53f029696311b7ce9cbef119e9276d23eef154bb838c9daef55329cb0b86b95855799f03ec70e5c0179d09325a3c67ce15accb1374cba9966e12a4bdbdb7477ced658149670dd806b8322a0ea1a155664bf8a82fe0a5bffabb2acaab48d4b976ee6a36b781740c04693ffacebb4291e7d2d8f096b6775b0cbb5880d8eceaa8a24c9e83fe39c41c71afdc5cb30619e4cc668367e4498fe68be3481483c5100f9b06f2d2536b0df56693f4986fb54c26a766f0656c7b631caf7b7efcc7e21ae5922ce28a4c54e7eb0620746ea147ee4cd108ccf4d26ac65f5f553c405f22fad6ff74890680f2f19658f9e953ebb84b2e868cf7ddd1783fe8129daf2ad032f9e64f53ef6e3e1f906448fad1caac43990d8989e3fa1beb0e1cb67878869d0e5ef43c3a8068c2752ea49530d081a6287e0c50deb70b9eabaf1088e1e754687364324a519935c5cf769fb8caa1c4bef018b911b76011279a67ac75da5180efaf453395d9cc06733a4d8834a8ec0f4a1ca46e4b4bd4b52a12f2e6d1e57ba3f2dc339d1baff9dcb8f9039ad4c63081126abd4905a723e29074755b9176604d6519a192243959eea9f201e4c8c35c4a49a5e7d5529bcda130896d316c1354e5faa77b9530745f1ac5fd79c2fd9c66829a1b9d2b6f4908307f29c3de5f30ca229df5b65a13e75e12b275febed88dbe9e1d8d19d58d8b630fc717a1afbe6c731aaeac665371bbdd1e3a9e8eebfcefabfb59eb06e035dc3605698707ddd7fb3062f6f28ef8fc93a50ac3e44cc323464559c20c59a13ca0d7615c9496a84cedf4766fc574b3539f4a3c9e7ee18cd966883c0e7bc4070dfd97763d1ee8b2f70a7dacf170ff8832b19f51748751b43d4d32233f2ae39258e47d74c8231fd0badfc53b69aba180b56a8b467dd0fde3c7731a0cc2ee74288fe1902655920a06ec2c2549c22690d00f5eeaa739fc0ec08857199d1cf5bb2dfaa6a84c69b83db7d44ff8e340db971031b9ffc34fcf3d22b3ef5ff81915d0c0b7aae03e4159b60d8b8540b66a502de4f06706c6d82d366f7068eda793d08f01e2e3ec9fcaec83d40cca347af0be0d65867befae050c838fcaa77edb7be1119fb71af2b402322c4e3bad4d0e4a891a900f223bb6dd342d1b5d0c837e0aa18fa4831573d139afeb4ffc4347100ef510924480ab252f2fae2438264f447b894cb934c1cfc18448dce47d46417e7c9c5f2fe03cca6935792de767838bd40e11f8fd566a3d2843c7e33a7067eb55bf0b9a80471a70f28ba2c38d7a4be3786a1e63e8d9350bb299499d3c139f1dd298d8b56dab1657ac5650dae523d5bdd6f4d373baf166d37e9d4757f06306d76e0ae0f52320062159094d6a08f00a4c5d2c602debb1aa0972b692b4708259c50c8c2275020d6109b15246cea2944a01d7b46e97b3d5af6a1243fe78f7fabc0976be4f92614f451cae26f6f1c5415b9d5dc3154fc21d0d92b4340c7b271235292ff13e7ab6c351f8d0973dcfd574b690a1f1db1ad3925618a5886326744ff462af0d8629a3a1d76f446eedf68b3cf83848c5152358bf8d4b441c6822d8909dc8426e62bc56eebb5ae099cbf86c1f5d2fbbab59ff0e3e6f2bd1031783ccd496a0834a74759f2fa55ed3b707eaa954b74960974a160aef89d66d0872e239bf09dc1081f647170f18883c65d5954b418e66a1a1ebd693e96196727e693906e51876b9be133d33ad7637afecce7dcf9dde8d3e724a2f8b3f8f17b5fa69507fa66d9ff815aee2ef628fc00ccf95d85188b4319f7627e31d5d841f0b6f43e3e2c6621d554f1eb170653d78beadbe67ee34b9d4f989529a30d9290b51a13a4adca0b33826379d08e671c40eec399d314f6762e4fd319c9c778b493ebe92ad50f3cdf3b5e6ae6f3c94e92ebbfae90da65ace7ce99f97dd330e7b0569226db4b73e2d2bc2049a4547cf974cbdf6dc6a1e1a8e82a1e345af272d6b46ca2a5e86a2e9c0cca1e867f5998036808ba41199009b983728aaad5211cd957bc8a6a322553e53750aba848dbd209a13b92e039ee2fc618b2c68b75d848fe9a21cd4ade36110ad5c74e9a1e9216a057bf6bfec3cb857983f78c117a66fb4fc9ad9b4dd228052cb6b1cc4981c7433da1b2433d7f718e76f3319e9dc8a00c58b9dc0cf08de9eace08d58a96eb73846711ac523285f99e4921509b3ee858ebf136ae29efbbe6a40b75c71c75a51eb902a9c5b7de34dbdebacd53c919a611905f214addf24120221b1082a16bf91a9b55696f7de40e6f684f79dd945c6b5c6cd79242915f87b7c19d3b60e0314bbf8548ed891495237b2a4b42f30d666bf3f6c5ac1d038ff4f8b94c168c33e0c5076042e7f6afa4b2057a7615298130414a7fb206d9550000d63c50138dfa6e5bb9791b47493717c1ea7b2af50d90ca07a5763e650860a847d25eeba3a1f5a1689f7fda3c21eb658861d2630a6100e09a182522ebbaeef2a46362c5ec9713eb404c9fa10515f61cdbe59ac17abb978ebc59e62f758543577ada7f630aa12bbf3615afa0da569679505c843beaafe56e47bf24a2d0aa7473b85c78aa19de92f00e277e21cb43b00dabd183242d21cd96bed5c49dcfd3b6a63867f659e9b36deb86b5a8969e246013085975aed450d51be35256c1f4b7d0ab43a9bf20c956ab14887107cb5f44710038aeaba558a17663fbb69da00aad107f0a63af457db09d21d2cfe27518aafb0d19e30bffa8e83b73e8203c7a6166f533e6078029428a527ad53adc130aed713e43bd717d881bfc441e4ac80f3445e9da66dc77560717c0014e18e083f3745320f7f7df0c3de82760a90fbceb461d2c690e50fc21db409dde1fb782acb140c3cb154dfed725346f192bb250b7e48d0df8c77ef4b265b21da45adb0c7e725d37d9148483d755a06d0f0d51e9ee42f0251db7cff403a6692a0fc30b42a272c85a116d9543de863973ff27df9d8a2e8051bd9e83984882ee3feb56debc82201f21729d5f786d7878883710f429791828cf21f1d01e8df7442c445ebeac2d806abf8339729131a2022309c4e53b8db90f35e7d73bd54cd87838c2931649e3bbb51bd941c787a5f174d958842808d5c586605d72db56b74fdcc5680fe43ca3b2a1ae6934598bfa8ef952cc74cb7f0f5f9fac123ff664d705c36d19633761caa0045a97e8c4e89ba46b40fcb6f2ce15c9416a042a56513db3bb378639990bdfac74ab54ca426e0f79f1a7f8be814226b04f194a415bcff6ad923e9500af66124e73638e6a4279e2984a6f11996694a795be3ec60773676131c8b7dc491eb4aba3b3d6b6d449b9c2345316295c38a22140015d45348464cb50bc8955d5b4c5abbc5b644de319dd5bf860f1a67ed1127532e3463c9597106b02a4befa4a8db84b564abad7d8bbd5c8ea5afefb8537b2a6a175373a07514c926ac797a1fd808e15501de046649cfb60f787e42e75fcd17fec5a9e0e6ccf0980fbae8e3848e4453bf0df9cbae73a0afc02d2dfd29ddd7f24ccbf859e0d3776f7bba239008ee12ee0f6a1747c77390a3342177ca8df92e8d3fa1255c1a9abea08855d3b144b974e8b6db3fe7a854b84a649e4007392efe7a7f9ba69937ea16491f253ec48c0d74692eaa05b2d5072fe9078564a14c67da5c692897fd2f484b387aed734c64b39ca1ed10598358a9e14461efac1f75444a3e18481cbe17c7</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>Buy me a coffee……</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Pi Haoxuan 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Pi Haoxuan 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/chatgpt%E9%95%9C%E5%83%8F/" rel="tag"># chatgpt镜像</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/06/%E6%B3%A8%E5%86%8CGPT/" rel="prev" title="注册GPT">
+      <i class="fa fa-chevron-left"></i> 注册GPT
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/06/20230506/" rel="next" title="接上篇">
+      接上篇 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Pi Haoxuan"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Pi Haoxuan</p>
+  <div class="site-description" itemprop="description">pi's website</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pihaoxuan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pihaoxuan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io"><i class="fab fa-gg fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:haoxuanapi@163.com" title="E-Mail → mailto:haoxuanapi@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://pi_haoxuan.gitee.io/" title="https:&#x2F;&#x2F;pi_haoxuan.gitee.io">PI's website</a>
+        </li>
+    </ul>
+  </div>
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/03/22/git%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" title="2024&#x2F;03&#x2F;22&#x2F;git命令大全&#x2F;">git命令大全</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/14/digitalImageProcessing-lab4/" title="2023&#x2F;12&#x2F;14&#x2F;digitalImageProcessing-lab4&#x2F;">digitalImageProcessing-lab4</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/07/digitalImageProcessing-lab3/" title="2023&#x2F;12&#x2F;07&#x2F;digitalImageProcessing-lab3&#x2F;">digitalImageProcessing-lab3</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/07/digitalImageProcessing-lab2/" title="2023&#x2F;12&#x2F;07&#x2F;digitalImageProcessing-lab2&#x2F;">digitalImageProcessing-lab2</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/11/25/softwarerequest/" title="2023&#x2F;11&#x2F;25&#x2F;softwarerequest&#x2F;">softwarerequest</a>
+        </li>
+    </ul>
+  </div>
+      </div>
+
+      
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-undefined">
+    <div class="links-of-blogroll-title">
+      <!-- modify icon to fire by szw -->
+      <i class="fa fa-history fa-" aria-hidden="true"></i>
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pi Haoxuan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* 
+		Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		var t1 = Date.UTC(2023,05,04,20,27,02); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML="SPINNING PEN 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"+"<br>";
+	}
+	siteTime();
+</script>
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i>
+  <span id="busuanzi_container_site_uv">
+    本站总访客数:<span id="busuanzi_value_site_uv"></span>&nbsp;&nbsp;| 
+  </span>
+  <span id="busuanzi_container_site_pv">
+      &nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  </div>
+  </div>
+
+  <script>
+      var now = new Date(); 
+      function createtime() { 
+          var grt= new Date("03/12/2019 12:00:00");//此处修改你的建站时间或者网站上线时间 
+          now.setTime(now.getTime()+250); 
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+      } 
+  setInterval("createtime()",250);
+  </script>
+
+
+
+
+
+<script>
+    //   自定义邮箱审核规则
+    document.body.addEventListener('click', function(e) {
+        if (e.target.classList.contains('vsubmit')) {
+            const email = document.querySelector('input[type=email]');
+            const nick = document.querySelector('input[name=nick]');
+            const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (!email.value || !nick.value || !reg.test(email.value)) {
+                const str = `<div class="valert text-center"><div class="vtext">请填写正确的昵称和邮箱！</div></div>`;
+                const vmark = document.querySelector('.vmark');
+                vmark.innerHTML = str;
+                vmark.style.display = 'block';
+                setTimeout(function() {
+                    vmark.style.display = 'none';
+                    vmark.innerHTML = '';
+                }, 2500);
+            }
+        }
+    })
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://pi_haoxuan.gitee.io/2023/05/06/chatgpt%E9%95%9C%E5%83%8F/";
+    this.page.identifier = "2023/05/06/chatgpt镜像/";
+    this.page.title = "chatgpt镜像";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+
+
+  
+</body>
+</html>

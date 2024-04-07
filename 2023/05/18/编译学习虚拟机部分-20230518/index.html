@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/pen.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/pen.png">
+  <link rel="mask-icon" href="/images/website.svgs" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"pi_haoxuan.gitee.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="编译学习虚拟机部分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译学习-虚拟机部分--20230518">
+<meta property="og:url" content="https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/index.html">
+<meta property="og:site_name" content="SPINNING PEN">
+<meta property="og:description" content="编译学习虚拟机部分">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg">
+<meta property="article:published_time" content="2023-05-18T08:59:24.000Z">
+<meta property="article:modified_time" content="2023-11-21T16:04:43.506Z">
+<meta property="article:author" content="Pi Haoxuan">
+<meta property="article:tag" content="编译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg">
+
+<link rel="canonical" href="https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>编译学习-虚拟机部分--20230518 | SPINNING PEN</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">SPINNING PEN</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">WRITE BY PIHAOXUAN</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="SPINNING PEN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          编译学习-虚拟机部分--20230518
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-18 16:59:24" itemprop="dateCreated datePublished" datetime="2023-05-18T16:59:24+08:00">2023-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-22 00:04:43" itemprop="dateModified" datetime="2023-11-22T00:04:43+08:00">2023-11-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/What-I-did-today/" itemprop="url" rel="index"><span itemprop="name">What I did today</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2023/05/18/编译学习虚拟机部分-20230518/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>编译学习虚拟机部分</p>
+<span id="more"></span>
+
+<h3 id="1、支撑知识"><a href="#1、支撑知识" class="headerlink" title="1、支撑知识"></a>1、支撑知识</h3><h4 id="关于电脑内存"><a href="#关于电脑内存" class="headerlink" title="关于电脑内存"></a>关于电脑内存</h4><p>电脑中的内存是虚拟地址映射到实际的内存上，而非真是有这么多。</p>
+<h4 id="关于本次使用的内存段"><a href="#关于本次使用的内存段" class="headerlink" title="关于本次使用的内存段"></a>关于本次使用的内存段</h4><p>简单来讲，进程的内存会被分为以下几个段</p>
+<blockquote>
+<p>1.代码段（text），用于存放指令代码，位于较低地址。（可能是指令需要改动不多甚至不需要改动，放在一些低地址区域，该区域可能是只读的）</p>
+<p>2.数据段（data），用于存放<strong>已经初始化的数据</strong>，例如<code>int i = 10</code>就是已经初始化的数据，需要存储到改位置。</p>
+<p>3.未初始化数据段（bss），顾名思义，就是存放<strong>未初始化的数据</strong>的地方，例如<code>int i[1000]</code>就是属于只声明而未初始化的数据，存放在该段。</p>
+<p>4.堆（heap），用于为程序动态分配内存。</p>
+<p>5.栈（stack）用于处理函数调用的相关数据，例如调用帧或者函数的局部变量。</p>
+</blockquote>
+<p>在第一点中提到在代码段在内存中位于低地址区域，那么如下图所示：</p>
+<p><code>图一</code></p>
+<p><img src="/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg" alt="各部分地址分布"></p>
+<p>个人理解：在计算机内存中，低地址是不允许写入的，其中存放的数据都是一些系统级的或者是常量，例如数字（0-9），字符（a-zA-Z,.&#x2F;等），当程序需要时，就只能读取而不能写入。</p>
+<p>而在高地址字段，例如堆栈，可以实现内存的动态分配和数据的调用和修改，即可读可写，提高了与用户的交互性。</p>
+<p>为简单起见，本次只关心 <strong>①代码段 ②数据段 ③栈</strong></p>
+<h4 id="③寄存器"><a href="#③寄存器" class="headerlink" title="③寄存器"></a>③寄存器</h4><p>寄存器用于存放计算机的运行状态，真实计算机中有许多寄存器，本次只用4种。</p>
+<blockquote>
+<p>1.<code>PC（Program Counter）程序计数器</code> 存放内存地址，该地址中放着<strong>下一条</strong>要执行的计算机指令</p>
+<p>2.<code>SP（Stack Pointer）指针寄存器</code> 永远指向当前栈的栈顶。因为栈顶是由高地址扩张到低地址（可以参考图一，栈底在最顶端）所以当有数据入栈时，SP的地址值减小；当出栈时SP的地址值增大</p>
+<p>3.<code>BP（Base Pointer）基址指针</code> 也是用于指向栈的某些位置（不想确定的位置，也并不是不能指向栈顶）</p>
+<p>4.<code>AX（Accumulator Register）通用寄存器</code> 从英文上看出是累加寄存器，在虚拟机中，用于存放一条指令执行后的计算结果。</p>
+<p><strong>PS：前三个都是存放地址的，定义是要指针定义，而AX是存放结果的，不用定义成指针。在实际计算机中，PC的初始值应该指向main函数的地址，但是现在 还没到这一步，先不指定。</strong></p>
+</blockquote>
+<h4 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h4><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>可不可以用unsigned int？？？</p>
+<h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><h4 id="类型问题"><a href="#类型问题" class="headerlink" title="类型问题"></a>类型问题</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ax;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LC)   &#123;ax = *(<span class="type">char</span> *)ax;&#125;      <span class="comment">// load character to ax, address in ax</span></span><br></pre></td></tr></table></figure>
+
+<p>if中的操作是将ax中的值作为地址，并且按照char类型解析该地址指向的内容，然后将解析完后的char重新赋值给ax，应该会导致类型冲突的呀。</p>
+<blockquote>
+<p><strong>解答</strong>：在计算机内存中，不论是<code>int</code>还是<code>char</code>还是各种指针类型，其实都是一个数，而<code>int</code>，<code>char</code>或者是<code>int*</code>，<code>char*</code>是决定程序在解析这个数的时候的方式（往后读多少个内存单元，按照什么类型解析）。</p>
+<p>改代码中，如果ax不是很大的数（8位以内），可以正常运行，再大就会出现转换错误的情况。</p>
+</blockquote>
+<h4 id="sp-sp-pc"><a href="#sp-sp-pc" class="headerlink" title="sp = sp - *pc++"></a><code>sp = sp - *pc++</code></h4><p>将栈顶指针sp 减去下一个指令需要使用的空间大小，pc++是指下一个指令的地址，解引用后就是指下一个指令，同时是一个int值，为什么指的是下一个指令所需要的空间大小？</p>
+<blockquote>
+<p><strong>解答</strong>：在函数调用时，一个函数需要多大的空间运行，一般都会在函数内部用一个小空间存储这个内容。</p>
+<p>这里将这个内容取出来减去，就是回收之前为子函数开辟出来的子函数提前告知的需要的空间。</p>
+</blockquote>
+<h3 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h3><h4 id="关于指针"><a href="#关于指针" class="headerlink" title="关于指针"></a>关于指针</h4><p><code>int * </code>和<code>char *</code>本质上都是指针，而指针都是一个数字，而计算机内指针都是用数字表示的，为什么不统一用int或者是unsigned int，而是要分int char和其它？</p>
+<p>因为<code>int * </code>和<code>char *</code>指向的数字表示不同的数据类型，而且还是做指针运算时的重要依据，比如在int类型中，指针运算++是向后移动4个字节（大多数机器是这样的），而char类型在做指针运算时，往往只向后移动1个字节，计算机做出这样的依据就是所使用的指针类型。</p>
+<p>其次，在计算机编译阶段，这两种类型对应存储的数据需要不同，计算机在编译时会检查<code>int * </code>和<code>char *</code>所指向的数据是否正确，若不正确则报错，避免潜在的错误。</p>
+<p>GPT这样说：</p>
+<blockquote>
+<p>int *和char *在本质上的区别是指针所指向内存单元中存储的数据类型不同。</p>
+<p>int * 是一个指向整型变量的指针，它所指向的内存单元中存储的是一个整型数值，占用 4 字节（在大部分机器上）。而 char * 则是一个指向字符型变量的指针，它所指向的内存单元中存储的是一个字节大小的 ASCII 码或者 Unicode 码。</p>
+<p>在计算机编译时，int <em>和char * 在指针操作上会有所不同。在执行指针运算时，指针所指向的内存单元地址将根据数据类型的不同而发生改变。例如，对于一个 int</em> 指针变量 p，执行 p++ 操作时，p 的值将增加 4，因为一个 int 变量占用 4 个字节。而对于一个 char* 指针变量 q，执行 q++ 操作时，q 的值只会增加 1，因为一个 char 变量只占用一个字节。</p>
+<p>此外，在编译器生成目标代码时，对于 int * 和 char * 所指向的内存单元，编译器在生成代码时还会进行类型检查。这是为了确保程序不会访问不正确的内存地址，避免潜在的错误。例如，在使用 int * 指针时，我们只能访问整型变量的内存地址，不能访问 char 或其他类型变量的内存地址。</p>
+</blockquote>
+<h4 id="关于栈顶"><a href="#关于栈顶" class="headerlink" title="关于栈顶"></a>关于栈顶</h4><p><code>SP指针寄存器</code> 永远指向当前栈的栈顶  此处的栈顶是最顶端的元素，而非最顶端元素的上面一个。</p>
+<h4 id="一些骚操作"><a href="#一些骚操作" class="headerlink" title="一些骚操作"></a>一些骚操作</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SC)   &#123;ax = *(<span class="type">char</span> *)*sp++ = ax;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码的运算顺序是：</p>
+<p>①sp++申请新空间</p>
+<p>②*解引用</p>
+<p>③将ax的值存进去</p>
+<p>④char * 强转</p>
+<p>⑤*解引用</p>
+<p>⑥将值再赋给ax（如果ax中的数字小的话，其实没变）</p>
+<h4 id="pc-1和-int-pc"><a href="#pc-1和-int-pc" class="headerlink" title="pc+1和(int *)*pc"></a><code>pc+1</code>和<code>(int *)*pc</code></h4><p><code>pc = pc+1</code>是指顺序执行下一行代码（从上帝视角来看）</p>
+<p><code>pc = (int *) *pc</code>是指跳转到下一个语句块</p>
+<p>从JMP指令的实现是<code>pc = (int *) *pc</code>就能看出，如果if后面是0，那么则回执行<code>pc = (int *) *pc</code>，实质上是进行了一次JMP。</p>
+<h4 id><a href="#" class="headerlink" title></a></h4>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>Buy me a coffee……</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Pi Haoxuan 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Pi Haoxuan 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E8%AF%91/" rel="tag"># 编译</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/12/%E7%BC%96%E8%AF%91%E8%AE%BE%E8%AE%A1/" rel="prev" title="编译设计">
+      <i class="fa fa-chevron-left"></i> 编译设计
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/22/C%E8%AF%AD%E8%A8%80%E5%87%BD%E6%95%B0%E8%A7%A3%E9%87%8A/" rel="next" title="C语言解释">
+      C语言解释 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%94%AF%E6%92%91%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">1、支撑知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%94%B5%E8%84%91%E5%86%85%E5%AD%98"><span class="nav-number">1.1.</span> <span class="nav-text">关于电脑内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E6%AC%A1%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E5%AD%98%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">关于本次使用的内存段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A2%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">③寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">1.4.</span> <span class="nav-text">指令集</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">类型问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sp-sp-pc"><span class="nav-number">3.2.</span> <span class="nav-text">sp &#x3D; sp - *pc++</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIPS%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">TIPS：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%8C%87%E9%92%88"><span class="nav-number">4.1.</span> <span class="nav-text">关于指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%88%E9%A1%B6"><span class="nav-number">4.2.</span> <span class="nav-text">关于栈顶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%AA%9A%E6%93%8D%E4%BD%9C"><span class="nav-number">4.3.</span> <span class="nav-text">一些骚操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pc-1%E5%92%8C-int-pc"><span class="nav-number">4.4.</span> <span class="nav-text">pc+1和(int *)*pc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.5.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Pi Haoxuan"
+      src="/images/touxiang.jpg">
+  <p class="site-author-name" itemprop="name">Pi Haoxuan</p>
+  <div class="site-description" itemprop="description">pi's website</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pihaoxuan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pihaoxuan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io"><i class="fab fa-gg fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:haoxuanapi@163.com" title="E-Mail → mailto:haoxuanapi@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://pi_haoxuan.gitee.io/" title="https:&#x2F;&#x2F;pi_haoxuan.gitee.io">PI's website</a>
+        </li>
+    </ul>
+  </div>
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/03/22/git%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/" title="2024&#x2F;03&#x2F;22&#x2F;git命令大全&#x2F;">git命令大全</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/14/digitalImageProcessing-lab4/" title="2023&#x2F;12&#x2F;14&#x2F;digitalImageProcessing-lab4&#x2F;">digitalImageProcessing-lab4</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/07/digitalImageProcessing-lab3/" title="2023&#x2F;12&#x2F;07&#x2F;digitalImageProcessing-lab3&#x2F;">digitalImageProcessing-lab3</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/07/digitalImageProcessing-lab2/" title="2023&#x2F;12&#x2F;07&#x2F;digitalImageProcessing-lab2&#x2F;">digitalImageProcessing-lab2</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/11/25/softwarerequest/" title="2023&#x2F;11&#x2F;25&#x2F;softwarerequest&#x2F;">softwarerequest</a>
+        </li>
+    </ul>
+  </div>
+      </div>
+
+      
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-undefined">
+    <div class="links-of-blogroll-title">
+      <!-- modify icon to fire by szw -->
+      <i class="fa fa-history fa-" aria-hidden="true"></i>
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pi Haoxuan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">65k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:01</span>
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* 
+		Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		var t1 = Date.UTC(2023,05,04,20,27,02); //北京时间2018-2-13 00:00:00
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML="SPINNING PEN 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒"+"<br>";
+	}
+	siteTime();
+</script>
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i>
+  <span id="busuanzi_container_site_uv">
+    本站总访客数:<span id="busuanzi_value_site_uv"></span>&nbsp;&nbsp;| 
+  </span>
+  <span id="busuanzi_container_site_pv">
+      &nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  </div>
+  </div>
+
+  <script>
+      var now = new Date(); 
+      function createtime() { 
+          var grt= new Date("03/12/2019 12:00:00");//此处修改你的建站时间或者网站上线时间 
+          now.setTime(now.getTime()+250); 
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+      } 
+  setInterval("createtime()",250);
+  </script>
+
+
+
+
+
+<script>
+    //   自定义邮箱审核规则
+    document.body.addEventListener('click', function(e) {
+        if (e.target.classList.contains('vsubmit')) {
+            const email = document.querySelector('input[type=email]');
+            const nick = document.querySelector('input[name=nick]');
+            const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (!email.value || !nick.value || !reg.test(email.value)) {
+                const str = `<div class="valert text-center"><div class="vtext">请填写正确的昵称和邮箱！</div></div>`;
+                const vmark = document.querySelector('.vmark');
+                vmark.innerHTML = str;
+                vmark.style.display = 'block';
+                setTimeout(function() {
+                    vmark.style.display = 'none';
+                    vmark.innerHTML = '';
+                }, 2500);
+            }
+        }
+    })
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://pi_haoxuan.gitee.io/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/";
+    this.page.identifier = "2023/05/18/编译学习虚拟机部分-20230518/";
+    this.page.title = "编译学习-虚拟机部分--20230518";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+
+
+  
+</body>
+</html>
