@@ -17,41 +17,41 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pi_haoxuan.gitee.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pi_haoxuan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="实验一：直方图均衡化、对数变换、幂次变换">
 <meta property="og:type" content="article">
 <meta property="og:title" content="digitalImageProcessing_lab1">
-<meta property="og:url" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/index.html">
+<meta property="og:url" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/index.html">
 <meta property="og:site_name" content="SPINNING PEN">
 <meta property="og:description" content="实验一：直方图均衡化、对数变换、幂次变换">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/%E5%85%AC%E5%BC%8F1.jpg">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/bright.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/bright_my.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/log_transform/bright_my_300_.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/power_transform/bright_my_5_.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/clear.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/clear_my.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/log_transform/clear_my_100_.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/power_transform/clear_my_2_.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/dark.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/dark_my.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/log_transform/dark_my_50_.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/power_transform/dark_my_0.5_.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/unclear.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/unclear_my.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/log_transform/unclear_my_100_.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/power_transform/unclear_my_2_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/%E5%85%AC%E5%BC%8F1.jpg">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/bright.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/bright_my.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/log_transform/bright_my_300_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/power_transform/bright_my_5_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/clear.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/clear_my.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/log_transform/clear_my_100_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/power_transform/clear_my_2_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/dark.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/dark_my.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/log_transform/dark_my_50_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/power_transform/dark_my_0.5_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/unclear.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/historgram_result/unclear_my.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/log_transform/unclear_my_100_.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/power_transform/unclear_my_2_.bmp">
 <meta property="article:published_time" content="2023-11-17T14:57:40.000Z">
 <meta property="article:modified_time" content="2023-12-07T07:32:07.590Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="数字图像处理实验1">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/%E5%85%AC%E5%BC%8F1.jpg">
+<meta name="twitter:image" content="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/%E5%85%AC%E5%BC%8F1.jpg">
 
-<link rel="canonical" href="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/">
+<link rel="canonical" href="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/">
 
 
 <script id="page-configurations">
@@ -214,7 +214,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/">
+    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -347,7 +347,7 @@
 <p><img src="/2023/11/17/digitalImageProcessing-lab1/unclear.bmp" alt="unclear" style="zoom:50%;"><img src="/2023/11/17/digitalImageProcessing-lab1/historgram_result/unclear_my.bmp" alt="unclear_my" style="zoom:50%;"></p>
 <p><img src="/2023/11/17/digitalImageProcessing-lab1/log_transform/unclear_my_100_.bmp" alt="unclear_my_100_" style="zoom:50%;"><img src="/2023/11/17/digitalImageProcessing-lab1/power_transform/unclear_my_2_.bmp" alt="unclear_my_2_" style="zoom:50%;"></p>
 <p>下图log变换底数为100，幂次变换指数为2 （tif文件不能插入到markdown中，请看PDF文件）</p>
-<p>PDF文件略有不同，影响不大<a href="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/digitalImgPro_lab1.pdf">digitalImgPro_lab1.pdf </a></p>
+<p>PDF文件略有不同，影响不大<a target="_blank" rel="noopener" href="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/digitalImgPro_lab1.pdf">digitalImgPro_lab1.pdf </a></p>
 <div class="pdfobject-container" data-target="https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/digitalImgPro_lab1.pdf" data-height="500px"></div>
 
     </div>
@@ -517,7 +517,7 @@
         <a href="https://github.com/pihaoxuan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pihaoxuan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io"><i class="fab fa-gg fa-fw"></i></a>
+        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io" rel="noopener" target="_blank"><i class="fab fa-gg fa-fw"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="mailto:haoxuanapi@163.com" title="E-Mail → mailto:haoxuanapi@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
@@ -531,7 +531,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://pi_haoxuan.gitee.io/" title="https:&#x2F;&#x2F;pi_haoxuan.gitee.io">PI's website</a>
+          <a href="https://pi_haoxuan.gitee.io/" title="https:&#x2F;&#x2F;pi_haoxuan.gitee.io" rel="noopener" target="_blank">PI's website</a>
         </li>
     </ul>
   </div>
@@ -628,7 +628,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:01</span>
+    <span title="站点阅读时长">59 分钟</span>
 </div>
 
 <span id="sitetime"></span>
@@ -833,7 +833,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://pi_haoxuan.gitee.io/2023/11/17/digitalImageProcessing-lab1/";
+    this.page.url = "https://pi_haoxuan.github.io/2023/11/17/digitalImageProcessing-lab1/";
     this.page.identifier = "2023/11/17/digitalImageProcessing-lab1/";
     this.page.title = "digitalImageProcessing_lab1";
     };

@@ -17,53 +17,53 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pi_haoxuan.gitee.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pi_haoxuan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Roberts算子边缘检测、Sobel算子边缘检测、Prewitt算子边缘检测、拉普拉斯算子边缘检测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="digitalImageProcessing-lab4">
-<meta property="og:url" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/index.html">
+<meta property="og:url" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/index.html">
 <meta property="og:site_name" content="SPINNING PEN">
 <meta property="og:description" content="Roberts算子边缘检测、Sobel算子边缘检测、Prewitt算子边缘检测、拉普拉斯算子边缘检测">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/image.png">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/image-2.png">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/image-1.png">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/image-3.png">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/image-4.png">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img1/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img1/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img1/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img2/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img2/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img2/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img3/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img3/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img3/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img4/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img4/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img4/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image.png">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-2.png">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-1.png">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-3.png">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-4.png">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/robert.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/prewitt.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/sobel.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/robert.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/prewitt.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/sobel.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/robert.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/prewitt.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/sobel.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/robert.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/prewitt.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/sobel.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_result.bmp">
+<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
 <meta property="article:published_time" content="2023-12-14T07:46:18.000Z">
 <meta property="article:modified_time" content="2023-12-14T08:13:45.512Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="数字图像处理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/image.png">
+<meta name="twitter:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image.png">
 
-<link rel="canonical" href="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/">
+<link rel="canonical" href="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/">
 
 
 <script id="page-configurations">
@@ -226,7 +226,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/">
+    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -500,7 +500,7 @@
 <p>prewitt算子相较于robert算子的卷积核较为复杂，能保存表面的细节更多，并且其垂直边缘和水平边缘明显强于robert算子检测结果。</p>
 <p>sobel算子在prewitt算子的基础上增加了核心像素周围的权重，使得核心像素占比更大，边缘突出明显</p>
 <p>拉普拉斯算子因为对噪声过于敏感，检测出的图像几乎都是很明显的边缘，对于房子墙体的边缘则没有过大响应<br><img src="/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_result.bmp"><br>于是改用高斯拉普拉斯算子检测，结果如图：<br><img src="/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp"><br>上图虽然对墙体的边缘有了较大的响应，但是整体有过重的噪声污染，较拉普拉斯算子检测效果好。</p>
-<p><a href="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/lab4.pdf">pdf preview</a></p>
+<p><a target="_blank" rel="noopener" href="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/lab4.pdf">pdf preview</a></p>
 <div class="pdfobject-container" data-target="https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/lab4.pdf" data-height="500px"></div>
 
     </div>
@@ -670,7 +670,7 @@
         <a href="https://github.com/pihaoxuan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pihaoxuan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io"><i class="fab fa-gg fa-fw"></i></a>
+        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io" rel="noopener" target="_blank"><i class="fab fa-gg fa-fw"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="mailto:haoxuanapi@163.com" title="E-Mail → mailto:haoxuanapi@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
@@ -684,7 +684,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://pi_haoxuan.gitee.io/" title="https:&#x2F;&#x2F;pi_haoxuan.gitee.io">PI's website</a>
+          <a href="https://pi_haoxuan.gitee.io/" title="https:&#x2F;&#x2F;pi_haoxuan.gitee.io" rel="noopener" target="_blank">PI's website</a>
         </li>
     </ul>
   </div>
@@ -781,7 +781,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:01</span>
+    <span title="站点阅读时长">59 分钟</span>
 </div>
 
 <span id="sitetime"></span>
@@ -986,7 +986,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://pi_haoxuan.gitee.io/2023/12/14/digitalImageProcessing-lab4/";
+    this.page.url = "https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/";
     this.page.identifier = "2023/12/14/digitalImageProcessing-lab4/";
     this.page.title = "digitalImageProcessing-lab4";
     };
