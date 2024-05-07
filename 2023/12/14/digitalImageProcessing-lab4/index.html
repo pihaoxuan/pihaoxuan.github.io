@@ -17,53 +17,53 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"pi_haoxuan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"pihaoxuan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Roberts算子边缘检测、Sobel算子边缘检测、Prewitt算子边缘检测、拉普拉斯算子边缘检测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="digitalImageProcessing-lab4">
-<meta property="og:url" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/index.html">
+<meta property="og:url" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/index.html">
 <meta property="og:site_name" content="SPINNING PEN">
 <meta property="og:description" content="Roberts算子边缘检测、Sobel算子边缘检测、Prewitt算子边缘检测、拉普拉斯算子边缘检测">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image.png">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-2.png">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-1.png">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-3.png">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-4.png">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/robert.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/prewitt.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/sobel.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_result.bmp">
-<meta property="og:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image.png">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-2.png">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-1.png">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-3.png">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image-4.png">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/robert.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/prewitt.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/sobel.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/robert.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/prewitt.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/sobel.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/robert.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/prewitt.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/sobel.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/robert.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/prewitt.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/sobel.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img1/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img2/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img3/laplacian_gaosi_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_result.bmp">
+<meta property="og:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/img4/laplacian_gaosi_result.bmp">
 <meta property="article:published_time" content="2023-12-14T07:46:18.000Z">
 <meta property="article:modified_time" content="2023-12-14T08:13:45.512Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="数字图像处理">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image.png">
+<meta name="twitter:image" content="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/image.png">
 
-<link rel="canonical" href="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/">
+<link rel="canonical" href="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/">
 
 
 <script id="page-configurations">
@@ -226,7 +226,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.jpg">
@@ -986,7 +986,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://pi_haoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/";
+    this.page.url = "https://pihaoxuan.github.io/2023/12/14/digitalImageProcessing-lab4/";
     this.page.identifier = "2023/12/14/digitalImageProcessing-lab4/";
     this.page.title = "digitalImageProcessing-lab4";
     };
