@@ -43,58 +43,6 @@
       </tags>
   </entry>
   <entry>
-    <title>接上篇</title>
-    <url>/2023/05/06/20230506/</url>
-    <content><![CDATA[<p>今天学的有点散乱</p>
-<span id="more"></span>
-
-<p>上一篇文章：<a href="/2023/05/05/20230505/" title="开始接触编译">开始接触编译</a></p>
-<h4 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h4><p>即使用语法树和符号表，检查源程序是否和语言定义的语义一致，同时收集类型信息，将它们放在语法树或者符号表中，后面的中间代码生成中会用到。</p>
-<p>同时，在语法树中，自动类型转换可以作为一个单独的节点表示，如下图</p>
-<p><img src="/2023/05/06/20230506/cast.jpg" alt="cast"></p>
-<p>inttofloat 表示把一个整型转换成一个浮点型。当上述（上篇文章）中的a，b，c都是浮点型时，30必须转换成浮点型才能和它们进行运算，因此发生了自动类型转换。且从低精度到高精度的转换是自然的。</p>
-<h4 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h4><p>其实，上述文章中一直在讲的<strong>语法树</strong>已经是一种中间代码了。</p>
-<p>中间代码需要满足两点：①<strong>易于生成</strong>     ②<strong>易于被翻译成目标机器的语言</strong></p>
-<p>例如<strong>三地址代码</strong></p>
-<p>上述表达式<strong>a &#x3D; b + c * 30</strong>可以表示为</p>
-<p><code>code1.1</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">t1 = inttofloat(30)</span><br><span class="line">t2 = id3 * t1</span><br><span class="line">t3 = id2 + t2</span><br><span class="line">id1 = t3</span><br></pre></td></tr></table></figure>
-
-<p>上述代码块就是三地址代码。</p>
-<p>三地址代码有以下要求：①<strong>赋值指令右侧最多只能有一个运算符</strong>（为了保证运算顺序）；②<strong>编译器应该生成一个临时变量名存放三地址指令计算得到的值</strong>（例如t1,t2,t3）;③<strong>有些三地址代码的运算分量少于三个</strong>（例如上述代码块第1行和第4行）.</p>
-<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><p>机器无关代码的优化，实质上就是改进中间代码，从而可以生成更好的目标代码（更好意味着执行更快或者功耗更小等等）</p>
-<p>比如，上面的三地址代码第一行，可以在编译的时候直接用<strong>30.0</strong>替换<strong>30</strong>，从而避免进行转型运算，中间步骤也可以优化，具体如下</p>
-<p><code>code1.2</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">t1 = id3 * 30.0</span><br><span class="line">id1 = id2 + t1</span><br></pre></td></tr></table></figure>
-
-<h4 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h4><p>即生成目标机器的语言。</p>
-<p>中间代码作为代码生成器的输入，映射到目标语言。如果目标机器的目标语言是机器代码，那么就需要合理分配寄存器以存放变量的值。</p>
-<p>例如，code1.2 可以被翻译成如下形式</p>
-<p><code>code1.3</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">LDF R2,id3</span><br><span class="line">MULF R2,R2,#30.0</span><br><span class="line">LDF R1,id2</span><br><span class="line">ADDF R1,R2</span><br><span class="line">STF id1,R1</span><br></pre></td></tr></table></figure>
-
-<p><strong>自行理解</strong></p>
-<h4 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h4><p><strong>符号表是一种数据结构</strong>，可以存储变量的各个属性，例如变量的存储分配，变量类型，变量的作用域等等。</p>
-<h4 id="趟"><a href="#趟" class="headerlink" title="趟"></a>趟</h4><p>可以将多个步骤组合成一趟。例如前端步骤中的词法分析，语法分析，语义分析以及中间代码生成可以被组合成一趟，而代码优化可以作为一个可选择的趟。还可以有一个为特定目标机器生成代码的后端趟。</p>
-<p>可以有不同的前端趟和某个固定的机器后端结合，实现一台机器可以编译多种语言</p>
-<p>也可以固定的前端趟和不同的机器后端结合，实现同一语言不同机器编译</p>
-<h4 id="编译器构造工具"><a href="#编译器构造工具" class="headerlink" title="编译器构造工具"></a>编译器构造工具</h4><p>顾名思义，就是做编译器的东西</p>
-<p>1）语法分析器的生成器：根据某一规则，生成相应的语法分析器</p>
-<p>2）扫描器的生成器：根据某一规则，生成相应的扫描器（扫描器也即词法分析器）</p>
-<p>3）语法制导的翻译引擎：生成一组用于遍历语法树并生成中间代码的例程（没大懂，抄书的）</p>
-<p>4）代码生成器的生成器：根据某些<strong>如何把中间语言翻译成目标机器语言</strong>的规则，生成代码</p>
-<p>5）数据流分析引擎：收集数据流信息，即，程序的值如何从程序的一个部分流向另一个部分，可以简单的理解为，函数传参。</p>
-<p>6）编译器构造工具集：构造编译器工具的集合      <strong>纯纯废话了</strong></p>
-<p>END</p>
-]]></content>
-      <categories>
-        <category>What I did today</category>
-      </categories>
-      <tags>
-        <tag>编译</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>开始接触编译</title>
     <url>/2023/05/05/20230505/</url>
     <content><![CDATA[<p>编译学习</p>
@@ -180,24 +128,55 @@
       </tags>
   </entry>
   <entry>
-    <title>20230509（混账版）</title>
-    <url>/2023/05/09/20230509/</url>
-    <content><![CDATA[<p>混账版</p>
+    <title>接上篇</title>
+    <url>/2023/05/06/20230506/</url>
+    <content><![CDATA[<p>今天学的有点散乱</p>
 <span id="more"></span>
 
-<p>昨天没写，今天也混账</p>
-<p>都是水！！</p>
-<p>准备签证资料，烦得很</p>
-<p>装好了Ubuntu20.04版本，如果有些button显示不全，就是分辨率的问题，如果输入法奇怪，去设置里面把全屏和双拼换一下，换成微软的输入法，其它都还可以。Ubuntu比Windows好用。</p>
-<p>操作系统，恶补</p>
-<p>无</p>
+<p>上一篇文章：<a href="/2023/05/05/20230505/" title="开始接触编译">开始接触编译</a></p>
+<h4 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h4><p>即使用语法树和符号表，检查源程序是否和语言定义的语义一致，同时收集类型信息，将它们放在语法树或者符号表中，后面的中间代码生成中会用到。</p>
+<p>同时，在语法树中，自动类型转换可以作为一个单独的节点表示，如下图</p>
+<p><img src="/2023/05/06/20230506/cast.jpg" alt="cast"></p>
+<p>inttofloat 表示把一个整型转换成一个浮点型。当上述（上篇文章）中的a，b，c都是浮点型时，30必须转换成浮点型才能和它们进行运算，因此发生了自动类型转换。且从低精度到高精度的转换是自然的。</p>
+<h4 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h4><p>其实，上述文章中一直在讲的<strong>语法树</strong>已经是一种中间代码了。</p>
+<p>中间代码需要满足两点：①<strong>易于生成</strong>     ②<strong>易于被翻译成目标机器的语言</strong></p>
+<p>例如<strong>三地址代码</strong></p>
+<p>上述表达式<strong>a &#x3D; b + c * 30</strong>可以表示为</p>
+<p><code>code1.1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">t1 = inttofloat(30)</span><br><span class="line">t2 = id3 * t1</span><br><span class="line">t3 = id2 + t2</span><br><span class="line">id1 = t3</span><br></pre></td></tr></table></figure>
+
+<p>上述代码块就是三地址代码。</p>
+<p>三地址代码有以下要求：①<strong>赋值指令右侧最多只能有一个运算符</strong>（为了保证运算顺序）；②<strong>编译器应该生成一个临时变量名存放三地址指令计算得到的值</strong>（例如t1,t2,t3）;③<strong>有些三地址代码的运算分量少于三个</strong>（例如上述代码块第1行和第4行）.</p>
+<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><p>机器无关代码的优化，实质上就是改进中间代码，从而可以生成更好的目标代码（更好意味着执行更快或者功耗更小等等）</p>
+<p>比如，上面的三地址代码第一行，可以在编译的时候直接用<strong>30.0</strong>替换<strong>30</strong>，从而避免进行转型运算，中间步骤也可以优化，具体如下</p>
+<p><code>code1.2</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">t1 = id3 * 30.0</span><br><span class="line">id1 = id2 + t1</span><br></pre></td></tr></table></figure>
+
+<h4 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h4><p>即生成目标机器的语言。</p>
+<p>中间代码作为代码生成器的输入，映射到目标语言。如果目标机器的目标语言是机器代码，那么就需要合理分配寄存器以存放变量的值。</p>
+<p>例如，code1.2 可以被翻译成如下形式</p>
+<p><code>code1.3</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">LDF R2,id3</span><br><span class="line">MULF R2,R2,#30.0</span><br><span class="line">LDF R1,id2</span><br><span class="line">ADDF R1,R2</span><br><span class="line">STF id1,R1</span><br></pre></td></tr></table></figure>
+
+<p><strong>自行理解</strong></p>
+<h4 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h4><p><strong>符号表是一种数据结构</strong>，可以存储变量的各个属性，例如变量的存储分配，变量类型，变量的作用域等等。</p>
+<h4 id="趟"><a href="#趟" class="headerlink" title="趟"></a>趟</h4><p>可以将多个步骤组合成一趟。例如前端步骤中的词法分析，语法分析，语义分析以及中间代码生成可以被组合成一趟，而代码优化可以作为一个可选择的趟。还可以有一个为特定目标机器生成代码的后端趟。</p>
+<p>可以有不同的前端趟和某个固定的机器后端结合，实现一台机器可以编译多种语言</p>
+<p>也可以固定的前端趟和不同的机器后端结合，实现同一语言不同机器编译</p>
+<h4 id="编译器构造工具"><a href="#编译器构造工具" class="headerlink" title="编译器构造工具"></a>编译器构造工具</h4><p>顾名思义，就是做编译器的东西</p>
+<p>1）语法分析器的生成器：根据某一规则，生成相应的语法分析器</p>
+<p>2）扫描器的生成器：根据某一规则，生成相应的扫描器（扫描器也即词法分析器）</p>
+<p>3）语法制导的翻译引擎：生成一组用于遍历语法树并生成中间代码的例程（没大懂，抄书的）</p>
+<p>4）代码生成器的生成器：根据某些<strong>如何把中间语言翻译成目标机器语言</strong>的规则，生成代码</p>
+<p>5）数据流分析引擎：收集数据流信息，即，程序的值如何从程序的一个部分流向另一个部分，可以简单的理解为，函数传参。</p>
+<p>6）编译器构造工具集：构造编译器工具的集合      <strong>纯纯废话了</strong></p>
 <p>END</p>
 ]]></content>
       <categories>
         <category>What I did today</category>
       </categories>
       <tags>
-        <tag>daily</tag>
+        <tag>编译</tag>
       </tags>
   </entry>
   <entry>
@@ -216,6 +195,27 @@
       </categories>
       <tags>
         <tag>course</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>20230509（混账版）</title>
+    <url>/2023/05/09/20230509/</url>
+    <content><![CDATA[<p>混账版</p>
+<span id="more"></span>
+
+<p>昨天没写，今天也混账</p>
+<p>都是水！！</p>
+<p>准备签证资料，烦得很</p>
+<p>装好了Ubuntu20.04版本，如果有些button显示不全，就是分辨率的问题，如果输入法奇怪，去设置里面把全屏和双拼换一下，换成微软的输入法，其它都还可以。Ubuntu比Windows好用。</p>
+<p>操作系统，恶补</p>
+<p>无</p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
       </tags>
   </entry>
   <entry>
@@ -1250,6 +1250,20 @@
       </tags>
   </entry>
   <entry>
+    <title>科学必经之路</title>
+    <url>/2024/04/07/%E6%9C%BA%E5%9C%BA/</url>
+    <content><![CDATA[<p>some website can buy a subscribe to own a VPN.</p>
+<span id="more"></span>
+
+]]></content>
+      <categories>
+        <category>科学上网</category>
+      </categories>
+      <tags>
+        <tag>科学上网</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据库原理</title>
     <url>/2023/05/29/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<p>数据库系统原理实验&amp;&amp;作业</p>
@@ -1273,24 +1287,10 @@
       </tags>
   </entry>
   <entry>
-    <title>科学必经之路</title>
-    <url>/2024/04/07/%E6%9C%BA%E5%9C%BA/</url>
-    <content><![CDATA[<p>some website can buy a subscribe to own a VPN.</p>
-<span id="more"></span>
-
-]]></content>
-      <categories>
-        <category>科学上网</category>
-      </categories>
-      <tags>
-        <tag>科学上网</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>注册GPT</title>
     <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="65aaffa7efaa10cfd648f2190bb5668a949b1f116303e61de55f6546dac2f252">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998ca0cec4e196ca4e989eb9210ca333b378cd09f951c1274c1515b0dafa8b2bec398866fb76bf70f15726c4da7a749ac4ed4e68f9a934b0cb6e2c242430779f0d845820f9d13f47c01570a0d67633652f8e9f0daa8ef76374499404c5d8e8645ed90089a33c1d8a4d4399a5edeb1fe17b3a280b1edef5bfa3d800eb51c25cf11255325a8652d57eb8d84e5791c58fba3e7774ed64b6b1662fb5086ec5d0e5f3c0bf2c3dae10e760f99701557b9edf174e08e50acd9824821ee40789b83536dfb0e59ce70e8938018a04a161b80fab7d0011dce2e16250ef810df074c0ea48db818b795ea17283a7e632017d7788e47b7c9e80e8113d3dafb0fe687e23697d075654eb4f0094e23026ab70dd7294420ef1b7e78ac09e23b78711561fb5c030d27ac4c66ddf0154c66a357871c8b53f0e4780de989f3298a7025a7874390800c1dc4e27b40c04787734be9caa91e9e81896faf2cbab00b8f67c072f4f04bca331c69558a979cc7171e48771a2ea54343fa94538617c4c017dac9c1e94e4fa5dc9619d542aee1648691444b8ccb8d138a9906debe4d21457eb9746ae39247ace831ae0db4079997c9da6117c940805c53bd36d7c4c323805abee75bc410ab421bb1d2ffc1b435306fbb30801e63d2ec17059588accce2f3cd15412760f0abeab9176b6dbaaece70600b063fd60ddf108efda6295b6e1e354c5524ac138991b95225ffedd58548888eca1238cf4ccaaf821d0a9d6946e891ad5f3f5dafb65c02140194547c65248a0488b6f9d2ef5e1414c584cf2d979344c15d8da2aa8ece10d26073a0f7aabcea5aba77aba1bec01e4b747077af969946713399cadf4b637c967e825db8c8d8f9a56351d9d5a47769a5687fe8028564fb81342c2ce2a79e0363575a4d2baa68e170b1cc0ca8489479c9d3658f0609ffbb7bf96b909dde14e2b78900b86d1516574bc407c811e1029d12aa42daa90cd7a68e42504b4978a0c72aeaf65711c8f9e93962ef757ddadf3acfbbceb45a90b57541b9c59a4509735c38194f97bb13553191ba6cc58c7d2b03c753cb9f0e2d09121a48f94da072288c08320cb813a9c6993d0a8b252f8a089afb0ac19b18e8035ec0ecd5f7f6636a9d77e82915e01e202eb630b5f3eb47fbb6b618a20084584fb0d199299470fef31062c80b561f6f1b87d370ac5b63c1749079313837d153de6c62a707683648c8f1854c06a24545cea45c438990f41847497c21925d4cf9a1c1cd74351e40de199e91c40eb60d40e0c13919ff1f4247c18316f6f7814ad199afde8172a16cab9396aac4fefd3c6528a3471f17d86a03b9d216554cf96983f05a4752a4ed805d91318426109e6027b48e29b1007ccd34279e2d10bf84c26209b15bd1cef6491fc76fcfcb9910cc6f79d4d2d839e678485d1cf0ce681b03a6c31d085cb59317af3de5ed50abc81227052ad928d9a80e2471a5d7d03a65a1898ce3b6f496e6a419d53ba3742b8316d51acf395892e0bdf65cc7975561e9205c942dbf7641657a3c47a46ae13d557889f34e39399f78f525746a738ea2533ce87b417b628efc2e5235f5ee73343e752b62c49fd68e62671fc4501ee457798afde3c5051405a515d2a2619e9c6ae0ab451d906f5a2093aef26eea0aff394201fbaee9a676584cdab7ef3f21cb31b1c18b468f830aef0c72da715e418586a1715152a48bd26adeee83039824cc6b7b2062d4ed5e2c80cd505f67525b4614e9e742e84b3df17d74e85578d83135e865dc82497606c3830e91bdf6a2dcb8d6173b89852f55644c4c862fffde99c2f7c68ec18746020326b2627d694e84a0638e324d476ed7c2a4f381ea6d15b2aa0b0</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="ac5c4b04dd0c2a98754ea7f6abbe660964f8303a9ae62db3cb20e09e18e82a8d">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998ca0cec4e196ca4e989eb9210ca333b378cd09f951c1274c1515b0dafa8b2bec393615ea3ab1b47399bb77338e51b275a06040967920060a3796bac40cdcd90a2c4abcb9ac711c9da6106a44b3d549f8dcb3499d7b9d406f6f28aa66f10775498e61bf78fdfb87a2467e4c9d07f51a3e32bb55bc4880c6de25751801d43792018c77f0550605e9f131d580707114bdd08a5b7170d228ce912e72a24b769109d066dcf3d58fa3b14e27e05ebeae59f6313be39d66826662ff68374294d9ca98e6fe2d150a5f09741453ccb068f3d5df633aed581e8febef3fcff3a35d6ddd5b4e53307d503a3224e71fa665620a8dec5a6ee1f297d0847431cd38853e7910a9db3654bc44fd44342fa0415e0e0cbd62f3d8efbdbe5f8f2314422275f0516f0fb64964d887951965f752fd1368a18fb8231e0052caba1956bc9840c90bd024e0c825f4fb3fae36d413b4d29c82b837d97039d85b24a7e93792388318c9d81cd846e6cbb2ef6e8dda0e0208002d8e2a2452e924d4e869ab1435390669f5f878e8488acee070e0e07aad742914544ab5b068333c5a524cbb05a5cf1b07293884133125d4e51edac5b3642faff7584af9ca7e5c29a8af76a020fc5c40dfd7d2c35d76c050168a9d8c36ff6e128e59dcc6a8ea02c3219bc3c112654834d6ad9e049f70cca320c699b1f796ea44fe9091065efb2e0469929d35d68740e4150bdc13bc1edd6ace0c4fc63039d9ab4a3e606778c054a795b46f810907a9999da5d193fdefd5214ddd0018b966d99482da37322efa04da34c0ae8f31fdaec488730e92efb5f8a5a449ed76f43b2a913cc45ba1b8e1733348bae839a8bae24903ed5f31b76419b12b6c64533aea7bbae9c65a74f033f33138ac03e7525281e59e70729977c6d063340bc99a62bd46885984af397a9ad5b5893b546d01fef28cd97578c72939d92c0627354a221252435f192b30ba9ccc5a5204e71efe06029ef7c9eb2e97233911ccefd5b4dd4de1d6466d8f45b770c27db20c68a9277c19a1052fc74c1c20c35fdf69b32e909ab4aa3304161cbf57eafee30ce340d22fe94deeee1fd2ee7279038ad2b1bf07c9bf5f0fc83abd72730214d82e713de67b166809a3d676965bd64522da1cd554613a86b62c378f503146a465e44d1366c39fde4cfa850223de259717d9a90e5147b285c89e821b534c2ab1a7d58a753ed57b7155640d465a0e104d032948b3526f5c43a56fd742ad7910d1a85a1e57ee5ae019e931bb4936d0f3d88c0b59e11cd5bc855d56a4294d4caa828e28937a56fd3661d534642e5f886d3ed1af1b504eecdb23b0efdc5610fee04807d5260c0a7d8ef7cf6094ed692267136d69d70e391e2abade82eb4089349b0df99acba06d0ad6951b8822d05b31ac0f83ea9d6e2109a91f634c35af8c9f31d262f338afe8da7a919459f1d94f021563a356ab6b717a5dbae9094a2d05f6fe7834f4f35a42c9c9e9014feb67a030381954b875ae215e8a5b5425c2fd251a5c21fdfbecaa4f05ed936576b26b48058f051ad7750f47fd4fd2647d9318fe4702c7a8b0dad2509fcfd0cffd37f9cc4ddc7a2c95a3310a5404045e7ede19bb2dc8ec8df0b92a4870edcb7faab5c8e97c9ecba7fde0fd7d5d7004b37929084422b54a25a7ccd35a483fac68386219556e1a00aaa5618fbde9a57c249f4a7bd853690185691750f39fd6469d5aae9cda981f0e985adbc92ce3f0c132f08e837ac1ff12bfecfd9aee0beea22bece3d86fb5ffd7e216087ec7fdc780ba8befcca010fa14b4f6b838961127b86ec896cfe0a4ee66965b5166021b268c407da70053c9135a70a76d171ef9a78080b12da10471e3914c36406b4812f2930fe9e36f7f7e57</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -1547,28 +1547,6 @@
       </tags>
   </entry>
   <entry>
-    <title>计算机网络</title>
-    <url>/2023/05/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
-    <content><![CDATA[<p>计算机网络</p>
-<span id="more"></span>
-
-<h3 id="计算机网络作业四：网络层"><a href="#计算机网络作业四：网络层" class="headerlink" title="计算机网络作业四：网络层"></a>计算机网络作业四：网络层</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E4%BD%9C%E4%B8%9A4.pdf">戳我下载！！</a></p>
-<h3 id="计算机网络实验四：网际控制报文协议ICMP分析"><a href="#计算机网络实验四：网际控制报文协议ICMP分析" class="headerlink" title="计算机网络实验四：网际控制报文协议ICMP分析"></a>计算机网络实验四：网际控制报文协议ICMP分析</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C%E5%9B%9B%EF%BC%9A%E7%BD%91%E9%99%85%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AEICMP%E5%88%86%E6%9E%90.docx">怼我下载计网实验四：网际控制报文协议ICMP分析</a></p>
-<h3 id="计算机网络作业五：传输层"><a href="#计算机网络作业五：传输层" class="headerlink" title="计算机网络作业五：传输层"></a>计算机网络作业五：传输层</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E4%BD%9C%E4%B8%9A5.pdf">戳我下载！</a></p>
-<h3 id="思政作业3"><a href="#思政作业3" class="headerlink" title="思政作业3"></a>思政作业3</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%80%9D%E6%94%BF%E4%BD%9C%E4%B8%9A3.docx">阅读参考《中国互联网络发展状况统计报告（第51次）》有关内容</a></p>
-<h3 id="作业6：应用层"><a href="#作业6：应用层" class="headerlink" title="作业6：应用层"></a>作业6：应用层</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E4%BD%9C%E4%B8%9A6.pdf">作业6666666666：应用层</a></p>
-<h3 id="实验六：超文本传送协议HTTP分析"><a href="#实验六：超文本传送协议HTTP分析" class="headerlink" title="实验六：超文本传送协议HTTP分析"></a>实验六：超文本传送协议HTTP分析</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C%E5%85%AD%EF%BC%9A%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AEHTTP%E5%88%86%E6%9E%90.docx">点我，解锁更多* * *%@#&amp;￥%！@￥%……@#￥</a></p>
-<h3 id="实验七：web页面请求全历程协议及数据包解析"><a href="#实验七：web页面请求全历程协议及数据包解析" class="headerlink" title="实验七：web页面请求全历程协议及数据包解析"></a>实验七：web页面请求全历程协议及数据包解析</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C%E4%B8%83%EF%BC%9Aweb%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82%E5%85%A8%E5%8E%86%E7%A8%8B%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E8%A7%A3%E6%9E%90.docx">嘿 嘿嘿 嘿嘿嘿 你懂的</a></p>
-<p>END</p>
-]]></content>
-      <categories>
-        <category>course</category>
-      </categories>
-      <tags>
-        <tag>计网作业</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>虚拟机指令解释</title>
     <url>/2023/06/01/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%8C%87%E4%BB%A4%E8%A7%A3%E9%87%8A/</url>
     <content><![CDATA[<p>简易编译器中的虚拟机指令解释</p>
@@ -1658,5 +1636,27 @@
       <categories>
         <category>编译</category>
       </categories>
+  </entry>
+  <entry>
+    <title>计算机网络</title>
+    <url>/2023/05/24/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<p>计算机网络</p>
+<span id="more"></span>
+
+<h3 id="计算机网络作业四：网络层"><a href="#计算机网络作业四：网络层" class="headerlink" title="计算机网络作业四：网络层"></a>计算机网络作业四：网络层</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E4%BD%9C%E4%B8%9A4.pdf">戳我下载！！</a></p>
+<h3 id="计算机网络实验四：网际控制报文协议ICMP分析"><a href="#计算机网络实验四：网际控制报文协议ICMP分析" class="headerlink" title="计算机网络实验四：网际控制报文协议ICMP分析"></a>计算机网络实验四：网际控制报文协议ICMP分析</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C%E5%9B%9B%EF%BC%9A%E7%BD%91%E9%99%85%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E5%8D%8F%E8%AE%AEICMP%E5%88%86%E6%9E%90.docx">怼我下载计网实验四：网际控制报文协议ICMP分析</a></p>
+<h3 id="计算机网络作业五：传输层"><a href="#计算机网络作业五：传输层" class="headerlink" title="计算机网络作业五：传输层"></a>计算机网络作业五：传输层</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E4%BD%9C%E4%B8%9A5.pdf">戳我下载！</a></p>
+<h3 id="思政作业3"><a href="#思政作业3" class="headerlink" title="思政作业3"></a>思政作业3</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%80%9D%E6%94%BF%E4%BD%9C%E4%B8%9A3.docx">阅读参考《中国互联网络发展状况统计报告（第51次）》有关内容</a></p>
+<h3 id="作业6：应用层"><a href="#作业6：应用层" class="headerlink" title="作业6：应用层"></a>作业6：应用层</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E4%BD%9C%E4%B8%9A6.pdf">作业6666666666：应用层</a></p>
+<h3 id="实验六：超文本传送协议HTTP分析"><a href="#实验六：超文本传送协议HTTP分析" class="headerlink" title="实验六：超文本传送协议HTTP分析"></a>实验六：超文本传送协议HTTP分析</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C%E5%85%AD%EF%BC%9A%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AEHTTP%E5%88%86%E6%9E%90.docx">点我，解锁更多* * *%@#&amp;￥%！@￥%……@#￥</a></p>
+<h3 id="实验七：web页面请求全历程协议及数据包解析"><a href="#实验七：web页面请求全历程协议及数据包解析" class="headerlink" title="实验七：web页面请求全历程协议及数据包解析"></a>实验七：web页面请求全历程协议及数据包解析</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/%E8%AE%A1%E7%BD%91%E5%AE%9E%E9%AA%8C%E4%B8%83%EF%BC%9Aweb%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82%E5%85%A8%E5%8E%86%E7%A8%8B%E5%8D%8F%E8%AE%AE%E5%8F%8A%E6%95%B0%E6%8D%AE%E5%8C%85%E8%A7%A3%E6%9E%90.docx">嘿 嘿嘿 嘿嘿嘿 你懂的</a></p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>计网作业</tag>
+      </tags>
   </entry>
 </search>
