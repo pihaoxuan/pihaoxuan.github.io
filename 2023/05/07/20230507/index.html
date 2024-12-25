@@ -23,19 +23,19 @@
   <meta name="description" content="龙书的皮屑">
 <meta property="og:type" content="article">
 <meta property="og:title" content="龙书的散件">
-<meta property="og:url" content="https://pihaoxuan.github.io/pihaoxuan/2023/05/07/20230507/index.html">
+<meta property="og:url" content="https://pihaoxuan.github.io/2023/05/07/20230507/index.html">
 <meta property="og:site_name" content="SPINNING PEN">
 <meta property="og:description" content="龙书的皮屑">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://pihaoxuan.github.io/pihaoxuan/pihaoxuan/2023/05/07/20230507/scope.jpg">
+<meta property="og:image" content="https://pihaoxuan.github.io/pihaoxuan/2023/05/07/20230507/scope.jpg">
 <meta property="article:published_time" content="2023-05-07T07:30:41.000Z">
 <meta property="article:modified_time" content="2023-11-21T16:08:14.812Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="编译">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://pihaoxuan.github.io/pihaoxuan/pihaoxuan/2023/05/07/20230507/scope.jpg">
+<meta name="twitter:image" content="https://pihaoxuan.github.io/pihaoxuan/2023/05/07/20230507/scope.jpg">
 
-<link rel="canonical" href="https://pihaoxuan.github.io/pihaoxuan/2023/05/07/20230507/">
+<link rel="canonical" href="https://pihaoxuan.github.io/2023/05/07/20230507/">
 
 
 <script id="page-configurations">
@@ -198,7 +198,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/pihaoxuan/2023/05/07/20230507/">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2023/05/07/20230507/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/pihaoxuan/images/touxiang.jpg">
@@ -297,7 +297,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">1</span>;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> a  =<span class="number">3</span>;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> b = <span class="number">4</span>;</span><br><span class="line">            cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">        &#125;</span><br><span class="line">        cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;a: &quot;</span>&lt;&lt;a&lt;&lt;<span class="string">&quot; b: &quot;</span>&lt;&lt;b&lt;&lt;endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>可以在任何编译器上执行，执行结果一定是如下图所示</p>
-<img src="/pihaoxuan/pihaoxuan/2023/05/07/20230507/scope.jpg" alt="scope" style="zoom:150%;">
+<img src="/pihaoxuan/2023/05/07/20230507/scope.jpg" alt="scope" style="zoom:150%;">
 
 <p>第11行中的 a 是第10行的 a ，并且，观察第九行和第十位行，得知，a &#x3D; 3只在这个区域有效，而在此之前，观察第八行 int b &#x3D; 2，也只在第七行的 { 和第十八行的 } 之间有效。因此，最后一次的输出结果正是最初定义的数值。以此类推也就不难理解作用域了。</p>
 <p>例如Java语言，定义了关键字来表示一个或者一些成员变量的作用域。其中<strong>private</strong>表示私有的，即只有该类能够访问该成员变量；<strong>protected</strong>表示被保护的，即该类及其子类可以访问；<strong>public</strong>表示公共的，即不论在程序的哪个部分都可以访问。</p>
@@ -805,7 +805,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
 </script>
 <script>
   var disqus_config = function() {
-    this.page.url = "https://pihaoxuan.github.io/pihaoxuan/2023/05/07/20230507/";
+    this.page.url = "https://pihaoxuan.github.io/2023/05/07/20230507/";
     this.page.identifier = "2023/05/07/20230507/";
     this.page.title = "龙书的散件";
     };
