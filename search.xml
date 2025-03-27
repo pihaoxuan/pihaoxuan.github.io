@@ -14,8 +14,7 @@
 <h4 id="三个网站"><a href="#三个网站" class="headerlink" title="三个网站"></a>三个网站</h4><p>①<a href="https://lotabout.me/2015/write-a-C-interpreter-0/">手把手教你构建 C 语言编译器</a></p>
 <p>②<a href="https://space.bilibili.com/296494084/channel/collectiondetail?sid=571708">编译器B站视频</a></p>
 <p>③<a href="https://github.com/rui314/chibicc/commits/main?before=90d1f7f199cc55b13c7fdb5839d1409806633fdb+315&branch=main&qualified_name=refs/heads/main">Commits · rui314&#x2F;chibicc (github.com)</a></p>
-<p>慢慢看吧，之后有新的资源会加进来的！</p>
-<p>收藏夹吃灰系列</p>
+<p>④<a href="https://github.com/pihaoxuan/tiny_C_compiler">我自己写的，其实是模仿①，但是我加了很多注释，写法上也没那么难懂</a></p>
 <p>END</p>
 ]]></content>
       <categories>
@@ -676,14 +675,14 @@
       </tags>
   </entry>
   <entry>
-    <title>其它git使用方法</title>
-    <url>/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p>一些其它git的使用方法（主要是<code>git push</code> 和 <code>pull</code> 之间的矛盾）</p>
+    <title>一些git使用方法</title>
+    <url>/2023/10/22/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>一些git的使用方法（主要是<code>git push</code> 和 <code>pull</code> 之间的矛盾）</p>
 <span id="more"></span>
 
 <p>⚠⚠⚠</p>
 <p>在多人协作开发中，自己在改代码的时候一定要先<code>git pull origin master</code>对远程仓库的代码进行最新版同步后再自己修改，避免在自己修改之后<code>push</code>不上去。（如果实在是忘记了，应该可以有命令解决，解决方法在下文）</p>
-<h2 id="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："><a href="#当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算：" class="headerlink" title="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："></a>当<code>pull</code>代码时出现报错，描述为：本地代码有修改，<code>git</code>不知道怎么办，你打算：</h2><p><img src="/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%BD%93%60pull%60%E4%BB%A3%E7%A0%81%E6%97%B6%E5%87%BA%E7%8E%B0%E6%8A%A5%E9%94%99%EF%BC%8C%E6%8F%8F%E8%BF%B0%E4%B8%BA%EF%BC%9A%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%E6%9C%89%E4%BF%AE%E6%94%B9%EF%BC%8C%60git%60%E4%B8%8D%E7%9F%A5%E9%81%93%E6%80%8E%E4%B9%88%E5%8A%9E.jpg" alt="当`pull`代码时出现报错，描述为：本地代码有修改，`git`不知道怎么办"></p>
+<h2 id="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："><a href="#当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算：" class="headerlink" title="当pull代码时出现报错，描述为：本地代码有修改，git不知道怎么办，你打算："></a>当<code>pull</code>代码时出现报错，描述为：本地代码有修改，<code>git</code>不知道怎么办，你打算：</h2><p><img src="/2023/10/22/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/%E5%BD%93%60pull%60%E4%BB%A3%E7%A0%81%E6%97%B6%E5%87%BA%E7%8E%B0%E6%8A%A5%E9%94%99%EF%BC%8C%E6%8F%8F%E8%BF%B0%E4%B8%BA%EF%BC%9A%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%E6%9C%89%E4%BF%AE%E6%94%B9%EF%BC%8C%60git%60%E4%B8%8D%E7%9F%A5%E9%81%93%E6%80%8E%E4%B9%88%E5%8A%9E.jpg" alt="当`pull`代码时出现报错，描述为：本地代码有修改，`git`不知道怎么办"></p>
 <p>上图就是本地有修改后想<code>pull</code>远程仓库的代码下来，<code>git</code>的做法</p>
 <h3 id="①放弃本地修改，直接照抄远程仓库代码"><a href="#①放弃本地修改，直接照抄远程仓库代码" class="headerlink" title="①放弃本地修改，直接照抄远程仓库代码"></a>①放弃本地修改，直接照抄远程仓库代码</h3><p>使用指令</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git reset --hard</span><br></pre></td></tr></table></figure>
@@ -697,7 +696,7 @@
 <p>HEAD is now at 上一版本号 上一版本<code>commit</code>内容</p>
 </blockquote>
 <p>这样就是成功了！</p>
-<p>之后正常<code>pull</code>就能成功了，之后就会出现下图的反馈<br><img src="/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/pull%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84%E5%8F%8D%E9%A6%88.jpg" alt="`pull`成功后的反馈"></p>
+<p>之后正常<code>pull</code>就能成功了，之后就会出现下图的反馈<br><img src="/2023/10/22/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/pull%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84%E5%8F%8D%E9%A6%88.jpg" alt="`pull`成功后的反馈"></p>
 <h3 id="②保留本地修改，不要远程仓库的修改（即以本地为准）"><a href="#②保留本地修改，不要远程仓库的修改（即以本地为准）" class="headerlink" title="②保留本地修改，不要远程仓库的修改（即以本地为准）"></a>②保留本地修改，不要远程仓库的修改（即以本地为准）</h3><h3 id="③合并两者的修改，并将其中冲突处人工检测解决冲突"><a href="#③合并两者的修改，并将其中冲突处人工检测解决冲突" class="headerlink" title="③合并两者的修改，并将其中冲突处人工检测解决冲突"></a>③合并两者的修改，并将其中冲突处人工检测解决冲突</h3><h2 id="git-add-指令"><a href="#git-add-指令" class="headerlink" title="git add  _____ 指令"></a><code>git add  _____</code> 指令</h2><p><code>git add .</code>：将所有 <strong>修改过的 新增的</strong> 文件添加到暂存区，但是不会管<strong>被删除的</strong>文件。</p>
 <p><code>git add -u</code>：即<code>git add -update</code>，只管被监控了的文件，就是将已经被<code>add</code>了的文件（即暂存区的文件）如果有修改，就会更新。所以它<strong>不会管新文件</strong>，因为新文件没有被监控。会管<strong>修改过的</strong>和<strong>删除的</strong>文件。</p>
 <p><code>git add -a</code>：即<code>git add -all</code>，是上面两个<code>git</code>的集合，会提交所有<strong>被删除</strong>、<strong>被修改</strong>、和<strong>新增的</strong>文件到数据暂存区</p>
@@ -714,7 +713,7 @@
 <blockquote>
 <p>当第一次使用<code>commit</code>指令的时候，本地的<code>git</code>认为你提交了你的修改记录，所以此时你的工作区已经被清空了，因为你本地已经提交成功了，此时没有修改，没有再次<code>add</code>，是不会让你再次<code>commit</code>的</p>
 </blockquote>
-<p>②打开网址 <a href="https://pihaoxuan.github.io/2023/10/22/%E5%85%B6%E5%AE%83git%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">其它git使用方法 </a> 找方法</p>
+<p>②打开网址 <a href="https://pihaoxuan.github.io/2023/10/22/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">一些git使用方法 </a> 找方法</p>
 <p>再次恭喜你，选对了方法！！！</p>
 <blockquote>
 <p><code>git reset --soft HEAD~1</code>指令：撤销提交并保留更改在暂存区（即回退到<code>add</code>完成之后）</p>
@@ -896,22 +895,6 @@
       </categories>
       <tags>
         <tag>Qt</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python</title>
-    <url>/2023/06/21/python/</url>
-    <content><![CDATA[<p>python安装包（3.9.7）</p>
-<span id="more"></span>
-
-<h3 id="python-安装环境"><a href="#python-安装环境" class="headerlink" title="python 安装环境"></a>python 安装环境</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/python-3.9.7-amd64.exe">python-3.9.7-amd64.exe</a></p>
-<p>END</p>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -1587,7 +1570,7 @@
     <title>注册GPT</title>
     <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="b18958183750d70e09b730fa30f453086deb6c39c063caf0162b1032825430c3">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998c8312daf012b6dd35bf875ef43be127baaf0ce034e6f31cd502c71660abff019ba1c301efafbb28e79d505bfa503f98841dc9ca44013dc6771cb7099621fa5e7497e194b7f45693dcbcb3dfabcdcbcaf9cd429e995ebcbf4e188f9b25a0ebdd709a5bd1f86fde86570ffbce8cfd1b3817a6867e1b98486f25d8ff71448850364768ea94a96060a40ff32d3f6a21febc6af9e96f824cf24d8e192deedf4a7f98c7acbcb1d2d577199defd6ed4d426e4ec222170d115849458e92184936499f92fb594d444e9b58953bc79f7a75ab4effc42d5ae25f2ce3e964b7ba07e742732fd1da282ee29512bfa8b5285958a63bb6bc45a9d4d80df175b635fa0ea743a44c7dac02dcbc623714c59a5c8662e9c09a1fc7df00f608730803e7586903049763fe14f4ca3d906e01d858cb4a336b6f08c79c327c9b0c8d948fe812173c1489a901d3e04bcd6dcd956696b5be6b4bc86255b2f34988ddbe1aef54db1c6921d04e8f47265d6337c66dec2710e7cec2ef44344a3f40005ff79368ba83417eec98cf007357d728a55cec5d687ca343cfb1f4d0f282a9b36487d51405364007a8209e2dde973dcbd66526bfabf392d342ae7ec7cb77791b1f1b3e7d7da235d1808cad46ffa6b1af6c1d1ea97618b4e9127b57fcfdb1ff4beb8bb2743096e41203790c3efeeac04715ebed569cd03f147896b370fd1cf5b7fad74b140881ba3caa721176aeb88fddd3de450351b65efed890b2280503bfaf2cdd4d4c309a2f1c4b4302c41679f617bb21aec57ea0bb846e8fb18917166f8ffaea575bb1b161f9a214fd4440d189a24d3175c2bc43993b915fb0ef6c0f6412584b6118d79eb3c43eab5fb32e3e35a74343ae0a3fcff426090f976758ead1416cf3bcc425aa514864d4b8ddbbc41c12205c5844b3f42e4df9cc8f7da8ea5ce46ce3ba07479bce0d6de2f261ae1c543b7f0264759401ee79388756a5ceb9420d9373faddb22e304deec531db7d0d3ac8d92b87488cc2f449a933bed4ced740c44e598c429c73c97a88a11cda28fa788dfdc91844b4879636da8ffc5564058a39d28316b1f291cad1e6cd57d86aaaab3e601ac3275da741b9dab3c3e6317467e218315691ec08c9459a5813f91116b913c0c55989d7cfb9b496575248b2cd9f58629ed6df874ef75b211aa6d49ee3cb12125d8a0a1aa0b2a2917d447e256f7ec278ae138c8ab9ef08d89ea0a235f1e3470f87d73f88cc170de854365893884066b38df55d264d9b801b1989df5d66d3de500c62b209389d3cc0fd3ba5bbac28d4391549226f9514d1411b7d8ec2692d22146fa775da298f456f072e633a2894a98920829989da4df192fb2096d0bc7be18daba73e6ef885242ec4df3a46deb448b42abb63e64209f12f58ea10a52e91a00bda4bc1db5a3f1ed7e5850fd03d58e75230f8ecf5f2df12402d6d13b23eb78bf584c866100bc7431c0f0b6a1f8a0135d3588f537be4836dc322fdbad843ae5568ac562d2f103575cd812fe8e09a321b24da81e49be08769d2c47a53ca6943b3daea8de69677afbd7adc383ccc510cda57bf902019e76fe92ea7a8f53d6e4063e4797638e8ca955b404e5413804a45dd5891b6ca6a5eef7831e2719ae4aa7041e2b5b04e0a582d3ef509d23e2cb2a05ffbce3af857ab3d5daf6b0e57f7198acfa1b9e170c2efb824bfef7c136c2287712f816446da32700a622db6f44373cd4efb3940e33c0f508435e2afcf1ecaf4b4b5923e8acfa0a670c1145ed1dddf522e06b834eff4f47e92b160fa1b30c138366afbd9f561b71a15e06f2bb72ac47365ac21ceb2d3117a5bee2efe0cc8e5ec9dbd203283ace89dd0d3afcee85b2135cf6585c535e263493154c3b146f60cb2a9d9e0b5fc42bb205f46d81c6100c2023dfe9bd624d418f6d5814b5f6831106204025fb280486128099b629419a702c951ffdc16498809a950a15983cf</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="619757fe4eafccd71407922bec9fd1c2827d6a69148fa02928e9c6f2882521c2">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998ca0cec4e196ca4e989eb9210ca333b3782c69f8007a48de74beb63c2df8b7b1bb32337af5936b95a1fa6a98911fe36f1a04bebe3080b7d7f44756cab66370c908c8ae4f52dc8b28db43cb8bb34da87065ee158df6237bb2d20b125ba0a478bbd7bfe36114043254ea09ac868e969091d87f6fa803a7f565515c27984260248b675e0a193ecbab1b4274bfe759a077523b91bfd5e52fc3e67f99d55c9cef6df2e0f96e47d964f3fc26ac891e7a277197e7ea3290cba8506cbd7826d3705dfe97f772a1c92713d7f5aa7499f835a171f3c1aea53cdbd1e2194dd3a1410ec9b9abc2902d59a046dd9290c0aeae410e692f49f07b984889b722940dd9082b78ab6c4d39db8ec082977eebfc1f6772233201abab43a02aca6549001b00c6238e14d48c07b5dbd03b9eec50099e14e97cb7a8c9b01815ecb294aad2f8252d318150f7e73f6ddeb04b0db70a1eede79b45c43f0d6585e686192f9b944c6c7fa660b3a644acf2ec8f1e12999034ef66a306acb0028d6ceffe4ba057ee55b7e5f35da19b0aad62744ae2c31ac527e4b3beb4cd2260fd87c0378e83fe6883027c6bf04d9bec67b80905f0069875afd198a0e4affd45e2bb3bbd214b4f9f1a95e9e1f4830541d3c7543f55b0b54c64384ed5e016bf004f855ee87745baa4949d7cacb9d5fd36437e3bc782f119d86ac69dfe9c3332c2fa7a15e6facf2356a10a69a77f58a7442f5f1ae3b3ac74c5ae1a34662f34aac2d5ce91f83dfe0ec3434edd33de2844a2be0964d654c07f6a0b2d439ed530671843ddff27fae56f5e842988d4d15880b0c018cb3ccdd185e95cfe44c7c73881988220b997c543e693ee378da035971b54e539372677d298a020e456196542936ef6c0c6401ddc8500dfc4d4305ace94701d8125b1aeaf7c2e45ce4ea2c003498de58c894eb42ed73a04bec265e9ecfd9f008b8e019504c11564fa777b874d95a5c81406294c8035bf27bb782a1ab4409061f0fe5120573fb20745706ef735aa15575351a2eba734c917898dd71332eac2fd5acdade176399620599d2c2ac7f97b09de9f3c08e2ccb571c84749a32eada8d68e2dd69ebe56c82e6368f3b1a6a506452f6833db2153fabe8c82fadffbcf1c63167c9375c74ff85686eb940856a57186f1bbda2d137f1b2aa67a20e66fe60528a3d87a7b1f1c66fd32a5a45602a0c885de1b9d8fd755957edd29186fcf302cbb8a3228778bf51bffadae9577f966802d0c2fe321ca1316f9d8496380728b628e843b8a5893d8c27028bdfc90e575a60707a9d380c52583d77adab8fdd05572fd11013248c3ed5923d3881320de60e96d7f2f6b166d3eda8ae874939d4266283257fe9d96ed0e782ae85b00f723ea96792b34605b703990c24d2e19a1e99200726054661c0d31fa75c5b28a96799d60fb162494bd93ab0df362ac3b8cf3a52061b54f1989df086d075aa582be04341c615a4cb2273bdeef5c448fa43f3e66a33bae81dae35fa3db710836838e92526ac0a53fff6a94580e7a7714388913ad0d80d2309507449fafbd37679343b9c8e222eaf1157c6491ee87b807e94513243074e4674908dae20281892547de8fcc0696581cd2d0f7cff2b2f84d57647b3419b1f5757809f88efd7843cbb96bd8e7d20e50100bbdf9bad6ade6b93f5f5fd329ef8a75d5fffad3e2be6bb6245ad77c80b5ca3575eaf00a453080ea75e52f20bf82886996e42bd10a477b37ac67ec1672778a1cd502494edae2ccdc7d2ce26ee26060326ab099458f7cb42d6d940cf6870107ff98cacd791fe8ab0030e1aaca691d747761e85dbe03479063fcbd5085a59491a461d23e6735b13af32bd793063dcb563191e55937d55ab31571f48eb9bd297f1c2b4cc92e9aba1ee8d05784400f7d7b4b163a0d21c92bcf366591d713aadf75a854ad0a858fb354153de49b9092f70802941c863a8b7f5f5b4798eb8eb5</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
