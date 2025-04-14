@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>开始接触编译</title>
+    <url>/2023/05/05/20230505/</url>
+    <content><![CDATA[<p>编译学习</p>
+<span id="more"></span>
+
+<h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
+<p>解释器是逐句执行源程序。编译器是整个文件一块编译，因此，编译器比解释器快，但是出错率高；解释器的错误诊断效果好于编译器，但是速度比编译器慢。</p>
+<blockquote>
+<p>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器好，因为它逐个语句地执行源程序。——《编译原理》（第二版）</p>
+</blockquote>
+<h4 id="Java语言的处理"><a href="#Java语言的处理" class="headerlink" title="Java语言的处理"></a>Java语言的处理</h4><p>Java语言在机器内部处理时，是将编译和解释过程结合起来执行的。Java的运行环境是JDK虚拟机。Java源程序通过编译形成<strong>字节码</strong>，字节码再通过虚拟机进行解释和执行。</p>
+<p>形成字节码，Java源程序就可以在不同机器上执行，因为字节码可以通过网络在机器之间传播。</p>
+<h4 id="程序编译"><a href="#程序编译" class="headerlink" title="程序编译"></a>程序编译</h4><p>一个源程序可能会被分成多个模块进行存储，放在独立的文件中。有时，<strong>预处理器</strong>独立把源程序合并在一起；同时，预处理器还负责将宏转换为源语言的语句.</p>
+<p>经过预处理后的源程序作为输入传递给编译器。编译器可能会把这些编译之后输出一个汇编语言的程序：<strong>因为汇编语言比较容易输出和调试</strong>，然后，汇编语言由<strong>汇编器</strong>处理，并生成<strong>可重定向</strong>的机器代码。</p>
+<p>大型程序经常被分成多个部分进行编译，因此，可重定向的机器代码有必要和其他可重定向的目标文件以及库文件连接到一起，形成真正的在机器上运行的代码。而<strong>链接器</strong>能够解决外部内存地址问题。最后，<strong>加载器</strong>把所有可执行目标文件放到内存中执行。</p>
+<h4 id="编译器：将源程序映射成语义上等价的目标程序"><a href="#编译器：将源程序映射成语义上等价的目标程序" class="headerlink" title="编译器：将源程序映射成语义上等价的目标程序"></a>编译器：将源程序映射成语义上等价的目标程序</h4><p>这个映射过程可以分为<strong>分析部分</strong>和<strong>综合部分</strong></p>
+<p>分析部分：将报错信息（报错信息在符号表中）和代码的中间形式一起发送给综合部分。</p>
+<p>综合部分：之后再谈。</p>
+<h4 id="一个编译器的各个步骤"><a href="#一个编译器的各个步骤" class="headerlink" title="一个编译器的各个步骤"></a>一个编译器的各个步骤</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">字符流-&gt;(词法分析器)-&gt;符号流-&gt;(语法分析)-&gt;语法树-&gt;(语义分析)-&gt;语法树-&gt;(中间代码生成器)-&gt;中间表示形式-&gt;(机器无关代码优化器)-&gt;中间表示形式-&gt;(代码生成器)-&gt;目标机器语言-&gt;(机器相关代码优化器)-&gt;目标机器语言</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<p>以上括号内的内容是编译器各个功能块，无括号内容是输入输出流。</p>
+<h4 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h4><p>1、读入字符流，组织成有意义的<strong>词素</strong></p>
+<p>2、对于每个词素，输出<strong>词法单元（token）</strong>&lt;token-name.attribute-value&gt;</p>
+<p>​	例如：a &#x3D;  b + c * 30  可以被词法分析成</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&lt;id,<span class="number">1</span>&gt;&lt;=&gt;&lt;id,<span class="number">2</span>&gt;&lt;+&gt;&lt;id,<span class="number">3</span>&gt;&lt;*&gt;&lt;<span class="number">30</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<p>原表达式中的空格会被忽略，变量a,b,c，运算符&#x3D;，+，*以及数字30都是词素。</p>
+<h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>语法分析用词法分析生成的各个词法单元的第一个分量来创建树形的中间表示，常用的表示方法是语法树，树中的每一个父节点是运算符，它的左右子节点就是进行该运算的运算分量。</p>
+<p>上述例子的树形语法表示如下图：</p>
+<p><img src="/2023/05/05/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>编译</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java和算法</title>
     <url>/2023/05/04/20230504/</url>
     <content><![CDATA[<p>纯试手写第一篇文章</p>
@@ -40,46 +80,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>开始接触编译</title>
-    <url>/2023/05/05/20230505/</url>
-    <content><![CDATA[<p>编译学习</p>
-<span id="more"></span>
-
-<h4 id="编译器和解释器"><a href="#编译器和解释器" class="headerlink" title="编译器和解释器"></a>编译器和解释器</h4><p>编译器是将源程序通过一定的步骤转成目标程序。目标程序可以接收用户的输入，通过内部代码的加工，计算得出结果后输出。</p>
-<p>解释器是逐句执行源程序。编译器是整个文件一块编译，因此，编译器比解释器快，但是出错率高；解释器的错误诊断效果好于编译器，但是速度比编译器慢。</p>
-<blockquote>
-<p>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器好，因为它逐个语句地执行源程序。——《编译原理》（第二版）</p>
-</blockquote>
-<h4 id="Java语言的处理"><a href="#Java语言的处理" class="headerlink" title="Java语言的处理"></a>Java语言的处理</h4><p>Java语言在机器内部处理时，是将编译和解释过程结合起来执行的。Java的运行环境是JDK虚拟机。Java源程序通过编译形成<strong>字节码</strong>，字节码再通过虚拟机进行解释和执行。</p>
-<p>形成字节码，Java源程序就可以在不同机器上执行，因为字节码可以通过网络在机器之间传播。</p>
-<h4 id="程序编译"><a href="#程序编译" class="headerlink" title="程序编译"></a>程序编译</h4><p>一个源程序可能会被分成多个模块进行存储，放在独立的文件中。有时，<strong>预处理器</strong>独立把源程序合并在一起；同时，预处理器还负责将宏转换为源语言的语句.</p>
-<p>经过预处理后的源程序作为输入传递给编译器。编译器可能会把这些编译之后输出一个汇编语言的程序：<strong>因为汇编语言比较容易输出和调试</strong>，然后，汇编语言由<strong>汇编器</strong>处理，并生成<strong>可重定向</strong>的机器代码。</p>
-<p>大型程序经常被分成多个部分进行编译，因此，可重定向的机器代码有必要和其他可重定向的目标文件以及库文件连接到一起，形成真正的在机器上运行的代码。而<strong>链接器</strong>能够解决外部内存地址问题。最后，<strong>加载器</strong>把所有可执行目标文件放到内存中执行。</p>
-<h4 id="编译器：将源程序映射成语义上等价的目标程序"><a href="#编译器：将源程序映射成语义上等价的目标程序" class="headerlink" title="编译器：将源程序映射成语义上等价的目标程序"></a>编译器：将源程序映射成语义上等价的目标程序</h4><p>这个映射过程可以分为<strong>分析部分</strong>和<strong>综合部分</strong></p>
-<p>分析部分：将报错信息（报错信息在符号表中）和代码的中间形式一起发送给综合部分。</p>
-<p>综合部分：之后再谈。</p>
-<h4 id="一个编译器的各个步骤"><a href="#一个编译器的各个步骤" class="headerlink" title="一个编译器的各个步骤"></a>一个编译器的各个步骤</h4><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">字符流-&gt;(词法分析器)-&gt;符号流-&gt;(语法分析)-&gt;语法树-&gt;(语义分析)-&gt;语法树-&gt;(中间代码生成器)-&gt;中间表示形式-&gt;(机器无关代码优化器)-&gt;中间表示形式-&gt;(代码生成器)-&gt;目标机器语言-&gt;(机器相关代码优化器)-&gt;目标机器语言</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-
-<p>以上括号内的内容是编译器各个功能块，无括号内容是输入输出流。</p>
-<h4 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h4><p>1、读入字符流，组织成有意义的<strong>词素</strong></p>
-<p>2、对于每个词素，输出<strong>词法单元（token）</strong>&lt;token-name.attribute-value&gt;</p>
-<p>​	例如：a &#x3D;  b + c * 30  可以被词法分析成</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">&lt;id,<span class="number">1</span>&gt;&lt;=&gt;&lt;id,<span class="number">2</span>&gt;&lt;+&gt;&lt;id,<span class="number">3</span>&gt;&lt;*&gt;&lt;<span class="number">30</span>&gt;</span><br></pre></td></tr></table></figure>
-
-<p>原表达式中的空格会被忽略，变量a,b,c，运算符&#x3D;，+，*以及数字30都是词素。</p>
-<h4 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h4><p>语法分析用词法分析生成的各个词法单元的第一个分量来创建树形的中间表示，常用的表示方法是语法树，树中的每一个父节点是运算符，它的左右子节点就是进行该运算的运算分量。</p>
-<p>上述例子的树形语法表示如下图：</p>
-<p><img src="/2023/05/05/20230505/%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90.jpg" alt="语法分析"></p>
-<p>END</p>
-]]></content>
-      <categories>
-        <category>What I did today</category>
-      </categories>
-      <tags>
-        <tag>编译</tag>
       </tags>
   </entry>
   <entry>
@@ -135,27 +135,6 @@
       </tags>
   </entry>
   <entry>
-    <title>20230509（混账版）</title>
-    <url>/2023/05/09/20230509/</url>
-    <content><![CDATA[<p>混账版</p>
-<span id="more"></span>
-
-<p>昨天没写，今天也混账</p>
-<p>都是水！！</p>
-<p>准备签证资料，烦得很</p>
-<p>装好了Ubuntu20.04版本，如果有些button显示不全，就是分辨率的问题，如果输入法奇怪，去设置里面把全屏和双拼换一下，换成微软的输入法，其它都还可以。Ubuntu比Windows好用。</p>
-<p>操作系统，恶补</p>
-<p>无</p>
-<p>END</p>
-]]></content>
-      <categories>
-        <category>What I did today</category>
-      </categories>
-      <tags>
-        <tag>daily</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>龙书的散件</title>
     <url>/2023/05/07/20230507/</url>
     <content><![CDATA[<p>龙书的皮屑</p>
@@ -201,6 +180,45 @@
       </tags>
   </entry>
   <entry>
+    <title>20230509（混账版）</title>
+    <url>/2023/05/09/20230509/</url>
+    <content><![CDATA[<p>混账版</p>
+<span id="more"></span>
+
+<p>昨天没写，今天也混账</p>
+<p>都是水！！</p>
+<p>准备签证资料，烦得很</p>
+<p>装好了Ubuntu20.04版本，如果有些button显示不全，就是分辨率的问题，如果输入法奇怪，去设置里面把全屏和双拼换一下，换成微软的输入法，其它都还可以。Ubuntu比Windows好用。</p>
+<p>操作系统，恶补</p>
+<p>无</p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>What I did today</category>
+      </categories>
+      <tags>
+        <tag>daily</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>20240416小教-人工智能</title>
+    <url>/2024/04/15/20240416%E5%B0%8F%E6%95%99-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</url>
+    <content><![CDATA[<p>NLP and digital Image Processing</p>
+<span id="more"></span>
+
+<p>以下是上课用到的课件及工具，请有需要的同学自行下载</p>
+<p>python环境：<a href="https://pihaoxuan.github.io/2023/06/21/python/">点我打开页面</a></p>
+<p>课件有点大（1GB+）</p>
+<p><a href="https://pan.baidu.com/s/1HZsaI1JfMdpWDWMyBAo8eg?pwd=zhao">点我下载课件</a></p>
+]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>course</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Class about Java and Qt</title>
     <url>/2023/07/21/Class%20about%20Java%20and%20Qt/</url>
     <content><![CDATA[<p>This is a passage of something about Qt coding</p>
@@ -221,24 +239,6 @@
       </categories>
       <tags>
         <tag>Qt</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>20240416小教-人工智能</title>
-    <url>/2024/04/15/20240416%E5%B0%8F%E6%95%99-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</url>
-    <content><![CDATA[<p>NLP and digital Image Processing</p>
-<span id="more"></span>
-
-<p>以下是上课用到的课件及工具，请有需要的同学自行下载</p>
-<p>python环境：<a href="https://pihaoxuan.github.io/2023/06/21/python/">点我打开页面</a></p>
-<p>课件有点大（1GB+）</p>
-<p><a href="https://pan.baidu.com/s/1HZsaI1JfMdpWDWMyBAo8eg?pwd=zhao">点我下载课件</a></p>
-]]></content>
-      <categories>
-        <category>course</category>
-      </categories>
-      <tags>
-        <tag>course</tag>
       </tags>
   </entry>
   <entry>
@@ -344,21 +344,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue</title>
-    <url>/2023/05/30/Vue/</url>
-    <content><![CDATA[<p>Vue前端开发</p>
-<span id="more"></span>
-
-<h3 id="实验三：投票系统的实现"><a href="#实验三：投票系统的实现" class="headerlink" title="实验三：投票系统的实现"></a>实验三：投票系统的实现</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/Vue-lab3-vote-system.zip">实验三：投票系统的实现（npm组件工程项目）<strong>点我下载</strong></a></p>
-]]></content>
-      <categories>
-        <category>course</category>
-      </categories>
-      <tags>
-        <tag>Vue前端开发</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OCR</title>
     <url>/2023/09/17/OCR/</url>
     <content><![CDATA[<p>初探OCR图片文字识别技术</p>
@@ -386,6 +371,21 @@
       </categories>
       <tags>
         <tag>OCR</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue</title>
+    <url>/2023/05/30/Vue/</url>
+    <content><![CDATA[<p>Vue前端开发</p>
+<span id="more"></span>
+
+<h3 id="实验三：投票系统的实现"><a href="#实验三：投票系统的实现" class="headerlink" title="实验三：投票系统的实现"></a>实验三：投票系统的实现</h3><p><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile1.0/Vue-lab3-vote-system.zip">实验三：投票系统的实现（npm组件工程项目）<strong>点我下载</strong></a></p>
+]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>Vue前端开发</tag>
       </tags>
   </entry>
   <entry>
@@ -453,254 +453,6 @@
       </tags>
   </entry>
   <entry>
-    <title>class17</title>
-    <url>/2023/06/19/class17/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="0115c9a67823bdc3a3c5ff45510d6d46602fee6cefd4037c6eef1fbd35a7fca6">042a9b5b09e3698fdc064d0eabb03174421f884bf588e71315cd298b985cd9173f4e934906bdaa7a37e615a388973f81a65febd43c8e2b1075b84d58a9fcaa35080ad74f9808918d743a042cc0d1477700c90b65a037a03ee1f40b294484b3809f9dc3c31633a52a9eb95aba3f14a0f61027e390a66ebb25bf3ad78a633f2b1f3c693e8e8f37ffad2da496ebc8bdaeb158c8d6443dd159a256b1ec8e6803df085f2fb6ea2cff2a797b167b5a8cffac7a2f5c7a7ac19699819ad7f9d78f50981deab71506bcf7eacd139bdbcfcef5a94b10212ba553237ed5083f47cc4591a502cc2f84e874986596deb492383fc10e5ba02494d9f3a2c469afdd1c28df344f7415bd84d3f0171a3995bc435d1fbcf1b8fe6e434fd96d9484794888505fce47472b518d90e585a392eb20cf5d873ea45ba4938ae4d6b513e91992df1b730117b5e634f1a240dcb01fd97d190ce5c03aef84764c24ad5d5de9cef4a32a83d224962a135d49b4d4ca03a490c0770a11f4e8814617fee958444322480570369da08483330af10d82d6e69bf02252a355452c</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>高三17班</category>
-      </categories>
-      <tags>
-        <tag>高三17班</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>digitalImageProcessing-lab3</title>
-    <url>/2023/12/07/digitalImageProcessing-lab3/</url>
-    <content><![CDATA[<p>实验三：拉普拉斯变换、变体拉普拉斯变换、高斯-拉普拉斯变换</p>
-<span id="more"></span>
-
-<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>掌握基于拉普拉斯变换的图像锐化算法</p>
-<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><p>基本拉普拉斯变换图像增强<br>拉普拉斯变体变换图像增强<br>高斯-拉普拉斯变换图像增强</p>
-<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><h4 id="基本拉普拉斯变换图像增强"><a href="#基本拉普拉斯变换图像增强" class="headerlink" title="基本拉普拉斯变换图像增强"></a>基本拉普拉斯变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image.png" alt="Alt text"></p>
-<h4 id="拉普拉斯变体变换图像增强"><a href="#拉普拉斯变体变换图像增强" class="headerlink" title="拉普拉斯变体变换图像增强"></a>拉普拉斯变体变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image-1.png" alt="Alt text"></p>
-<h4 id="高斯-拉普拉斯变换图像增强"><a href="#高斯-拉普拉斯变换图像增强" class="headerlink" title="高斯-拉普拉斯变换图像增强"></a>高斯-拉普拉斯变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image-2.png" alt="Alt text"></p>
-<h3 id="算法解释说明"><a href="#算法解释说明" class="headerlink" title="算法解释说明"></a>算法解释说明</h3><p><strong>基本原理</strong></p>
-<p>以模板<img src="/2023/12/07/digitalImageProcessing-lab3/image-3.png" alt="Alt text">为例，用$g(x,y)$代表变换后的像素值，$f(x,y)$代表变换前的像素值，则有如下公示：<br>$g(x,y) &#x3D; -4 × f(x,y) + [f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]$<br>如果该区域为平坦区域，则 $g(x,y)$ 结果为0，即对平坦区域实现0响应。<br>如果该区域为边缘，则在$[f(\text{上})、f(\text{下})、f(\text{左})、f(\text{右})]$中有一个与其它像素值不同，那么$g(x,y)$的值主要取决于该边缘值，所以对边缘有强烈的响应。</p>
-<p>以模板<img src="/2023/12/07/digitalImageProcessing-lab3/image.png" alt="Alt text">为例：<br>$g(x,y) &#x3D; 5 × f(x,y) - [f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]$<br>化简后得<br>$g(x,y) &#x3D; f(x,y) + [4 × f(x,y)-[f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]]$</p>
-<p>如果该区域为平坦区域，则 $g(x,y)$ 结果为$f(x,y) + 0$，即对平坦区域实现0响应,该店像素值不变。</p>
-<p>如果该区域为边缘，则在$[f(\text{上})、f(\text{下})、f(\text{左})、f(\text{右})]$中有一个与其它像素值不同，那么$g(x,y) &#x3D; f(x,y) + [f(x,y) - f(\text{边缘像素值差值})]$，所以对边缘有强烈的响应，并且锐化增强图像。</p>
-<p>对于上述的<strong>基本</strong>拉普拉斯变换图像增强和拉普拉斯<strong>变体</strong>变换图像增强，其卷积核中间系数与其它系数相加不等于0是因为需要加上原图，而系数等于0则是该卷积核对边缘区域的响应非常剧烈而对平坦区域（即非边缘区域）响应为0。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">progress_img</span>(<span class="params">image,kernel</span>):</span><br><span class="line">    width,height = image.size</span><br><span class="line">    reslut_pixels = []</span><br><span class="line">    kernel_size = <span class="built_in">len</span>(kernel)</span><br><span class="line">    offset = kernel_size // <span class="number">2</span></span><br><span class="line">                        </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 计算卷积后的像素值</span></span><br><span class="line">            pixel_sum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> m <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(kernel)):</span><br><span class="line">                <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(kernel[<span class="number">0</span>])):</span><br><span class="line">                    <span class="keyword">if</span>(((x + n - <span class="number">1</span>)&gt;=width <span class="keyword">or</span> (x + n - <span class="number">1</span>)&lt;<span class="number">0</span>) <span class="keyword">or</span> ((y + m - <span class="number">1</span>)&gt;=height <span class="keyword">or</span> (y + m - <span class="number">1</span>)&lt;<span class="number">0</span> )):</span><br><span class="line">                        pixel_sum+=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        pixel_sum += image.getpixel((x + n - <span class="number">1</span>, y + m - <span class="number">1</span>)) * kernel[m][n]</span><br><span class="line">                           </span><br><span class="line">            reslut_pixels.append(pixel_sum)  </span><br><span class="line">            </span><br><span class="line">    <span class="comment"># 形成新图像</span></span><br><span class="line">    result_img = Image.new(<span class="string">&quot;L&quot;</span>,(width,height))</span><br><span class="line">    result_img.putdata(reslut_pixels)</span><br><span class="line">    <span class="keyword">return</span> result_img</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    input_filepath = <span class="string">&#x27;./img1/img1.tif&#x27;</span></span><br><span class="line">    output_fielpath = <span class="string">&#x27;./img1/bGaussian_lpls_17.bmp&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拉普拉斯变换卷积核</span></span><br><span class="line">    basic_lpls_kernel = [[<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                         [-<span class="number">1</span>,<span class="number">4</span>,-<span class="number">1</span>],</span><br><span class="line">                         [<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    variant_lpls_kernel = [[<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                           [<span class="number">1</span>,-<span class="number">4</span>,<span class="number">1</span>],</span><br><span class="line">                           [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    Gaussian_lpls_kernel = [[<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">                            [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                            [-<span class="number">1</span>,-<span class="number">2</span>,<span class="number">17</span>,-<span class="number">2</span>,-<span class="number">1</span>],</span><br><span class="line">                            [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                            [<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 读取图片</span></span><br><span class="line">    origin_img = read_image(input_filepath)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 处理并获得基本拉普拉斯变换图片</span></span><br><span class="line">    <span class="comment"># basic_lpls_img = progress_img(origin_img,basic_lpls_kernel)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># # 变体拉普拉斯变换图像</span></span><br><span class="line">    <span class="comment"># variant_lpls_img = progress_img(origin_img,variant_lpls_kernel)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 高斯拉普拉斯变换图像</span></span><br><span class="line">    Gaussian_lpls_img = progress_img(origin_img,Gaussian_lpls_kernel)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 展示图片</span></span><br><span class="line">    origin_img.show(title=<span class="string">&#x27;Origin image&#x27;</span>)</span><br><span class="line">    Gaussian_lpls_img.show(title=<span class="string">&#x27;variant_lpls5_image&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 保存图片</span></span><br><span class="line">    save_image(Gaussian_lpls_img,output_fielpath)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="图1"><a href="#图1" class="headerlink" title="图1"></a>图1</h3><div>
-    </div><br><br><div style="display: flex; flex-wrap: wrap; justify-content: center;">
-  <div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/img1.bmp" alt="bright" style="zoom: 50%;">
-    <p><em>Image 1: Original Image</em></p>
-  </div>
-  <div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/basic_lpls5.bmp" alt="bright" style="zoom: 50%;">
-    <p><em>Image 2: Basic Laplacian</em></p>
-  </div><br><br>
-<div style="display: flex; flex-wrap: wrap; justify-content: center;">
-  <div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/variant_lpls_9.bmp" alt="bright" style="zoom: 50%;">
-    <p><em>Image 3: Variant Laplacian</em></p>
-  </div>
-  <div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/bGaussian_lpls_17.bmp" alt="bright" style="zoom: 50%;">
-    <p><em>Image 2: Gaussian Laplacian</em></p>
-  </div>
-    <br><br></div> </div>  
-
-
-
-<h3 id="图2"><a href="#图2" class="headerlink" title="图2"></a>图2</h3><p><br><br><div style="display: flex; flex-wrap: wrap; justify-content: center;"><br>  <div style="margin: 10px; text-align: center;"><br>    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/img2.bmp" alt="bright" style="zoom: 40%;"><br>    <p><em>Image 5: Original Image</em></p><br>  </div><br>  <div style="margin: 10px; text-align: center;"><br>    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/basic_lpls_5.bmp" alt="bright" style="zoom: 40%;"><br>    <p><em>Image 6: Basic Laplacian</em></p><br>  </div></div></p>
-
-<div style="display: flex; flex-wrap: wrap; justify-content: center;">  
-<div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/variant_lpls_9.bmp" alt="bright" style="zoom: 40%;">
-    <p><em>Image 7: Variant Laplacian</em></p>
-  </div>
-  <div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/Gaussian_lpls_17.bmp" alt="bright" style="zoom: 40%;">
-    <p><em>Image 8: Gaussian Laplacian</em></p>
-  </div>
-</div><br><br>
-
-
-
-
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h5 id="对于图一："><a href="#对于图一：" class="headerlink" title="对于图一："></a>对于图一：</h5><p><strong>基本拉普拉斯变换</strong>,图像在原图的基础上，额外增加了如<em>Image 9</em>的细节,实现了边缘的锐化</p>
-<p><br><div style="margin: 10px; text-align: center;"><br>    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/basic_lpls4.bmp" alt="bright" style="zoom: 80%;"><br>    <p><em>Image 9: 基本拉普拉斯变换增强的细节</em></p><br>  </div><br></p>
-<p><strong>变体拉普拉斯变换</strong>，与基本拉普拉斯变换相比，更加强调了中心像素值的贡献程度，从而使得图像在变换后更加突出。</p>
-<div><br><br><div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/variant_lpls_-8.bmp" alt="bright" style="zoom: 80%;">
-    <p><em>Image 10: 变体拉普拉斯变换增强的细节</em></p>
-    </div><br><br></div>
-
-
-
-
-
-<p>上述两种变换都是$3×3$的卷积核，对细节的增强较少</p>
-<p><strong>高斯拉普拉斯变换</strong>与上述两种变换相比，采用了$5×5$的卷积核，对细节增强更多，从<em>Image 11</em>即可体现，且因为拉普拉斯变换对噪声非常敏感，采用高斯拉普拉斯变换后会先除去部分噪声，再增强细节，效果会好上很多。</p>
- <div><br><br> <div style="margin: 10px; text-align: center;">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/Gaussian_lpls16.bmp" alt="bright" style="zoom: 80%;">
-    <p><em>Image 11: 高斯拉普拉斯变换增强的细节</em></p>
-     </div><br><br></div>
-
-
-
-
-
-<h5 id="对于图二："><a href="#对于图二：" class="headerlink" title="对于图二："></a>对于图二：</h5><p>基本拉普拉斯便函和变体拉普拉斯变换对图二的细节增强如图<em>Image 12</em> 和 <em>Image 13</em> 和 <em>Image 14</em></p>
-<div style="margin: 10px; text-align: center; flex:0 0 30%">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/basic_lpls_4.bmp" alt="bright" style="zoom: 50%;">
-    <p><em>Image 12: 基本拉普拉斯变换增强的细节</em></p>
-  </div>
-
-
-  <div style="margin: 10px; text-align: center; flex:0 0  30%">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/variant_lpls_-8.bmp" alt="bright" style="zoom: 50%;">
-    <p><em>Image 13: 变体拉普拉斯变换增强的细节</em></p>
-  </div>
-
-<div style="margin: 10px; text-align: center; flex:0 0  30%">
-    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/Gaussian_lpls_16.bmp" alt="bright" style="zoom: 50%;">
-    <p><em>Image 14: 高斯拉普拉斯变换增强的细节</em></p>
-  </div>
-
-
-
-
-<p>可以看出效果与图一基本一致</p>
-<p><a href="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab3/lab3.pdf">this is a preview</a></p>
-<p><br><br><br></p>
-<div class="pdfobject-container" data-target="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab3/lab3.pdf" data-height="500px"></div>
-]]></content>
-      <categories>
-        <category>course</category>
-      </categories>
-      <tags>
-        <tag>数字图像处理实验三</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>digitalImageProcessing-lab2</title>
-    <url>/2023/12/07/digitalImageProcessing-lab2/</url>
-    <content><![CDATA[<p>实验二：算术均值滤波、几何均值滤波、逆谐波均值滤波、修正阿尔法均值滤波、中值滤波</p>
-<span id="more"></span>
-
-<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>掌握基本滤波算法的实现</p>
-<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><p>①算术均值滤波<br>②几何均值滤波<br>③逆谐波均值滤波<br>④修正阿尔法均值滤波<br>⑤中值滤波</p>
-<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><h5 id="对于算术均值滤波，算法如下，其中m-x3D-n-x3D-3"><a href="#对于算术均值滤波，算法如下，其中m-x3D-n-x3D-3" class="headerlink" title="对于算术均值滤波，算法如下，其中m&#x3D;n&#x3D;3"></a>对于算术均值滤波，算法如下，其中m&#x3D;n&#x3D;3</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image.png" alt="Alt text"></p>
-<h5 id="对于几何均值滤波，算如下，其中m-x3D-n-x3D-3"><a href="#对于几何均值滤波，算如下，其中m-x3D-n-x3D-3" class="headerlink" title="对于几何均值滤波，算如下，其中m&#x3D;n&#x3D;3"></a>对于几何均值滤波，算如下，其中m&#x3D;n&#x3D;3</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image-1.png" alt="Alt text"></p>
-<h5 id="对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明"><a href="#对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明" class="headerlink" title="对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明"></a>对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image-2.png" alt="Alt text"></p>
-<h5 id="对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明"><a href="#对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明" class="headerlink" title="对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明"></a>对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image-3.png" alt="Alt text"></p>
-<h5 id="对于中值滤波，算法如下，其中模板大小为3×3"><a href="#对于中值滤波，算法如下，其中模板大小为3×3" class="headerlink" title="对于中值滤波，算法如下，其中模板大小为3×3"></a>对于中值滤波，算法如下，其中模板大小为3×3</h5><p>中值滤波根据给出的模板大小，讲模板内的像素值排序，以中间值为标准将模板内所有值改为中间值</p>
-<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 算数均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,kernel_size</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size 的最左边到最右边，+1是控制边界能到最右边 因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span>(px&gt;=width <span class="keyword">or</span> px&lt;<span class="number">0</span>):</span><br><span class="line">                        px=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span>(py&gt;=height <span class="keyword">or</span> py&lt;<span class="number">0</span>):</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算算数均值并更新像素值</span></span><br><span class="line">            mean_value = <span class="built_in">sum</span>(region) // <span class="built_in">len</span>(region)</span><br><span class="line">            filtered_pixels.append(mean_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img3/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img3.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;arithmetic.bmp&quot;</span></span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用算数均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 几何均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,kernel_size</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size 的最左边到最右边，+1是控制边界能到最右边 因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span>(px&gt;=width <span class="keyword">or</span> px&lt;<span class="number">0</span>):</span><br><span class="line">                        px=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span>(py&gt;=height <span class="keyword">or</span> py&lt;<span class="number">0</span>):</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算几何均值并更新像素值</span></span><br><span class="line">            geometric_mean_value = <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> pixel_value <span class="keyword">in</span> region:</span><br><span class="line">                geometric_mean_value *= pixel_value</span><br><span class="line">            geometric_mean_value = <span class="built_in">int</span>(geometric_mean_value ** (<span class="number">1</span> / <span class="built_in">len</span>(region)))</span><br><span class="line">            filtered_pixels.append(geometric_mean_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;geometric.bmp&quot;</span></span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用几何均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 逆谐波均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,kernel_size,Q</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size 的最左边到最右边，+1是控制边界能到最右边 因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span>(px&gt;=width <span class="keyword">or</span> px&lt;<span class="number">0</span>):</span><br><span class="line">                        px=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span>(py&gt;=height <span class="keyword">or</span> py&lt;<span class="number">0</span>):</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算逆谐波均值并更新像素值</span></span><br><span class="line">            up = <span class="number">0</span></span><br><span class="line">            down = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> region:</span><br><span class="line">                <span class="keyword">if</span>(Q&lt;<span class="number">0</span>):</span><br><span class="line">                    up+=math.<span class="built_in">pow</span>(<span class="number">1</span>/item,<span class="built_in">abs</span>(Q+<span class="number">1</span>)) <span class="keyword">if</span> item !=<span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">                    down+=math.<span class="built_in">pow</span>(<span class="number">1</span>/item,<span class="built_in">abs</span>(Q)) <span class="keyword">if</span> item !=<span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    up+=math.<span class="built_in">pow</span>(item,(Q+<span class="number">1</span>)) </span><br><span class="line">                    down+=math.<span class="built_in">pow</span>(item,Q)</span><br><span class="line">            median_value = <span class="built_in">int</span>(up//down) <span class="keyword">if</span> down !=<span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">            filtered_pixels.append(median_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line">    Q = <span class="number">2</span></span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;contraharmonic_mean_Q=&quot;</span>+<span class="built_in">str</span>(Q)+<span class="string">&quot;_.bmp&quot;</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用逆谐波均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size,Q)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 修正阿尔法均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,d,alpha</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>,(width,height))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(d,width-d):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(d,height-d):</span><br><span class="line">            neighbors = []</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-d,d+<span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-d, d+<span class="number">1</span>):</span><br><span class="line">                    pixel_value = image.getpixel((x+i,y+i))</span><br><span class="line">                    neighbors.append(pixel_value)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 对neighbors内的元素排序</span></span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(neighbors)):</span><br><span class="line">                key = neighbors[item]</span><br><span class="line">                j = item-<span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> j&gt;=<span class="number">0</span> <span class="keyword">and</span> key&lt;neighbors[j]:</span><br><span class="line">                    neighbors[j+<span class="number">1</span>] = neighbors[j]</span><br><span class="line">                    j-=<span class="number">1</span></span><br><span class="line">                neighbors[j+<span class="number">1</span>]=key</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 去除最大最小值</span></span><br><span class="line">            neighbors = neighbors[alpha:-alpha]</span><br><span class="line">            mean_value = <span class="built_in">sum</span>(neighbors)//<span class="built_in">len</span>(neighbors)</span><br><span class="line">            filtered_image.putpixel((x,y),mean_value)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    d = <span class="number">3</span></span><br><span class="line">    alpha = <span class="number">5</span></span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;alpha_mean_alpha=&quot;</span>+<span class="built_in">str</span>(alpha)+<span class="string">&quot;_d=&quot;</span>+<span class="built_in">str</span>(d)+<span class="string">&quot;_.bmp&quot;</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用修正alpha均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, d,alpha)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 中值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image, file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image, kernel_size</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size的最左边到最右边，+1是控制边界能到最右边，因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span> px &gt;= width <span class="keyword">or</span> px &lt; <span class="number">0</span>:</span><br><span class="line">                        px = <span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span> py &gt;= height <span class="keyword">or</span> py &lt; <span class="number">0</span>:</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 手动实现排序</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(region)):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(region) - i - <span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">if</span> region[j] &gt; region[j + <span class="number">1</span>]:</span><br><span class="line">                        region[j], region[j + <span class="number">1</span>] = region[j + <span class="number">1</span>], region[j]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算中值并更新像素值</span></span><br><span class="line">            median_value = region[<span class="built_in">len</span>(region) // <span class="number">2</span>]</span><br><span class="line">            filtered_pixels.append(median_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span> + image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span> + <span class="string">&quot;midvalue.bmp&quot;</span></span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用中值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
-<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h4 id="图片顺序："><a href="#图片顺序：" class="headerlink" title="图片顺序："></a>图片顺序：</h4><h4 id="第一排依次是原图、算数"><a href="#第一排依次是原图、算数" class="headerlink" title="第一排依次是原图、算数"></a>第一排依次是原图、算数</h4><h4 id="第二排依次是几何、逆谐波"><a href="#第二排依次是几何、逆谐波" class="headerlink" title="第二排依次是几何、逆谐波"></a>第二排依次是几何、逆谐波</h4><h4 id="第三排依次是修正阿尔法、中值"><a href="#第三排依次是修正阿尔法、中值" class="headerlink" title="第三排依次是修正阿尔法、中值"></a>第三排依次是修正阿尔法、中值</h4><p>对于图片2-1来说，实验结果如下，其中逆谐波均值滤波Q&#x3D;-2，阿尔法修正中d＝3，α&#x3D;5</p>
-<p><img src="/2023/12/07/digitalImageProcessing-lab2/img1/img1.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img1/arithmetic.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img1/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img1/contraharmonic_mean_Q=-2_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img1/alpha_mean_alpha=5_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img1/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
-<p>对于图片2-2来说，实验结果如下，其中逆谐波均值滤波Q&#x3D;40，阿尔法修正中d&#x3D;3，α&#x3D;5</p>
-<p><img src="/2023/12/07/digitalImageProcessing-lab2/img2/img2.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img2/arithmetic.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img2/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img2/contraharmonic_mean_Q=40_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img2/alpha_mean_alpha=5_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img2/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
-<p>对于图片2-3来说实验结果如下，其中逆谐波均值滤波Q&#x3D;-2，阿尔法修正中d&#x3D;3，α&#x3D;3</p>
-<p><img src="/2023/12/07/digitalImageProcessing-lab2/img3/img3.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img3/arithmetic.bmp" style="zoom:60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img3/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img3/contraharmonic_mean_Q=-2_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img3/alpha_mean_alpha=3_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img3/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
-<p>对于图片2-4来说实验结果如下，其中逆谐波均值滤波Q&#x3D;-2，阿尔法修正中d&#x3D;3，α&#x3D;5</p>
-<p><img src="/2023/12/07/digitalImageProcessing-lab2/img4/img4.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img4/arithmetic.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img4/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img4/contraharmonic_mean_Q=-2_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img4/alpha_mean_alpha=5_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img4/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
-<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><h4 id="中值滤波"><a href="#中值滤波" class="headerlink" title="中值滤波"></a>中值滤波</h4><p>在本次实验设计到的4个原图中，不论是从清晰度还是噪声去除上，所有图片都是中值滤波比其他所有不同的均值滤波效果要好。因为中值滤波选取一个模块内中间值作为该模块的标准值，而被噪声污染的像素值一般体现为很大或者很小的像素值，所以中值滤波能够完全规避很大或者很小的噪声的影响，而均值滤波虽然是在尽可能规避，但是因为其不抛弃噪声的像素，多少会受到影响。</p>
-<h4 id="算数均值滤波"><a href="#算数均值滤波" class="headerlink" title="算数均值滤波"></a>算数均值滤波</h4><p>对于算数均值滤波来说，算数均值滤波是通过计算一个卷积核内的算术均值来去除噪声，虽然能够在一定程度上去除噪声的影响，但是这也会将细节信息在算数平均的过程中抹除，尤其是对于边缘信息来说，会使得边缘更加模糊。</p>
-<h4 id="几何均值滤波"><a href="#几何均值滤波" class="headerlink" title="几何均值滤波"></a>几何均值滤波</h4><p>对于几何均值滤波，先幂次再开放的算法在对普通的卷积核内的像素的影响喝算术均值滤波的影响相差无几，但是对于边缘信息来说，因为边缘变化是一个陡峭的变化，一边非常小甚至接近于0，那么结果也是0，这样就会使得边缘信息得以保留。</p>
-<h4 id="逆谐波均值滤波"><a href="#逆谐波均值滤波" class="headerlink" title="逆谐波均值滤波"></a>逆谐波均值滤波</h4><p>对于逆谐波均值滤波，有一个很重要的参数Q，当Q&#x3D;0时，等价于算数均值滤波，当Q&gt;0时，对椒噪声有较好的去除效果，所以对于图2-2，选择Q&#x3D;40的值来作为参数对图片降噪。<strong>当Q&#x3D;2时，确实得到了较好的结果，但是当Q&#x3D;4时，结果比Q&#x3D;2还要好，当我继续尝试增大Q值，比如Q&#x3D;40，发现效果并没有比Q&#x3D;4好很多，只是又亮了一些，所以并不值得</strong></p>
-<p>而对于图2-3来说，当Q取负值的效果就比Q取正值的效果好很多，因为当Q取正值的时候对盐燥声的去除效果较好，同样<strong>当Q&#x3D;-2时，确实得到了较好的结果，但是当Q&#x3D;-4时，结果比Q&#x3D;2还要好，当我继续尝试增大Q值，比如Q&#x3D;-40，发现效果并没有比Q&#x3D;-4好很多，只是又暗了一些，清晰度并没有很大的变化，所以并不值得</strong></p>
-<p>对于图2-4来说，并没有很明显的椒盐噪声，所以降噪的效果并不明显，只是Q&gt;0的时候图像更加亮，而Q&lt;0的时候图像更加暗</p>
-<h4 id="修正阿尔法均值滤波"><a href="#修正阿尔法均值滤波" class="headerlink" title="修正阿尔法均值滤波"></a>修正阿尔法均值滤波</h4><p>对于所有的修正阿尔法均值滤波，算法中对卷积核内的像素值也做了“掐头去尾”的处理，但是还是对剩下的像素进行了平均求值，这也会将一些被污染程度轻的因素影响最终结果，而且与算数均值滤波一样，还会损失边缘信息，是图片变得模糊。<br>总的来说，阿尔法修正均值滤波使得图片更加模糊，但是边界比算数均值明显，而且图片像“打了马赛克”</p>
-<p><a href="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab2/lab2.pdf">this is a preview</a></p>
-<div class="pdfobject-container" data-target="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab2/lab2.pdf" data-height="500px"></div>
-]]></content>
-      <categories>
-        <category>course</category>
-      </categories>
-      <tags>
-        <tag>数字图像处理实验二</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>git命令大全</title>
-    <url>/2024/03/22/git%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/</url>
-    <content><![CDATA[<p><code>git</code> command and some explains</p>
-<span id="more"></span>
-
-<h2 id="git-init"><a href="#git-init" class="headerlink" title="git init"></a><code>git init</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init (newDir)</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>在当前目录初始化一个<code>git</code>仓库或者重新初始化一个已经存在的仓库。执行完之后会在当前目录下生成一个<code>.git</code>目录（Windows下可能设置了隐藏的项目不可见，设置一下就好了。<a href="https://support.microsoft.com/zh-cn/windows/%E5%9C%A8-windows-%E4%B8%AD%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E7%9A%84%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9-97fbc472-c603-9d90-91d0-1166d1d9f4b5">Windows下显示隐藏项目</a>）</p>
-</blockquote>
-<blockquote>
-<p><code>Linux</code>下在命令行界面运行命令<code>la</code>即可看到。</p>
-</blockquote>
-<blockquote>
-<p>括号中的<code>newDir</code>可以选择是否添加。</p>
-<p>如果添加，则在初始化的过程中还会在当前目录下，新建一个子目录<code>newDir</code>。</p>
-</blockquote>
-<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a><code>git clone</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone &lt;URL&gt; [your_dir]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>从URL网站上克隆（完全复制）项目到本地<strong>（可以不用加入这个项目仓库）</strong>。<code>your_dir</code>为可选参数，如果选择，则克隆到指定目录<code>your_dir</code>，如果不选择，则默认克隆到当前目录。</p>
-</blockquote>
-<h2 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a><code>git config</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global uesr.name [&quot;your_name&quot;]</span><br><span class="line">git config --global user.email [&quot;your_email&quot;]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>配置<code>git</code>用户信息，包括邮箱，用户名。用于辨识提交项目的人。**<code>gitee</code>不会对用户名和邮箱进行验证，即便你的邮箱和用户名是假的**，如果邮箱存在，则在项目中显示某内容为该邮箱提交的，如果邮箱无效，则显示某内容是该用户名提交的。</p>
-</blockquote>
-<blockquote>
-<p>如果不选择中括号内的参数，则只表示查询。</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global --list</span><br><span class="line">git config --global --edit</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>可以查看全局配置信息，包括配置的用户名，邮箱，已配置<code>git</code>的路径等</p>
-<p>第二个命令是默认用打开<code>vim</code>打开配置信息文件：<a href="https://blog.csdn.net/wangyuxiang946/article/details/126560108">vim使用方法</a>。</p>
-</blockquote>
-<h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a><code>git status</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git status [-s]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查看当前目录下文件跟踪<strong>状态</strong></p>
-</blockquote>
-<blockquote>
-<p>若使用可选参数，则在被跟踪文件左边出现说明</p>
-</blockquote>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">M:被修改的文件</span><br><span class="line">A:新添加的文件</span><br><span class="line">D:被删除的文件</span><br><span class="line">R:重命名的文件</span><br><span class="line">??:未被跟踪的文件</span><br></pre></td></tr></table></figure>
-
-<h2 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a><code>git diff</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git diff</span><br><span class="line">git diff --cached</span><br><span class="line">git diff HEAD</span><br><span class="line">git diff your_file</span><br><span class="line">git diff --stat</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><code>git diff</code>查看还没有被缓存的改动</p>
-<p><code>git diff --cached</code>查看已经被缓存的改动</p>
-<p><code>git diff HEAD</code>查看已经缓存和未缓存的所有改动</p>
-<p><code>git diff your_file</code>查看某个文件的改动</p>
-<p><code>git diff --stat</code>查看摘要而非改动细节</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>digitalImageProcessing_lab1</title>
     <url>/2023/11/17/digitalImageProcessing-lab1/</url>
     <content><![CDATA[<p>实验一：直方图均衡化、对数变换、幂次变换</p>
@@ -758,28 +510,73 @@
       </tags>
   </entry>
   <entry>
-    <title>python_data_analysis</title>
-    <url>/2023/11/21/python-data-analysis/</url>
-    <content><![CDATA[<p>this blog is used to recode one of my course, named python data analysis. but I only upload some pdf-files about Experiments.</p>
+    <title>class17</title>
+    <url>/2023/06/19/class17/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="0115c9a67823bdc3a3c5ff45510d6d46602fee6cefd4037c6eef1fbd35a7fca6">042a9b5b09e3698fdc064d0eabb03174421f884bf588e71315cd298b985cd9173f4e934906bdaa7a37e615a388973f81a65febd43c8e2b1075b84d58a9fcaa35080ad74f9808918d743a042cc0d1477700c90b65a037a03ee1f40b294484b3809f9dc3c31633a52a9eb95aba3f14a0f61027e390a66ebb25bf3ad78a633f2b1f3c693e8e8f37ffad2da496ebc8bdaeb158c8d6443dd159a256b1ec8e6803df085f2fb6ea2cff2a797b167b5a8cffac7a2f5c7a7ac19699819ad7f9d78f50981deab71506bcf7eacd139bdbcfcef5a94b10212ba553237ed5083f47cc4591a502cc2f84e874986596deb492383fc10e5ba02494d9f3a2c469afdd1c28df344f7415bd84d3f0171a3995bc435d1fbcf1b8fe6e434fd96d9484794888505fce47472b518d90e585a392eb20cf5d873ea45ba4938ae4d6b513e91992df1b730117b5e634f1a240dcb01fd97d190ce5c03aef84764c24ad5d5de9cef4a32a83d224962a135d49b4d4ca03a490c0770a11f4e8814617fee958444322480570369da08483330af10d82d6e69bf02252a355452c</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>高三17班</category>
+      </categories>
+      <tags>
+        <tag>高三17班</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>digitalImageProcessing-lab2</title>
+    <url>/2023/12/07/digitalImageProcessing-lab2/</url>
+    <content><![CDATA[<p>实验二：算术均值滤波、几何均值滤波、逆谐波均值滤波、修正阿尔法均值滤波、中值滤波</p>
 <span id="more"></span>
 
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>掌握基本滤波算法的实现</p>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><p>①算术均值滤波<br>②几何均值滤波<br>③逆谐波均值滤波<br>④修正阿尔法均值滤波<br>⑤中值滤波</p>
+<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><h5 id="对于算术均值滤波，算法如下，其中m-x3D-n-x3D-3"><a href="#对于算术均值滤波，算法如下，其中m-x3D-n-x3D-3" class="headerlink" title="对于算术均值滤波，算法如下，其中m&#x3D;n&#x3D;3"></a>对于算术均值滤波，算法如下，其中m&#x3D;n&#x3D;3</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image.png" alt="Alt text"></p>
+<h5 id="对于几何均值滤波，算如下，其中m-x3D-n-x3D-3"><a href="#对于几何均值滤波，算如下，其中m-x3D-n-x3D-3" class="headerlink" title="对于几何均值滤波，算如下，其中m&#x3D;n&#x3D;3"></a>对于几何均值滤波，算如下，其中m&#x3D;n&#x3D;3</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image-1.png" alt="Alt text"></p>
+<h5 id="对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明"><a href="#对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明" class="headerlink" title="对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明"></a>对于逆谐波均值滤波，算法如下，其中参数值在下面每张图上说明</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image-2.png" alt="Alt text"></p>
+<h5 id="对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明"><a href="#对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明" class="headerlink" title="对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明"></a>对于修正阿尔法均值滤波，算法如下，其中参数值在下面每张图上说明</h5><p><img src="/2023/12/07/digitalImageProcessing-lab2/image-3.png" alt="Alt text"></p>
+<h5 id="对于中值滤波，算法如下，其中模板大小为3×3"><a href="#对于中值滤波，算法如下，其中模板大小为3×3" class="headerlink" title="对于中值滤波，算法如下，其中模板大小为3×3"></a>对于中值滤波，算法如下，其中模板大小为3×3</h5><p>中值滤波根据给出的模板大小，讲模板内的像素值排序，以中间值为标准将模板内所有值改为中间值</p>
+<h2 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 算数均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,kernel_size</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size 的最左边到最右边，+1是控制边界能到最右边 因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span>(px&gt;=width <span class="keyword">or</span> px&lt;<span class="number">0</span>):</span><br><span class="line">                        px=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span>(py&gt;=height <span class="keyword">or</span> py&lt;<span class="number">0</span>):</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算算数均值并更新像素值</span></span><br><span class="line">            mean_value = <span class="built_in">sum</span>(region) // <span class="built_in">len</span>(region)</span><br><span class="line">            filtered_pixels.append(mean_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img3/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img3.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;arithmetic.bmp&quot;</span></span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用算数均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 几何均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,kernel_size</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size 的最左边到最右边，+1是控制边界能到最右边 因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span>(px&gt;=width <span class="keyword">or</span> px&lt;<span class="number">0</span>):</span><br><span class="line">                        px=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span>(py&gt;=height <span class="keyword">or</span> py&lt;<span class="number">0</span>):</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算几何均值并更新像素值</span></span><br><span class="line">            geometric_mean_value = <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> pixel_value <span class="keyword">in</span> region:</span><br><span class="line">                geometric_mean_value *= pixel_value</span><br><span class="line">            geometric_mean_value = <span class="built_in">int</span>(geometric_mean_value ** (<span class="number">1</span> / <span class="built_in">len</span>(region)))</span><br><span class="line">            filtered_pixels.append(geometric_mean_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;geometric.bmp&quot;</span></span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用几何均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
-<p>Lab 1 is about review of python language, so it is so simple to complete it.</p>
-<p>Just a game, you can guess a number with your computer.</p>
-<p><a href="https://pihaoxuan.github.io/2023/11/21/python-data-analysis/lab1.pdf">this is a link to preview pdf-file of lab 1</a></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">lower = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Please input a small number :&quot;</span>))</span><br><span class="line">hight = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Please input a bigger number :&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(hight &lt; lower):</span><br><span class="line">        hight = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;bigger number can not smaller than small number ,please input bigger number again:&quot;</span>))</span><br><span class="line"></span><br><span class="line">answer = random.randint(lower,hight)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;you have 3 times to guess the number between the small number and the big number, and you can input -1 to exit this program.&quot;</span>)</span><br><span class="line"></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> ( count&lt;<span class="number">3</span> ):</span><br><span class="line">        guess = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;please input yor answer : &quot;</span>))</span><br><span class="line">        <span class="keyword">if</span> (guess==answer):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;you are right, game over!&quot;</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">elif</span> (guess&lt;answer <span class="keyword">and</span> guess != -<span class="number">1</span>):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Too small, please input angain: &quot;</span>)</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span>(count ==<span class="number">3</span>):</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;the answer is %d&quot;</span>,answer)</span><br><span class="line">                    </span><br><span class="line">        <span class="keyword">elif</span> (guess &gt; answer <span class="keyword">and</span> guess != -<span class="number">1</span>):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Too big, please input again:&quot;</span>)</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span>(count==<span class="number">3</span>):</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;the answer is&quot;</span>,answer)</span><br><span class="line">                    </span><br><span class="line">        <span class="keyword">elif</span> (guess ==-<span class="number">1</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;you kill the game, you are a bad man&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 逆谐波均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,kernel_size,Q</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size 的最左边到最右边，+1是控制边界能到最右边 因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span>(px&gt;=width <span class="keyword">or</span> px&lt;<span class="number">0</span>):</span><br><span class="line">                        px=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span>(py&gt;=height <span class="keyword">or</span> py&lt;<span class="number">0</span>):</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算逆谐波均值并更新像素值</span></span><br><span class="line">            up = <span class="number">0</span></span><br><span class="line">            down = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> region:</span><br><span class="line">                <span class="keyword">if</span>(Q&lt;<span class="number">0</span>):</span><br><span class="line">                    up+=math.<span class="built_in">pow</span>(<span class="number">1</span>/item,<span class="built_in">abs</span>(Q+<span class="number">1</span>)) <span class="keyword">if</span> item !=<span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">                    down+=math.<span class="built_in">pow</span>(<span class="number">1</span>/item,<span class="built_in">abs</span>(Q)) <span class="keyword">if</span> item !=<span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    up+=math.<span class="built_in">pow</span>(item,(Q+<span class="number">1</span>)) </span><br><span class="line">                    down+=math.<span class="built_in">pow</span>(item,Q)</span><br><span class="line">            median_value = <span class="built_in">int</span>(up//down) <span class="keyword">if</span> down !=<span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">            filtered_pixels.append(median_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line">    Q = <span class="number">2</span></span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;contraharmonic_mean_Q=&quot;</span>+<span class="built_in">str</span>(Q)+<span class="string">&quot;_.bmp&quot;</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用逆谐波均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size,Q)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
 
-<p><a href="https://pihaoxuan.github.io/2023/11/21/python-data-analysis/b.pdf">this is a link to preview pdf-file of lab 2</a></p>
-<p>the profile of lab 2 I dont have time write it, but I will find some space time to write after these days.</p>
-<p><a href="https://pihaoxuan.github.io/2023/11/21/python-data-analysis/c.pdf">this is a link to preview pdf-file of lab 3</a></p>
-<p>the same as lab 2.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 修正阿尔法均值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image,d,alpha</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>,(width,height))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(d,width-d):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(d,height-d):</span><br><span class="line">            neighbors = []</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-d,d+<span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-d, d+<span class="number">1</span>):</span><br><span class="line">                    pixel_value = image.getpixel((x+i,y+i))</span><br><span class="line">                    neighbors.append(pixel_value)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 对neighbors内的元素排序</span></span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(neighbors)):</span><br><span class="line">                key = neighbors[item]</span><br><span class="line">                j = item-<span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span> j&gt;=<span class="number">0</span> <span class="keyword">and</span> key&lt;neighbors[j]:</span><br><span class="line">                    neighbors[j+<span class="number">1</span>] = neighbors[j]</span><br><span class="line">                    j-=<span class="number">1</span></span><br><span class="line">                neighbors[j+<span class="number">1</span>]=key</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 去除最大最小值</span></span><br><span class="line">            neighbors = neighbors[alpha:-alpha]</span><br><span class="line">            mean_value = <span class="built_in">sum</span>(neighbors)//<span class="built_in">len</span>(neighbors)</span><br><span class="line">            filtered_image.putpixel((x,y),mean_value)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    d = <span class="number">3</span></span><br><span class="line">    alpha = <span class="number">5</span></span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span>+image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span>+<span class="string">&quot;alpha_mean_alpha=&quot;</span>+<span class="built_in">str</span>(alpha)+<span class="string">&quot;_d=&quot;</span>+<span class="built_in">str</span>(d)+<span class="string">&quot;_.bmp&quot;</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用修正alpha均值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, d,alpha)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 中值滤波</span></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image, file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">process_image</span>(<span class="params">image, kernel_size</span>):</span><br><span class="line">    width, height = image.size</span><br><span class="line">    filtered_pixels = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 提取区域</span></span><br><span class="line">            region = []</span><br><span class="line">            <span class="comment"># 从kernel_size的最左边到最右边，+1是控制边界能到最右边，因为range是左闭右开</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(-kernel_size // <span class="number">2</span>, kernel_size // <span class="number">2</span> + <span class="number">1</span>):</span><br><span class="line">                    px, py = x + i, y + j</span><br><span class="line">                    <span class="comment"># 边界处理</span></span><br><span class="line">                    <span class="keyword">if</span> px &gt;= width <span class="keyword">or</span> px &lt; <span class="number">0</span>:</span><br><span class="line">                        px = <span class="number">0</span></span><br><span class="line">                    <span class="keyword">if</span> py &gt;= height <span class="keyword">or</span> py &lt; <span class="number">0</span>:</span><br><span class="line">                        py = <span class="number">0</span></span><br><span class="line">                    <span class="comment"># 获取像素值</span></span><br><span class="line">                    region.append(image.getpixel((px, py)))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 手动实现排序</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(region)):</span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(region) - i - <span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">if</span> region[j] &gt; region[j + <span class="number">1</span>]:</span><br><span class="line">                        region[j], region[j + <span class="number">1</span>] = region[j + <span class="number">1</span>], region[j]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算中值并更新像素值</span></span><br><span class="line">            median_value = region[<span class="built_in">len</span>(region) // <span class="number">2</span>]</span><br><span class="line">            filtered_pixels.append(median_value)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建新图像</span></span><br><span class="line">    filtered_image = Image.new(<span class="string">&quot;L&quot;</span>, (width, height))</span><br><span class="line">    filtered_image.putdata(filtered_pixels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> filtered_image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">dir</span> = <span class="string">&quot;./img4/&quot;</span></span><br><span class="line">    image_name = <span class="string">&quot;img4.bmp&quot;</span></span><br><span class="line">    input_image_path = <span class="built_in">dir</span> + image_name</span><br><span class="line">    output_image_path = <span class="built_in">dir</span> + <span class="string">&quot;midvalue.bmp&quot;</span></span><br><span class="line">    kernel_size = <span class="number">3</span></span><br><span class="line"></span><br><span class="line">    input_image = read_image(input_image_path)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 应用中值滤波器</span></span><br><span class="line">    filtered_image = process_image(input_image, kernel_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 显示原始图像和滤波后的图像</span></span><br><span class="line">    input_image.show(title=<span class="string">&quot;Original Image&quot;</span>)</span><br><span class="line">    filtered_image.show(title=<span class="string">&quot;Filtered Image&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 保存滤波后的图像</span></span><br><span class="line">    save_image(filtered_image, output_image_path)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h4 id="图片顺序："><a href="#图片顺序：" class="headerlink" title="图片顺序："></a>图片顺序：</h4><h4 id="第一排依次是原图、算数"><a href="#第一排依次是原图、算数" class="headerlink" title="第一排依次是原图、算数"></a>第一排依次是原图、算数</h4><h4 id="第二排依次是几何、逆谐波"><a href="#第二排依次是几何、逆谐波" class="headerlink" title="第二排依次是几何、逆谐波"></a>第二排依次是几何、逆谐波</h4><h4 id="第三排依次是修正阿尔法、中值"><a href="#第三排依次是修正阿尔法、中值" class="headerlink" title="第三排依次是修正阿尔法、中值"></a>第三排依次是修正阿尔法、中值</h4><p>对于图片2-1来说，实验结果如下，其中逆谐波均值滤波Q&#x3D;-2，阿尔法修正中d＝3，α&#x3D;5</p>
+<p><img src="/2023/12/07/digitalImageProcessing-lab2/img1/img1.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img1/arithmetic.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img1/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img1/contraharmonic_mean_Q=-2_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img1/alpha_mean_alpha=5_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img1/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
+<p>对于图片2-2来说，实验结果如下，其中逆谐波均值滤波Q&#x3D;40，阿尔法修正中d&#x3D;3，α&#x3D;5</p>
+<p><img src="/2023/12/07/digitalImageProcessing-lab2/img2/img2.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img2/arithmetic.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img2/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img2/contraharmonic_mean_Q=40_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img2/alpha_mean_alpha=5_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img2/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
+<p>对于图片2-3来说实验结果如下，其中逆谐波均值滤波Q&#x3D;-2，阿尔法修正中d&#x3D;3，α&#x3D;3</p>
+<p><img src="/2023/12/07/digitalImageProcessing-lab2/img3/img3.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img3/arithmetic.bmp" style="zoom:60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img3/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img3/contraharmonic_mean_Q=-2_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img3/alpha_mean_alpha=3_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img3/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
+<p>对于图片2-4来说实验结果如下，其中逆谐波均值滤波Q&#x3D;-2，阿尔法修正中d&#x3D;3，α&#x3D;5</p>
+<p><img src="/2023/12/07/digitalImageProcessing-lab2/img4/img4.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img4/arithmetic.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img4/geometric.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img4/contraharmonic_mean_Q=-2_.bmp" alt="bright" style="zoom: 60%;"><br><img src="/2023/12/07/digitalImageProcessing-lab2/img4/alpha_mean_alpha=5_d=3_.bmp" alt="bright" style="zoom: 60%;"><img src="/2023/12/07/digitalImageProcessing-lab2/img4/midvalue.bmp" alt="bright" style="zoom: 60%;"></p>
+<h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><h4 id="中值滤波"><a href="#中值滤波" class="headerlink" title="中值滤波"></a>中值滤波</h4><p>在本次实验设计到的4个原图中，不论是从清晰度还是噪声去除上，所有图片都是中值滤波比其他所有不同的均值滤波效果要好。因为中值滤波选取一个模块内中间值作为该模块的标准值，而被噪声污染的像素值一般体现为很大或者很小的像素值，所以中值滤波能够完全规避很大或者很小的噪声的影响，而均值滤波虽然是在尽可能规避，但是因为其不抛弃噪声的像素，多少会受到影响。</p>
+<h4 id="算数均值滤波"><a href="#算数均值滤波" class="headerlink" title="算数均值滤波"></a>算数均值滤波</h4><p>对于算数均值滤波来说，算数均值滤波是通过计算一个卷积核内的算术均值来去除噪声，虽然能够在一定程度上去除噪声的影响，但是这也会将细节信息在算数平均的过程中抹除，尤其是对于边缘信息来说，会使得边缘更加模糊。</p>
+<h4 id="几何均值滤波"><a href="#几何均值滤波" class="headerlink" title="几何均值滤波"></a>几何均值滤波</h4><p>对于几何均值滤波，先幂次再开放的算法在对普通的卷积核内的像素的影响喝算术均值滤波的影响相差无几，但是对于边缘信息来说，因为边缘变化是一个陡峭的变化，一边非常小甚至接近于0，那么结果也是0，这样就会使得边缘信息得以保留。</p>
+<h4 id="逆谐波均值滤波"><a href="#逆谐波均值滤波" class="headerlink" title="逆谐波均值滤波"></a>逆谐波均值滤波</h4><p>对于逆谐波均值滤波，有一个很重要的参数Q，当Q&#x3D;0时，等价于算数均值滤波，当Q&gt;0时，对椒噪声有较好的去除效果，所以对于图2-2，选择Q&#x3D;40的值来作为参数对图片降噪。<strong>当Q&#x3D;2时，确实得到了较好的结果，但是当Q&#x3D;4时，结果比Q&#x3D;2还要好，当我继续尝试增大Q值，比如Q&#x3D;40，发现效果并没有比Q&#x3D;4好很多，只是又亮了一些，所以并不值得</strong></p>
+<p>而对于图2-3来说，当Q取负值的效果就比Q取正值的效果好很多，因为当Q取正值的时候对盐燥声的去除效果较好，同样<strong>当Q&#x3D;-2时，确实得到了较好的结果，但是当Q&#x3D;-4时，结果比Q&#x3D;2还要好，当我继续尝试增大Q值，比如Q&#x3D;-40，发现效果并没有比Q&#x3D;-4好很多，只是又暗了一些，清晰度并没有很大的变化，所以并不值得</strong></p>
+<p>对于图2-4来说，并没有很明显的椒盐噪声，所以降噪的效果并不明显，只是Q&gt;0的时候图像更加亮，而Q&lt;0的时候图像更加暗</p>
+<h4 id="修正阿尔法均值滤波"><a href="#修正阿尔法均值滤波" class="headerlink" title="修正阿尔法均值滤波"></a>修正阿尔法均值滤波</h4><p>对于所有的修正阿尔法均值滤波，算法中对卷积核内的像素值也做了“掐头去尾”的处理，但是还是对剩下的像素进行了平均求值，这也会将一些被污染程度轻的因素影响最终结果，而且与算数均值滤波一样，还会损失边缘信息，是图片变得模糊。<br>总的来说，阿尔法修正均值滤波使得图片更加模糊，但是边界比算数均值明显，而且图片像“打了马赛克”</p>
+<p><a href="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab2/lab2.pdf">this is a preview</a></p>
+<div class="pdfobject-container" data-target="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab2/lab2.pdf" data-height="500px"></div>
 ]]></content>
       <categories>
         <category>course</category>
       </categories>
       <tags>
-        <tag>python数据分析实验</tag>
+        <tag>数字图像处理实验二</tag>
       </tags>
   </entry>
   <entry>
@@ -987,6 +784,282 @@
       </tags>
   </entry>
   <entry>
+    <title>git命令大全</title>
+    <url>/2024/03/22/git%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/</url>
+    <content><![CDATA[<p><code>git</code> command and some explains</p>
+<span id="more"></span>
+
+<h2 id="git-init"><a href="#git-init" class="headerlink" title="git init"></a><code>git init</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git init (newDir)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在当前目录初始化一个<code>git</code>仓库或者重新初始化一个已经存在的仓库。执行完之后会在当前目录下生成一个<code>.git</code>目录（Windows下可能设置了隐藏的项目不可见，设置一下就好了。<a href="https://support.microsoft.com/zh-cn/windows/%E5%9C%A8-windows-%E4%B8%AD%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E7%9A%84%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9-97fbc472-c603-9d90-91d0-1166d1d9f4b5">Windows下显示隐藏项目</a>）</p>
+</blockquote>
+<blockquote>
+<p><code>Linux</code>下在命令行界面运行命令<code>la</code>即可看到。</p>
+</blockquote>
+<blockquote>
+<p>括号中的<code>newDir</code>可以选择是否添加。</p>
+<p>如果添加，则在初始化的过程中还会在当前目录下，新建一个子目录<code>newDir</code>。</p>
+</blockquote>
+<h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a><code>git clone</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone &lt;URL&gt; [your_dir]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从URL网站上克隆（完全复制）项目到本地<strong>（可以不用加入这个项目仓库）</strong>。<code>your_dir</code>为可选参数，如果选择，则克隆到指定目录<code>your_dir</code>，如果不选择，则默认克隆到当前目录。</p>
+</blockquote>
+<h2 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a><code>git config</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global uesr.name [&quot;your_name&quot;]</span><br><span class="line">git config --global user.email [&quot;your_email&quot;]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>配置<code>git</code>用户信息，包括邮箱，用户名。用于辨识提交项目的人。**<code>gitee</code>不会对用户名和邮箱进行验证，即便你的邮箱和用户名是假的**，如果邮箱存在，则在项目中显示某内容为该邮箱提交的，如果邮箱无效，则显示某内容是该用户名提交的。</p>
+</blockquote>
+<blockquote>
+<p>如果不选择中括号内的参数，则只表示查询。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global --list</span><br><span class="line">git config --global --edit</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以查看全局配置信息，包括配置的用户名，邮箱，已配置<code>git</code>的路径等</p>
+<p>第二个命令是默认用打开<code>vim</code>打开配置信息文件：<a href="https://blog.csdn.net/wangyuxiang946/article/details/126560108">vim使用方法</a>。</p>
+</blockquote>
+<h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a><code>git status</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git status [-s]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>查看当前目录下文件跟踪<strong>状态</strong></p>
+</blockquote>
+<blockquote>
+<p>若使用可选参数，则在被跟踪文件左边出现说明</p>
+</blockquote>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line">M:被修改的文件</span><br><span class="line">A:新添加的文件</span><br><span class="line">D:被删除的文件</span><br><span class="line">R:重命名的文件</span><br><span class="line">??:未被跟踪的文件</span><br></pre></td></tr></table></figure>
+
+<h2 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a><code>git diff</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git diff</span><br><span class="line">git diff --cached</span><br><span class="line">git diff HEAD</span><br><span class="line">git diff your_file</span><br><span class="line">git diff --stat</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>git diff</code>查看还没有被缓存的改动</p>
+<p><code>git diff --cached</code>查看已经被缓存的改动</p>
+<p><code>git diff HEAD</code>查看已经缓存和未缓存的所有改动</p>
+<p><code>git diff your_file</code>查看某个文件的改动</p>
+<p><code>git diff --stat</code>查看摘要而非改动细节</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>digitalImageProcessing-lab3</title>
+    <url>/2023/12/07/digitalImageProcessing-lab3/</url>
+    <content><![CDATA[<p>实验三：拉普拉斯变换、变体拉普拉斯变换、高斯-拉普拉斯变换</p>
+<span id="more"></span>
+
+<h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><p>掌握基于拉普拉斯变换的图像锐化算法</p>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><p>基本拉普拉斯变换图像增强<br>拉普拉斯变体变换图像增强<br>高斯-拉普拉斯变换图像增强</p>
+<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><h4 id="基本拉普拉斯变换图像增强"><a href="#基本拉普拉斯变换图像增强" class="headerlink" title="基本拉普拉斯变换图像增强"></a>基本拉普拉斯变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image.png" alt="Alt text"></p>
+<h4 id="拉普拉斯变体变换图像增强"><a href="#拉普拉斯变体变换图像增强" class="headerlink" title="拉普拉斯变体变换图像增强"></a>拉普拉斯变体变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image-1.png" alt="Alt text"></p>
+<h4 id="高斯-拉普拉斯变换图像增强"><a href="#高斯-拉普拉斯变换图像增强" class="headerlink" title="高斯-拉普拉斯变换图像增强"></a>高斯-拉普拉斯变换图像增强</h4><p>基于以下卷积核模板的图像变换<br><img src="/2023/12/07/digitalImageProcessing-lab3/image-2.png" alt="Alt text"></p>
+<h3 id="算法解释说明"><a href="#算法解释说明" class="headerlink" title="算法解释说明"></a>算法解释说明</h3><p><strong>基本原理</strong></p>
+<p>以模板<img src="/2023/12/07/digitalImageProcessing-lab3/image-3.png" alt="Alt text">为例，用$g(x,y)$代表变换后的像素值，$f(x,y)$代表变换前的像素值，则有如下公示：<br>$g(x,y) &#x3D; -4 × f(x,y) + [f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]$<br>如果该区域为平坦区域，则 $g(x,y)$ 结果为0，即对平坦区域实现0响应。<br>如果该区域为边缘，则在$[f(\text{上})、f(\text{下})、f(\text{左})、f(\text{右})]$中有一个与其它像素值不同，那么$g(x,y)$的值主要取决于该边缘值，所以对边缘有强烈的响应。</p>
+<p>以模板<img src="/2023/12/07/digitalImageProcessing-lab3/image.png" alt="Alt text">为例：<br>$g(x,y) &#x3D; 5 × f(x,y) - [f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]$<br>化简后得<br>$g(x,y) &#x3D; f(x,y) + [4 × f(x,y)-[f(\text{上})+f(\text{下})+f(\text{左})+f(\text{右})]]$</p>
+<p>如果该区域为平坦区域，则 $g(x,y)$ 结果为$f(x,y) + 0$，即对平坦区域实现0响应,该店像素值不变。</p>
+<p>如果该区域为边缘，则在$[f(\text{上})、f(\text{下})、f(\text{左})、f(\text{右})]$中有一个与其它像素值不同，那么$g(x,y) &#x3D; f(x,y) + [f(x,y) - f(\text{边缘像素值差值})]$，所以对边缘有强烈的响应，并且锐化增强图像。</p>
+<p>对于上述的<strong>基本</strong>拉普拉斯变换图像增强和拉普拉斯<strong>变体</strong>变换图像增强，其卷积核中间系数与其它系数相加不等于0是因为需要加上原图，而系数等于0则是该卷积核对边缘区域的响应非常剧烈而对平坦区域（即非边缘区域）响应为0。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_image</span>(<span class="params">file_path</span>):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(file_path).convert(<span class="string">&quot;L&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_image</span>(<span class="params">image,file_path</span>):</span><br><span class="line">    image.save(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">progress_img</span>(<span class="params">image,kernel</span>):</span><br><span class="line">    width,height = image.size</span><br><span class="line">    reslut_pixels = []</span><br><span class="line">    kernel_size = <span class="built_in">len</span>(kernel)</span><br><span class="line">    offset = kernel_size // <span class="number">2</span></span><br><span class="line">                        </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="built_in">range</span>(height):</span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(width):</span><br><span class="line">            <span class="comment"># 计算卷积后的像素值</span></span><br><span class="line">            pixel_sum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> m <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(kernel)):</span><br><span class="line">                <span class="keyword">for</span> n <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(kernel[<span class="number">0</span>])):</span><br><span class="line">                    <span class="keyword">if</span>(((x + n - <span class="number">1</span>)&gt;=width <span class="keyword">or</span> (x + n - <span class="number">1</span>)&lt;<span class="number">0</span>) <span class="keyword">or</span> ((y + m - <span class="number">1</span>)&gt;=height <span class="keyword">or</span> (y + m - <span class="number">1</span>)&lt;<span class="number">0</span> )):</span><br><span class="line">                        pixel_sum+=<span class="number">0</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        pixel_sum += image.getpixel((x + n - <span class="number">1</span>, y + m - <span class="number">1</span>)) * kernel[m][n]</span><br><span class="line">                           </span><br><span class="line">            reslut_pixels.append(pixel_sum)  </span><br><span class="line">            </span><br><span class="line">    <span class="comment"># 形成新图像</span></span><br><span class="line">    result_img = Image.new(<span class="string">&quot;L&quot;</span>,(width,height))</span><br><span class="line">    result_img.putdata(reslut_pixels)</span><br><span class="line">    <span class="keyword">return</span> result_img</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    input_filepath = <span class="string">&#x27;./img1/img1.tif&#x27;</span></span><br><span class="line">    output_fielpath = <span class="string">&#x27;./img1/bGaussian_lpls_17.bmp&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拉普拉斯变换卷积核</span></span><br><span class="line">    basic_lpls_kernel = [[<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                         [-<span class="number">1</span>,<span class="number">4</span>,-<span class="number">1</span>],</span><br><span class="line">                         [<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    variant_lpls_kernel = [[<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                           [<span class="number">1</span>,-<span class="number">4</span>,<span class="number">1</span>],</span><br><span class="line">                           [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    Gaussian_lpls_kernel = [[<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">                            [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                            [-<span class="number">1</span>,-<span class="number">2</span>,<span class="number">17</span>,-<span class="number">2</span>,-<span class="number">1</span>],</span><br><span class="line">                            [<span class="number">0</span>,-<span class="number">1</span>,-<span class="number">2</span>,-<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">                            [<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>]]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 读取图片</span></span><br><span class="line">    origin_img = read_image(input_filepath)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 处理并获得基本拉普拉斯变换图片</span></span><br><span class="line">    <span class="comment"># basic_lpls_img = progress_img(origin_img,basic_lpls_kernel)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># # 变体拉普拉斯变换图像</span></span><br><span class="line">    <span class="comment"># variant_lpls_img = progress_img(origin_img,variant_lpls_kernel)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 高斯拉普拉斯变换图像</span></span><br><span class="line">    Gaussian_lpls_img = progress_img(origin_img,Gaussian_lpls_kernel)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 展示图片</span></span><br><span class="line">    origin_img.show(title=<span class="string">&#x27;Origin image&#x27;</span>)</span><br><span class="line">    Gaussian_lpls_img.show(title=<span class="string">&#x27;variant_lpls5_image&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 保存图片</span></span><br><span class="line">    save_image(Gaussian_lpls_img,output_fielpath)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><h3 id="图1"><a href="#图1" class="headerlink" title="图1"></a>图1</h3><div>
+    </div><br><br><div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/img1.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 1: Original Image</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/basic_lpls5.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 2: Basic Laplacian</em></p>
+  </div><br><br>
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/variant_lpls_9.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 3: Variant Laplacian</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/bGaussian_lpls_17.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 2: Gaussian Laplacian</em></p>
+  </div>
+    <br><br></div> </div>  
+
+
+
+<h3 id="图2"><a href="#图2" class="headerlink" title="图2"></a>图2</h3><p><br><br><div style="display: flex; flex-wrap: wrap; justify-content: center;"><br>  <div style="margin: 10px; text-align: center;"><br>    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/img2.bmp" alt="bright" style="zoom: 40%;"><br>    <p><em>Image 5: Original Image</em></p><br>  </div><br>  <div style="margin: 10px; text-align: center;"><br>    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/basic_lpls_5.bmp" alt="bright" style="zoom: 40%;"><br>    <p><em>Image 6: Basic Laplacian</em></p><br>  </div></div></p>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center;">  
+<div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/variant_lpls_9.bmp" alt="bright" style="zoom: 40%;">
+    <p><em>Image 7: Variant Laplacian</em></p>
+  </div>
+  <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/Gaussian_lpls_17.bmp" alt="bright" style="zoom: 40%;">
+    <p><em>Image 8: Gaussian Laplacian</em></p>
+  </div>
+</div><br><br>
+
+
+
+
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><h5 id="对于图一："><a href="#对于图一：" class="headerlink" title="对于图一："></a>对于图一：</h5><p><strong>基本拉普拉斯变换</strong>,图像在原图的基础上，额外增加了如<em>Image 9</em>的细节,实现了边缘的锐化</p>
+<p><br><div style="margin: 10px; text-align: center;"><br>    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/basic_lpls4.bmp" alt="bright" style="zoom: 80%;"><br>    <p><em>Image 9: 基本拉普拉斯变换增强的细节</em></p><br>  </div><br></p>
+<p><strong>变体拉普拉斯变换</strong>，与基本拉普拉斯变换相比，更加强调了中心像素值的贡献程度，从而使得图像在变换后更加突出。</p>
+<div><br><br><div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/variant_lpls_-8.bmp" alt="bright" style="zoom: 80%;">
+    <p><em>Image 10: 变体拉普拉斯变换增强的细节</em></p>
+    </div><br><br></div>
+
+
+
+
+
+<p>上述两种变换都是$3×3$的卷积核，对细节的增强较少</p>
+<p><strong>高斯拉普拉斯变换</strong>与上述两种变换相比，采用了$5×5$的卷积核，对细节增强更多，从<em>Image 11</em>即可体现，且因为拉普拉斯变换对噪声非常敏感，采用高斯拉普拉斯变换后会先除去部分噪声，再增强细节，效果会好上很多。</p>
+ <div><br><br> <div style="margin: 10px; text-align: center;">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img1/Gaussian_lpls16.bmp" alt="bright" style="zoom: 80%;">
+    <p><em>Image 11: 高斯拉普拉斯变换增强的细节</em></p>
+     </div><br><br></div>
+
+
+
+
+
+<h5 id="对于图二："><a href="#对于图二：" class="headerlink" title="对于图二："></a>对于图二：</h5><p>基本拉普拉斯便函和变体拉普拉斯变换对图二的细节增强如图<em>Image 12</em> 和 <em>Image 13</em> 和 <em>Image 14</em></p>
+<div style="margin: 10px; text-align: center; flex:0 0 30%">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/basic_lpls_4.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 12: 基本拉普拉斯变换增强的细节</em></p>
+  </div>
+
+
+  <div style="margin: 10px; text-align: center; flex:0 0  30%">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/variant_lpls_-8.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 13: 变体拉普拉斯变换增强的细节</em></p>
+  </div>
+
+<div style="margin: 10px; text-align: center; flex:0 0  30%">
+    <img src="/2023/12/07/digitalImageProcessing-lab3/img2/Gaussian_lpls_16.bmp" alt="bright" style="zoom: 50%;">
+    <p><em>Image 14: 高斯拉普拉斯变换增强的细节</em></p>
+  </div>
+
+
+
+
+<p>可以看出效果与图一基本一致</p>
+<p><a href="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab3/lab3.pdf">this is a preview</a></p>
+<p><br><br><br></p>
+<div class="pdfobject-container" data-target="https://pihaoxuan.github.io/2023/12/07/digitalImageProcessing-lab3/lab3.pdf" data-height="500px"></div>
+]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>数字图像处理实验三</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python_data_analysis</title>
+    <url>/2023/11/21/python-data-analysis/</url>
+    <content><![CDATA[<p>this blog is used to recode one of my course, named python data analysis. but I only upload some pdf-files about Experiments.</p>
+<span id="more"></span>
+
+
+
+<p>Lab 1 is about review of python language, so it is so simple to complete it.</p>
+<p>Just a game, you can guess a number with your computer.</p>
+<p><a href="https://pihaoxuan.github.io/2023/11/21/python-data-analysis/lab1.pdf">this is a link to preview pdf-file of lab 1</a></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">lower = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Please input a small number :&quot;</span>))</span><br><span class="line">hight = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Please input a bigger number :&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(hight &lt; lower):</span><br><span class="line">        hight = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;bigger number can not smaller than small number ,please input bigger number again:&quot;</span>))</span><br><span class="line"></span><br><span class="line">answer = random.randint(lower,hight)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;you have 3 times to guess the number between the small number and the big number, and you can input -1 to exit this program.&quot;</span>)</span><br><span class="line"></span><br><span class="line">count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> ( count&lt;<span class="number">3</span> ):</span><br><span class="line">        guess = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;please input yor answer : &quot;</span>))</span><br><span class="line">        <span class="keyword">if</span> (guess==answer):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;you are right, game over!&quot;</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">elif</span> (guess&lt;answer <span class="keyword">and</span> guess != -<span class="number">1</span>):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Too small, please input angain: &quot;</span>)</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span>(count ==<span class="number">3</span>):</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;the answer is %d&quot;</span>,answer)</span><br><span class="line">                    </span><br><span class="line">        <span class="keyword">elif</span> (guess &gt; answer <span class="keyword">and</span> guess != -<span class="number">1</span>):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Too big, please input again:&quot;</span>)</span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span>(count==<span class="number">3</span>):</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;the answer is&quot;</span>,answer)</span><br><span class="line">                    </span><br><span class="line">        <span class="keyword">elif</span> (guess ==-<span class="number">1</span>):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;you kill the game, you are a bad man&quot;</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://pihaoxuan.github.io/2023/11/21/python-data-analysis/b.pdf">this is a link to preview pdf-file of lab 2</a></p>
+<p>the profile of lab 2 I dont have time write it, but I will find some space time to write after these days.</p>
+<p><a href="https://pihaoxuan.github.io/2023/11/21/python-data-analysis/c.pdf">this is a link to preview pdf-file of lab 3</a></p>
+<p>the same as lab 2.</p>
+]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>python数据分析实验</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python安装教程</title>
+    <url>/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[<p>以下是为零基础学生编写的Windows系统Python与VSCode安装教程，所有步骤均配直观操作指引和常见问题解答，建议按顺序阅读。</p>
+<span id="more"></span>
+
+<h3 id="一、安装Python环境（耗时约15分钟）"><a href="#一、安装Python环境（耗时约15分钟）" class="headerlink" title="一、安装Python环境（耗时约15分钟）"></a>一、安装Python环境（耗时约15分钟）</h3><h4 id="步骤1：下载安装包（若使用备用地址，则可以直接下载）"><a href="#步骤1：下载安装包（若使用备用地址，则可以直接下载）" class="headerlink" title="步骤1：下载安装包（若使用备用地址，则可以直接下载）"></a>步骤1：下载安装包（若使用备用地址，则可以直接下载）</h4><ol>
+<li>打开浏览器访问<a href="https://www.python.org/">Python官网</a><a href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/python-3.13.3-amd64.exe">备用地址1-github源</a><a href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile2.0/python-3.13.3-amd64.exe">备用地址2-gitee源</a></li>
+<li>点击顶部导航栏的 <strong>Downloads</strong> → 选择 <strong>Windows</strong> 系统标签（如图标有Windows标志）</li>
+<li>下载 <strong>Python 3.13</strong> 版本（推荐稳定版，如红框标注的最新安装包，若不知道选择哪一版本，推荐使用备用地址）</li>
+</ol>
+<h4 id="步骤2：运行安装程序"><a href="#步骤2：运行安装程序" class="headerlink" title="步骤2：运行安装程序"></a>步骤2：运行安装程序</h4><ol>
+<li>双击下载的 <strong>python-3.13.x.exe</strong> 文件</li>
+<li>勾选 <strong>Add Python 3.12 to PATH</strong>（重要！相当于给系统配导航员）</li>
+<li>点击 <strong>Install Now</strong>（保持默认安装路径）</li>
+<li>等待进度条完成，出现”Setup was successful”即安装成功</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[访问官网] --&gt; B[选择Windows版本]</span><br><span class="line">    B --&gt; C[下载安装包]</span><br><span class="line">    C --&gt; D[勾选PATH选项]</span><br><span class="line">    D --&gt; E[完成安装]</span><br></pre></td></tr></table></figure>
+
+<h4 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h4><ol>
+<li>按 <strong>Win+R</strong> 输入 <strong>cmd</strong> → 回车打开terminal（黑窗口）</li>
+<li>输入命令：<code>python --version</code><br>✅ 正确显示 <strong>Python 3.12.x</strong><br>❌ 若提示”找不到命令”，需重新安装并确认勾选PATH</li>
+</ol>
+<hr>
+<h3 id="二、安装VSCode编辑器（耗时约10分钟）"><a href="#二、安装VSCode编辑器（耗时约10分钟）" class="headerlink" title="二、安装VSCode编辑器（耗时约10分钟）"></a>二、安装VSCode编辑器（耗时约10分钟）</h3><h4 id="步骤1：获取安装程序"><a href="#步骤1：获取安装程序" class="headerlink" title="步骤1：获取安装程序"></a>步骤1：获取安装程序</h4><ol>
+<li>访问<a href="https://code.visualstudio.com/">VSCode官网</a><a href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/VSCodeUserSetup-x64-1.99.2.exe">备用地址-github源</a></li>
+<li>点击蓝色 <strong>Download for Windows</strong> 按钮（约100MB）</li>
+</ol>
+<h4 id="步骤2：完成安装"><a href="#步骤2：完成安装" class="headerlink" title="步骤2：完成安装"></a>步骤2：完成安装</h4><ol>
+<li>运行安装程序后连续点击 <strong>下一步</strong></li>
+<li>重要选项勾选：<br>☑️ 创建桌面快捷方式<br>☑️ 添加到PATH（方便右键菜单调用）</li>
+</ol>
+<h4 id="步骤3：中文界面配置"><a href="#步骤3：中文界面配置" class="headerlink" title="步骤3：中文界面配置"></a>步骤3：中文界面配置</h4><ol>
+<li>打开VSCode → 按 <strong>Ctrl+Shift+X</strong> 打开扩展商店</li>
+<li>搜索 <strong>Chinese Language Pack</strong> → 点击安装并重启VSCode【不是重启电脑】</li>
+</ol>
+<hr>
+<h3 id="三、配置Python开发环境（耗时约5分钟）"><a href="#三、配置Python开发环境（耗时约5分钟）" class="headerlink" title="三、配置Python开发环境（耗时约5分钟）"></a>三、配置Python开发环境（耗时约5分钟）</h3><h4 id="核心插件安装"><a href="#核心插件安装" class="headerlink" title="核心插件安装"></a>核心插件安装</h4><ol>
+<li>在VSCode扩展商店搜索 <strong>Python</strong>（微软官方出品）</li>
+<li>点击安装后自动提示安装其他组件（Pylance等）</li>
+</ol>
+<h4 id="设置解释器路径"><a href="#设置解释器路径" class="headerlink" title="设置解释器路径"></a>设置解释器路径</h4><ol>
+<li>按 <strong>Ctrl+Shift+P</strong> 打开命令面板</li>
+<li>输入 <strong>Python: Select Interpreter</strong> → 选择 <strong>Python 3.13</strong> 路径</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pie</span><br><span class="line">    title 插件功能分布</span><br><span class="line">    &quot;代码提示&quot; : 35</span><br><span class="line">    &quot;语法检查&quot; : 25</span><br><span class="line">    &quot;调试功能&quot; : 20</span><br><span class="line">    &quot;环境管理&quot; : 20</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="四、创建第一个程序（经典案例教学）"><a href="#四、创建第一个程序（经典案例教学）" class="headerlink" title="四、创建第一个程序（经典案例教学）"></a>四、创建第一个程序（经典案例教学）</h3><h4 id="案例：诗歌生成器"><a href="#案例：诗歌生成器" class="headerlink" title="案例：诗歌生成器"></a>案例：诗歌生成器</h4><ol>
+<li>按 <strong>Ctrl+N</strong> 新建文件 → 输入：<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 文学生专属问候程序</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;《数字时代的十四行诗》&quot;</span>)</span><br><span class="line">name = <span class="built_in">input</span>(<span class="string">&quot;请输入您的笔名：&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>，欢迎用代码书写诗意！\n——by 文学院数字人文实验室&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+<li>按 <strong>Ctrl+S</strong> 保存为 <strong>poem.py</strong>（注意后缀必须是.py）</li>
+<li>点击右上角 ▶️ 运行按钮查看效果</li>
+</ol>
+<hr>
+<h3 id="五、常见问题指南"><a href="#五、常见问题指南" class="headerlink" title="五、常见问题指南"></a>五、常见问题指南</h3><h4 id="问题1：命令行提示”python不是命令”"><a href="#问题1：命令行提示”python不是命令”" class="headerlink" title="问题1：命令行提示”python不是命令”"></a>问题1：命令行提示”python不是命令”</h4><p>• 解决方法：重新运行安装程序，勾选PATH时注意勾选框是否变蓝</p>
+<h4 id="问题2：VSCode无法运行代码"><a href="#问题2：VSCode无法运行代码" class="headerlink" title="问题2：VSCode无法运行代码"></a>问题2：VSCode无法运行代码</h4><p>• 检查右下角是否显示Python 3.12版本<br>• 尝试按 <strong>F5</strong> 启动调试模式</p>
+<h4 id="问题3：中文显示乱码"><a href="#问题3：中文显示乱码" class="headerlink" title="问题3：中文显示乱码"></a>问题3：中文显示乱码</h4><p>• 在代码首行添加：<code># -*- coding: utf-8 -*-</code><br>• 文件 → 首选项 → 设置 → 搜索 <strong>encoding</strong> → 改为 <strong>utf-8</strong></p>
+<hr>
+<h3 id="六、学习建议"><a href="#六、学习建议" class="headerlink" title="六、学习建议"></a>六、学习建议</h3><ol>
+<li>尝试修改程序中的诗句（如将”十四行诗”改为”五言绝句”）</li>
+<li>安装 <strong>Code Runner</strong> 插件（右键即可运行代码）</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">graph LR</span><br><span class="line">    安装环境 --&gt; 编写诗歌程序</span><br><span class="line">    编写诗歌程序 --&gt; 探索数据分析</span><br><span class="line">    探索数据分析 --&gt; 制作词云图</span><br><span class="line">    制作词云图 --&gt; 完成数字人文课题</span><br></pre></td></tr></table></figure>
+
+<p>本教程已综合多份专业资料进行优化设计，建议收藏备用。遇到问题可在工作日9:00-17:00联系<a href="https://pihaoxuan.github.io/">皮昊旋</a>。</p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>softwarerequest</title>
     <url>/2023/11/25/softwarerequest/</url>
     <content><![CDATA[<p>this page is some parts of software requests.</p>
@@ -1000,6 +1073,25 @@
       </categories>
       <tags>
         <tag>软件需求分析实验</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>softwaretest</title>
+    <url>/2023/11/22/softwaretest/</url>
+    <content><![CDATA[<p>this page for software test experiments, taught by ZhangFY(dgut)</p>
+<span id="more"></span>
+
+<p>I will upload lab 1, lab 2, lab 3 later, but I did not sure when. </p>
+<p>Following is lab 4. it about Base path testing,which means 基路径测试 in Chinese.</p>
+<p><a href="https://pihaoxuan.github.io/2023/11/22/softwaretest/lab4.pdf">this is a preview</a></p>
+<p>Following is lab5. it about data flow testing in a program, including judge Define-Use Path and Define-Clear Path.</p>
+<p><a href="https://pihaoxuan.github.io/2023/11/22/softwaretest/lab5.pdf">this is a preview</a></p>
+]]></content>
+      <categories>
+        <category>course</category>
+      </categories>
+      <tags>
+        <tag>软件测试实验</tag>
       </tags>
   </entry>
   <entry>
@@ -1084,25 +1176,6 @@
       <categories>
         <category>C语言</category>
       </categories>
-  </entry>
-  <entry>
-    <title>softwaretest</title>
-    <url>/2023/11/22/softwaretest/</url>
-    <content><![CDATA[<p>this page for software test experiments, taught by ZhangFY(dgut)</p>
-<span id="more"></span>
-
-<p>I will upload lab 1, lab 2, lab 3 later, but I did not sure when. </p>
-<p>Following is lab 4. it about Base path testing,which means 基路径测试 in Chinese.</p>
-<p><a href="https://pihaoxuan.github.io/2023/11/22/softwaretest/lab4.pdf">this is a preview</a></p>
-<p>Following is lab5. it about data flow testing in a program, including judge Define-Use Path and Define-Clear Path.</p>
-<p><a href="https://pihaoxuan.github.io/2023/11/22/softwaretest/lab5.pdf">this is a preview</a></p>
-]]></content>
-      <categories>
-        <category>course</category>
-      </categories>
-      <tags>
-        <tag>软件测试实验</tag>
-      </tags>
   </entry>
   <entry>
     <title>关于git的一些使用心得</title>
@@ -1294,6 +1367,28 @@
       </tags>
   </entry>
   <entry>
+    <title>注册GPT</title>
+    <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="a36e1b66ac05afc8b5f974eb2731a8f46118c45ae5c969ec34987ab810dc733a">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998c8e0a289145696abab39183e1ee111dd0a09eaf26222f7da63f4d1a3fe1041f7a5fe8666bbcbf785d8bc53123d679ce56f22293dd9c4a95141c50cc992fb0673cefba2f0600dbdf4da50ff129a271df7387c081aab22835cb9828b30f30b466d3c68d62f9146b7cc788a65f428337caf961b7167f7309e7da590928c9eac3d106e204d86782af2aa4507bff0828b7e0d98cfd24e65dec8a1e656e4c562990c4af24c8fa8dfcc28ca19a2f345df0f354d7470747221c97acc62371fbafb4fecb0ad22864dbd803a678abe85e42a54344d82257366acb34776e92b57662dd5dcbdd0b713dbbf544e0eab11995a7fe56d35ee075f9bd57079b31e7cd7b21c041684d4d63b4252e79454c0151c94d8b528af0b499031136514498368c872cd51eaee8472489eb2f3548634b97854adab8d06e78c4623869f50f523a8b3638f434c8e3c468fb038447162798b9882da27102cfe8782769432d299576b34cad6e622d194e861de475a3234019b09e5517c52f07aef62a178df95c6e014a579674e52f2d07223e258bc4c4b11b62ec34df14e7d66dc9827087e8564fe243c5299158f3177a89f0b49f5b488f76e9ff8900a0995359535710dee41627cc00cd9ee11bed8063b92b260bd9cdbc3c9dbad3c99135f13833f1e551848ae0ab8d520e4368214b8d432fcbf561a13a970ac1109923b171329aa39421a620c7694784b2c45d139eb5ad0c1c19d6bc44ec8e461292cda92f11041cf79aaabc7f7bf71fd4e8d4ecbee796d87ca6e4c79aefb76bbf69b9055b17f448debbea7e97b19f8eb035f01046d6ffa50fd8e2ab183f11fd2d91e70f5a867315cfbd8309059430f1e7c7e7a4eb2f88803116c0a6d275ab4a04e96fd19cec963bebea98e28c339a90d19475963d23e06b315d1196b8885969b1476feb8499b29b52471668c1700310f044ac18a871021850165f533c83e4f1b030eaaf17595f577f98e5829e964ab39fca1de14b7395f4f84004bbd916c370f3a0b3cf98c555706b742c8b9be57047200a96eb4d6689760c7111dc2de311be21c5fd402d969143bbd1af7223c2595054a4d2124365f939243d22dfb9f097ec7482869ca62bfb3d1c91da076e8672678001aa0c48a2f553cc8627f8d3772c0f67659e033393b2c38b22daf1079febf5b152e07d4cc6e56eac5854c90c4861c036c25f62d6fdb35d9912b667cc0558975be209ac3f6b139d5911c611c8111153905a518f14d29d6bd564cc318185de4406ae2dca5a546d6b7232b1d6dc8f4eaef4d192d6d3cb41beaa49f2b54a1547442559033c770893cc1f0e7bac60921ff6f4aa933adc1dd374ccbaf1066c717b27e9b5aab0452d7ed97efdea6fbb1deb1d3eff5a58f998ce591590162431d560b3f5860e6bdd8863d059b268a7ee3f3ef07857393c47ddc170dd92e04ab11f9ddfa5fa615778ea1acf7f19b3cd60eb15405a106d06db51f9533a476bb0afd6e684a651b1aa3e6c17dd2cac3b353354b10fe30fc6aff39a5fff19f2f74bcde4fb41b52e0d752dde2e7d4a6c25fe53d7743e41105186f86e765332aa952d3060d95e374a4216816ebcf531fa194f12f4b1d544944852d2395c168493e66a6b13a5d2abc1e43f100db613e9c245b0bd01bc35540283d755fd3b0f7e1b14b4ff375c8421099c3c790da96c576ca0057cecaada2975e3bdc14bff6c937f474ca5d08ecc74b0e386dfda1e9fed2767f0c8731c66720919eb453f621c051aab18def35d78ddd10fc5d339b59eb03e2e6c8b4807f0754097174d6e4293d952b118c243c5cc670a518a480c752cfd38c0eb2bd2dbab66c4cb704dd05de3849aa22239652fced96dfcf2f23a4e0d68acec13f7e5a3f59c7b6eebd0ca4deb663cf2a68c5be3c03212b82e9ed618cdf9c18f740d9d90cc6022d88d99db96823e7a664e117a0691a563764f0e9f8a7db896a58b920f676fde888956dc</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+      <categories>
+        <category>chatgpt</category>
+      </categories>
+      <tags>
+        <tag>注册ChatGpt</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>算法设计与分析</title>
     <url>/2023/05/04/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -1313,28 +1408,6 @@
       </categories>
       <tags>
         <tag>算法设计与分析</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>注册GPT</title>
-    <url>/2023/05/06/%E6%B3%A8%E5%86%8CGPT/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="c1bb830030cba52b67b8b3b48812c579a6d3f5fdd6bd3b8602c0c1d46a0c4f6a">4630436162ade97ba2718b7d0c4b3b635b2f6f34676482420dfaf4319505d4d9bd77eafe835cae01bd5c3e58c0d3b506f4be596dfe70a5441afc7e3891e3f64086ff998c55ba3f93e5b6dd0e3afa3b7483c293d51bb389a8e947c92a33bdd28d04195a24b3f525120e555658e21b5a318bd3f2adf36490105faaae17893bb3df6f8662c1c16718ccfbc7f8692d4f08980a1d73f2eaa85d365a298b961b4a907b05f5863d40168993bb22b266c0fa45b6c58bce790895ff8f2011dbc0e5e5be7d9232ece63260910226fc1896e836e6278956d95a82982c8a4d80e18c310ea1c13c40d6f8f7a51c9b4418b9b631ffd4a44de1fe3bc7f11a1bbb8f78048c9a3b2d69284762741398a52ee96c0bdce7dba614be19349459edef52d7d295b596dcbd46a3bfb036fb4f4ffaeb02f80fc932c47313d44e025f1d2ac9e7ec44584fdc20ac07b8c22f091154978108a07be9f21f0093016276691c680a3d618ab7e486fc57537ef532313e16346b6ba9ca33bd3f524232fcdfbcc3000d6e34a201ee25cd5698a176a3ebdbef8e4fa8adf5a49cc4f4ce55aa7e59267694f294938507ed4f80110d8971050c0c750322a365b3702a41e2fa9b86a3a1a4a518f5db8005a79138b622add11b0d655f287bff5cd556364a040e9b1c79543bd9021a06df4d5dd909f5d478a3eb5ad07c7b8053f156f8e054f6059f8b4de66bb7ef6c51c42e83db6b65e6277053a6768e12340466f11b41590950ec93c3ee93716a46382c2b0d0da07f731ed94d3fc52967314e56ebd8f0607c8ebb75bf8da2d8cb369df65623e74f87e81bbe48da0b4b02e61831b43dc011361292bbb15a29fb1519a636d6c8dd992dac19517551a7a8d50ec7bab1998c8312daf012b6dd35bf875ef43be127baaf0ce034e6f31cd502c71660abff019ba1c301efafbb28e79d505bfa503f988403007cc806314f512dbd3fcf09a55c2558dbb3267e78285c835f48ead313187d9d43807595b36e4bf7b2bd0fbb2c23b2e26287bfd4c562791b22fb89f6fafe9e20a1f485d0ecb581ee97bddc7269f784c4527eec7df032cbd2bfb6761d1e3d1cd5d2ce4771c159357d090fe9693662da17cfa8f9ebe149e99d55770e16d5bb9078bd6a468049899f4cdc9708aab361f3224f198d2a3e1bfe1f83a98b90df04e3cc6c097e3c2af993100aa40583dd539c46c7e7bde8a5dc8882dbc04079162440cde2d2971d1c45e4fd290312a8c97b70f49e2eaf9505ccd51043ffd2728e9f548755a6bbd7efec05a3a47cf864d9e8c46bb1e3254311bee484387ac42a5605fe50e6347ad374ac100ff4ce144f981de6a3fb215332d3999f0548f0e8952dd5299340657ce04956762b3712cb9dd7546ca2e5639152860c6c3c53daf3b40f065813b0baeb9f05f65946a9b01b10e3061270e4821a22c3b262a4accb6bac536dc884259ce2f3fc8e8d5a86fad42a96f0630be635e7f004909e6d55f14ae6817dd1bea191671ec8498c6504fcb9531a4854eafa30bc65728604bbb78022190557ff6c6eea93158db3ed669c557fb3bcbc067cce99ce4aad913821d30179472b80f2e4db68f8b8215c705dd590813c3dcfac2ca4acd0e1629041dc1b98e686912cd1d69e194898c8f1e5cfed82f540135fe5635195fff9280ded7dff700344d709462b6e90cf46ed038add768e061210ef83223a7431c3110b2dc73b5e5c910ebda283b11ef9160f8096ed77620380a1c8a0d2e2e9660dbff35491dfa29d41f35a9126be2777d6e6c10c6dafba2a1b9eb597cbd98bbea8f11cd2c21ddaa2cdb63c20c2bc32ce36e90ae7ee51f5291ecb62f0395b1447ffe4d9f6b53b751e35e29cd8735ecfff5ab0a5846650fc8aade3ad12f32aafa4ed898ae2d244fb5067aa1c4923190420943f4296ecb85fe4fb67df6bfd2271f22608e616cca3dc467065959356a2f4721ffde88bca184dac266a40de77910e15b714a38fad37eb14fd9735a890fda424386074fcbb627af7d7915b9d621fcc0dbf0b4d2f957a69ac04c7abc972dc9bd4dd9f589bda009364ae00086488bf961fe419ea60a339d292a6bafbbb6cc16f4feb9d6f3b608a66e05b40c9966dc93a6714eb507e60f0d0a4f175810577b0fa186022c3e9e89ced25887ca92d7d9010dea7d7ce6098ce2f3db7e53eedc11bec8cfea4dcdba6db418d954bafb1711d197f77b971d1dbcd65c9279233ad6ec39d203c67f8b750f5a7b6557c05032dada8bc9ba393c2fbf07d2a07fc2dc49f3d8d9861cc9f4c4c479c2ab169c9e82477ddc017e548a3015d1a8c77273b9772ac9fea0df3e2484810b6fb337a7e144d6a20529c53fedd0451303135d9646dce9603d63af2f6b1ce21e1741c1da2164d7b1a311e1767abb1b0c53adfcb827a30fba40e9ee2554328175c07df2120e94c0644f784a5b6bf009c45544aa6bf1b163f54258fa191ee6c1320af190a71ba3f78513f1b1526102e6be6eb178e7b0aa9138b3521e1d7078c9c5f88c00274601a2b5e31a9bbb791cfad8a606b392e3e6050ec0c514066e6a51edd2833751280211532feb59d94813c05e939c41733cddef8b58fe8b4f65eb1b74bcefac20fd803086d7353b86c55c54aaa9817faa539aa4e4cc2f5db1769544b10d91a1752488e3f266ffd42afe8819d511aa792755e8458bedac7c265ebae35ea4b1839f4751ba3f070f763a6a8c95afb3bc0e649e9061bd99ead2fd2e467cea4abf7d1c4e212ef73206bd39d6698965995c41b7fbd6cf8c197c5b10aaf2ba807196d342d870aef98697671bbba7eb65dbaf847030ed510f550f452ab21c0a1de4fcbf916db92411a671fb5c43ac8774264162fee18</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      <categories>
-        <category>chatgpt</category>
-      </categories>
-      <tags>
-        <tag>注册ChatGpt</tag>
       </tags>
   </entry>
   <entry>
