@@ -287,34 +287,50 @@
       
         <p><code>git</code> command and some explains</p>
 <span id="more"></span>
+
 <h2 id="git-init"><a href="#git-init" class="headerlink" title="git init"></a><code>git init</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init (newDir)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p>在当前目录初始化一个<code>git</code>仓库或者重新初始化一个已经存在的仓库。执行完之后会在当前目录下生成一个<code>.git</code>目录（Windows下可能设置了隐藏的项目不可见，设置一下就好了。<a target="_blank" rel="noopener" href="https://support.microsoft.com/zh-cn/windows/在-windows-中查看隐藏的文件和文件夹-97fbc472-c603-9d90-91d0-1166d1d9f4b5">Windows下显示隐藏项目</a>）</p>
+<p>在当前目录初始化一个<code>git</code>仓库或者重新初始化一个已经存在的仓库。执行完之后会在当前目录下生成一个<code>.git</code>目录（Windows下可能设置了隐藏的项目不可见，设置一下就好了。<a target="_blank" rel="noopener" href="https://support.microsoft.com/zh-cn/windows/%E5%9C%A8-windows-%E4%B8%AD%E6%9F%A5%E7%9C%8B%E9%9A%90%E8%97%8F%E7%9A%84%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E4%BB%B6%E5%A4%B9-97fbc472-c603-9d90-91d0-1166d1d9f4b5">Windows下显示隐藏项目</a>）</p>
+</blockquote>
+<blockquote>
 <p><code>Linux</code>下在命令行界面运行命令<code>la</code>即可看到。</p>
+</blockquote>
+<blockquote>
 <p>括号中的<code>newDir</code>可以选择是否添加。</p>
 <p>如果添加，则在初始化的过程中还会在当前目录下，新建一个子目录<code>newDir</code>。</p>
 </blockquote>
 <h2 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a><code>git clone</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone &lt;URL&gt; [your_dir]</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p>从URL网站上克隆（完全复制）项目到本地<strong>（可以不用加入这个项目仓库）</strong>。<code>your_dir</code>为可选参数，如果选择，则克隆到指定目录<code>your_dir</code>，如果不选择，则默认克隆到当前目录。</p>
+<p>从URL网站上克隆（完全复制）项目到本地**（可以不用加入这个项目仓库）**。<code>your_dir</code>为可选参数，如果选择，则克隆到指定目录<code>your_dir</code>，如果不选择，则默认克隆到当前目录。</p>
 </blockquote>
 <h2 id="git-config"><a href="#git-config" class="headerlink" title="git config"></a><code>git config</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global uesr.name [&quot;your_name&quot;]</span><br><span class="line">git config --global user.email [&quot;your_email&quot;]</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>配置<code>git</code>用户信息，包括邮箱，用户名。用于辨识提交项目的人。<strong><code>gitee</code>不会对用户名和邮箱进行验证，即便你的邮箱和用户名是假的</strong>，如果邮箱存在，则在项目中显示某内容为该邮箱提交的，如果邮箱无效，则显示某内容是该用户名提交的。</p>
+</blockquote>
+<blockquote>
 <p>如果不选择中括号内的参数，则只表示查询。</p>
 </blockquote>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global --list</span><br><span class="line">git config --global --edit</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>可以查看全局配置信息，包括配置的用户名，邮箱，已配置<code>git</code>的路径等</p>
 <p>第二个命令是默认用打开<code>vim</code>打开配置信息文件：<a target="_blank" rel="noopener" href="https://blog.csdn.net/wangyuxiang946/article/details/126560108">vim使用方法</a>。</p>
 </blockquote>
 <h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a><code>git status</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status [-s]</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>查看当前目录下文件跟踪<strong>状态</strong></p>
+</blockquote>
+<blockquote>
 <p>若使用可选参数，则在被跟踪文件左边出现说明</p>
 </blockquote>
 <figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">M:被修改的文件</span><br><span class="line">A:新添加的文件</span><br><span class="line">D:被删除的文件</span><br><span class="line">R:重命名的文件</span><br><span class="line">??:未被跟踪的文件</span><br></pre></td></tr></table></figure>
+
 <h2 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a><code>git diff</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git diff</span><br><span class="line">git diff --cached</span><br><span class="line">git diff HEAD</span><br><span class="line">git diff your_file</span><br><span class="line">git diff --stat</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p><code>git diff</code>查看还没有被缓存的改动</p>
 <p><code>git diff --cached</code>查看已经被缓存的改动</p>
@@ -596,7 +612,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

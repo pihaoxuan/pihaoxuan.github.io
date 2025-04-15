@@ -289,6 +289,7 @@
       
         <p>编译学习虚拟机部分</p>
 <span id="more"></span>
+
 <h3 id="1、支撑知识"><a href="#1、支撑知识" class="headerlink" title="1、支撑知识"></a>1、支撑知识</h3><h4 id="关于电脑内存"><a href="#关于电脑内存" class="headerlink" title="关于电脑内存"></a>关于电脑内存</h4><p>电脑中的内存是虚拟地址映射到实际的内存上，而非真是有这么多。</p>
 <h4 id="关于本次使用的内存段"><a href="#关于本次使用的内存段" class="headerlink" title="关于本次使用的内存段"></a>关于本次使用的内存段</h4><p>简单来讲，进程的内存会被分为以下几个段</p>
 <blockquote>
@@ -300,8 +301,8 @@
 </blockquote>
 <p>在第一点中提到在代码段在内存中位于低地址区域，那么如下图所示：</p>
 <p><code>图一</code></p>
-<p><img src="/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/地址分布.jpg" alt="各部分地址分布"></p>
-<p>个人理解：在计算机内存中，低地址是不允许写入的，其中存放的数据都是一些系统级的或者是常量，例如数字（0-9），字符（a-zA-Z,./等），当程序需要时，就只能读取而不能写入。</p>
+<p><img src="/2023/05/18/%E7%BC%96%E8%AF%91%E5%AD%A6%E4%B9%A0%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%83%A8%E5%88%86-20230518/%E5%9C%B0%E5%9D%80%E5%88%86%E5%B8%83.jpg" alt="各部分地址分布"></p>
+<p>个人理解：在计算机内存中，低地址是不允许写入的，其中存放的数据都是一些系统级的或者是常量，例如数字（0-9），字符（a-zA-Z,.&#x2F;等），当程序需要时，就只能读取而不能写入。</p>
 <p>而在高地址字段，例如堆栈，可以实现内存的动态分配和数据的调用和修改，即可读可写，提高了与用户的交互性。</p>
 <p>为简单起见，本次只关心 <strong>①代码段 ②数据段 ③栈</strong></p>
 <h4 id="③寄存器"><a href="#③寄存器" class="headerlink" title="③寄存器"></a>③寄存器</h4><p>寄存器用于存放计算机的运行状态，真实计算机中有许多寄存器，本次只用4种。</p>
@@ -314,6 +315,7 @@
 </blockquote>
 <h4 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h4><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>可不可以用unsigned int？？？</p>
 <h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h3><h4 id="类型问题"><a href="#类型问题" class="headerlink" title="类型问题"></a>类型问题</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ax;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LC)   &#123;ax = *(<span class="type">char</span> *)ax;&#125;      <span class="comment">// load character to ax, address in ax</span></span><br></pre></td></tr></table></figure>
+
 <p>if中的操作是将ax中的值作为地址，并且按照char类型解析该地址指向的内容，然后将解析完后的char重新赋值给ax，应该会导致类型冲突的呀。</p>
 <blockquote>
 <p><strong>解答</strong>：在计算机内存中，不论是<code>int</code>还是<code>char</code>还是各种指针类型，其实都是一个数，而<code>int</code>，<code>char</code>或者是<code>int*</code>，<code>char*</code>是决定程序在解析这个数的时候的方式（往后读多少个内存单元，按照什么类型解析）。</p>
@@ -324,18 +326,19 @@
 <p><strong>解答</strong>：在函数调用时，一个函数需要多大的空间运行，一般都会在函数内部用一个小空间存储这个内容。</p>
 <p>这里将这个内容取出来减去，就是回收之前为子函数开辟出来的子函数提前告知的需要的空间。</p>
 </blockquote>
-<h3 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h3><h4 id="关于指针"><a href="#关于指针" class="headerlink" title="关于指针"></a>关于指针</h4><p><code>int *</code>和<code>char *</code>本质上都是指针，而指针都是一个数字，而计算机内指针都是用数字表示的，为什么不统一用int或者是unsigned int，而是要分int char和其它？</p>
-<p>因为<code>int *</code>和<code>char *</code>指向的数字表示不同的数据类型，而且还是做指针运算时的重要依据，比如在int类型中，指针运算++是向后移动4个字节（大多数机器是这样的），而char类型在做指针运算时，往往只向后移动1个字节，计算机做出这样的依据就是所使用的指针类型。</p>
-<p>其次，在计算机编译阶段，这两种类型对应存储的数据需要不同，计算机在编译时会检查<code>int *</code>和<code>char *</code>所指向的数据是否正确，若不正确则报错，避免潜在的错误。</p>
+<h3 id="TIPS："><a href="#TIPS：" class="headerlink" title="TIPS："></a>TIPS：</h3><h4 id="关于指针"><a href="#关于指针" class="headerlink" title="关于指针"></a>关于指针</h4><p><code>int * </code>和<code>char *</code>本质上都是指针，而指针都是一个数字，而计算机内指针都是用数字表示的，为什么不统一用int或者是unsigned int，而是要分int char和其它？</p>
+<p>因为<code>int * </code>和<code>char *</code>指向的数字表示不同的数据类型，而且还是做指针运算时的重要依据，比如在int类型中，指针运算++是向后移动4个字节（大多数机器是这样的），而char类型在做指针运算时，往往只向后移动1个字节，计算机做出这样的依据就是所使用的指针类型。</p>
+<p>其次，在计算机编译阶段，这两种类型对应存储的数据需要不同，计算机在编译时会检查<code>int * </code>和<code>char *</code>所指向的数据是否正确，若不正确则报错，避免潜在的错误。</p>
 <p>GPT这样说：</p>
 <blockquote>
-<p>int <em>和char </em>在本质上的区别是指针所指向内存单元中存储的数据类型不同。</p>
-<p>int <em> 是一个指向整型变量的指针，它所指向的内存单元中存储的是一个整型数值，占用 4 字节（在大部分机器上）。而 char </em> 则是一个指向字符型变量的指针，它所指向的内存单元中存储的是一个字节大小的 ASCII 码或者 Unicode 码。</p>
-<p>在计算机编译时，int <em>和char </em> 在指针操作上会有所不同。在执行指针运算时，指针所指向的内存单元地址将根据数据类型的不同而发生改变。例如，对于一个 int<em> 指针变量 p，执行 p++ 操作时，p 的值将增加 4，因为一个 int 变量占用 4 个字节。而对于一个 char</em> 指针变量 q，执行 q++ 操作时，q 的值只会增加 1，因为一个 char 变量只占用一个字节。</p>
-<p>此外，在编译器生成目标代码时，对于 int <em> 和 char </em> 所指向的内存单元，编译器在生成代码时还会进行类型检查。这是为了确保程序不会访问不正确的内存地址，避免潜在的错误。例如，在使用 int * 指针时，我们只能访问整型变量的内存地址，不能访问 char 或其他类型变量的内存地址。</p>
+<p>int *和char *在本质上的区别是指针所指向内存单元中存储的数据类型不同。</p>
+<p>int * 是一个指向整型变量的指针，它所指向的内存单元中存储的是一个整型数值，占用 4 字节（在大部分机器上）。而 char * 则是一个指向字符型变量的指针，它所指向的内存单元中存储的是一个字节大小的 ASCII 码或者 Unicode 码。</p>
+<p>在计算机编译时，int <em>和char * 在指针操作上会有所不同。在执行指针运算时，指针所指向的内存单元地址将根据数据类型的不同而发生改变。例如，对于一个 int</em> 指针变量 p，执行 p++ 操作时，p 的值将增加 4，因为一个 int 变量占用 4 个字节。而对于一个 char* 指针变量 q，执行 q++ 操作时，q 的值只会增加 1，因为一个 char 变量只占用一个字节。</p>
+<p>此外，在编译器生成目标代码时，对于 int * 和 char * 所指向的内存单元，编译器在生成代码时还会进行类型检查。这是为了确保程序不会访问不正确的内存地址，避免潜在的错误。例如，在使用 int * 指针时，我们只能访问整型变量的内存地址，不能访问 char 或其他类型变量的内存地址。</p>
 </blockquote>
 <h4 id="关于栈顶"><a href="#关于栈顶" class="headerlink" title="关于栈顶"></a>关于栈顶</h4><p><code>SP指针寄存器</code> 永远指向当前栈的栈顶  此处的栈顶是最顶端的元素，而非最顶端元素的上面一个。</p>
 <h4 id="一些骚操作"><a href="#一些骚操作" class="headerlink" title="一些骚操作"></a>一些骚操作</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SC)   &#123;ax = *(<span class="type">char</span> *)*sp++ = ax;&#125;</span><br></pre></td></tr></table></figure>
+
 <p>上述代码的运算顺序是：</p>
 <p>①sp++申请新空间</p>
 <p>②*解引用</p>
@@ -346,7 +349,7 @@
 <h4 id="pc-1和-int-pc"><a href="#pc-1和-int-pc" class="headerlink" title="pc+1和(int *)*pc"></a><code>pc+1</code>和<code>(int *)*pc</code></h4><p><code>pc = pc+1</code>是指顺序执行下一行代码（从上帝视角来看）</p>
 <p><code>pc = (int *) *pc</code>是指跳转到下一个语句块</p>
 <p>从JMP指令的实现是<code>pc = (int *) *pc</code>就能看出，如果if后面是0，那么则回执行<code>pc = (int *) *pc</code>，实质上是进行了一次JMP。</p>
-<h4 id><a href="#" class="headerlink" title=" "></a> </h4>
+<h4 id><a href="#" class="headerlink" title></a></h4>
     </div>
 
     
@@ -475,7 +478,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%94%AF%E6%92%91%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">1、支撑知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%94%B5%E8%84%91%E5%86%85%E5%AD%98"><span class="nav-number">1.1.</span> <span class="nav-text">关于电脑内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E6%AC%A1%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E5%AD%98%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">关于本次使用的内存段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A2%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">③寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">1.4.</span> <span class="nav-text">指令集</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">类型问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sp-sp-pc"><span class="nav-number">3.2.</span> <span class="nav-text">sp &#x3D; sp - *pc++</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIPS%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">TIPS：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%8C%87%E9%92%88"><span class="nav-number">4.1.</span> <span class="nav-text">关于指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%88%E9%A1%B6"><span class="nav-number">4.2.</span> <span class="nav-text">关于栈顶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%AA%9A%E6%93%8D%E4%BD%9C"><span class="nav-number">4.3.</span> <span class="nav-text">一些骚操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pc-1%E5%92%8C-int-pc"><span class="nav-number">4.4.</span> <span class="nav-text">pc+1和(int *)*pc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.5.</span> <span class="nav-text"> </span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%94%AF%E6%92%91%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">1、支撑知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E7%94%B5%E8%84%91%E5%86%85%E5%AD%98"><span class="nav-number">1.1.</span> <span class="nav-text">关于电脑内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E6%AC%A1%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E5%AD%98%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">关于本次使用的内存段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%91%A2%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">③寄存器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">1.4.</span> <span class="nav-text">指令集</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">问题：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E9%97%AE%E9%A2%98"><span class="nav-number">3.1.</span> <span class="nav-text">类型问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sp-sp-pc"><span class="nav-number">3.2.</span> <span class="nav-text">sp &#x3D; sp - *pc++</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TIPS%EF%BC%9A"><span class="nav-number">4.</span> <span class="nav-text">TIPS：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%8C%87%E9%92%88"><span class="nav-number">4.1.</span> <span class="nav-text">关于指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%88%E9%A1%B6"><span class="nav-number">4.2.</span> <span class="nav-text">关于栈顶</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E9%AA%9A%E6%93%8D%E4%BD%9C"><span class="nav-number">4.3.</span> <span class="nav-text">一些骚操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pc-1%E5%92%8C-int-pc"><span class="nav-number">4.4.</span> <span class="nav-text">pc+1和(int *)*pc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.5.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -620,7 +623,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

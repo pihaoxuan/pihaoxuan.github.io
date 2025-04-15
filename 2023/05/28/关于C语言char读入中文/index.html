@@ -286,13 +286,16 @@
       
         <p>关于C语言char读入中文</p>
 <span id="more"></span>
+
 <p>先上代码</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> token;</span><br><span class="line"><span class="type">char</span> *src;</span><br><span class="line"><span class="type">void</span> <span class="title function_">next</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    token = *src++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>如上述代码所示，其中<code>token</code>是<code>int</code>类型，而<code>src</code>是<code>char</code>类型的指针，它所指向的内容只会取一个字节进行解析。</p>
 <p>现在让<code>src</code>指向一个内存块，其存储的值是<code>0xE4BDA0</code>，即中文字符<code>你</code>的<code>utf-8</code>的编码，由于你的编码占了三个字节，而C语言中<code>char</code>类型只解析一个字节，因此，当<code>src</code>指向这个内存块的时候，只解析最低位，即<code>0xA0</code>。当讲0xA0赋值给token时，因为token是int类型，因此token会将最低位写入0xA0，其它位保持赋值时刷新的值。</p>
 <blockquote>
 <p>解释一下<code>保持赋值时刷新的值</code>是什么意思：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> k;</span><br><span class="line">k=<span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+
 <p>如上述代码所示，k被赋值三，且之前没初始化，那么在赋值时，为了保证k 的正确，应该将对应的内存刷新成二进制</p>
 <p><code>0000 0000 0000 0011</code>但是在计算机内部，整数是用补码存储的，因此在计算机中，真实的值应该是</p>
 <p><code>0111 1111 1111 1101</code>因为k是int类型，不是无符号，所以第一位仍然是0，表示该数是正数。</p>
@@ -575,7 +578,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

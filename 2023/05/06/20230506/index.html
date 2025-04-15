@@ -289,6 +289,7 @@
       
         <p>今天学的有点散乱</p>
 <span id="more"></span>
+
 <p>上一篇文章：<a href="/2023/05/05/20230505/" title="开始接触编译">开始接触编译</a></p>
 <h4 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h4><p>即使用语法树和符号表，检查源程序是否和语言定义的语义一致，同时收集类型信息，将它们放在语法树或者符号表中，后面的中间代码生成中会用到。</p>
 <p>同时，在语法树中，自动类型转换可以作为一个单独的节点表示，如下图</p>
@@ -297,20 +298,23 @@
 <h4 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h4><p>其实，上述文章中一直在讲的<strong>语法树</strong>已经是一种中间代码了。</p>
 <p>中间代码需要满足两点：①<strong>易于生成</strong>     ②<strong>易于被翻译成目标机器的语言</strong></p>
 <p>例如<strong>三地址代码</strong></p>
-<p>上述表达式<strong>a = b + c * 30</strong>可以表示为</p>
+<p>上述表达式<strong>a &#x3D; b + c * 30</strong>可以表示为</p>
 <p><code>code1.1</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t1 = inttofloat(30)</span><br><span class="line">t2 = id3 * t1</span><br><span class="line">t3 = id2 + t2</span><br><span class="line">id1 = t3</span><br></pre></td></tr></table></figure>
+
 <p>上述代码块就是三地址代码。</p>
 <p>三地址代码有以下要求：①<strong>赋值指令右侧最多只能有一个运算符</strong>（为了保证运算顺序）；②<strong>编译器应该生成一个临时变量名存放三地址指令计算得到的值</strong>（例如t1,t2,t3）;③<strong>有些三地址代码的运算分量少于三个</strong>（例如上述代码块第1行和第4行）.</p>
 <h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><p>机器无关代码的优化，实质上就是改进中间代码，从而可以生成更好的目标代码（更好意味着执行更快或者功耗更小等等）</p>
 <p>比如，上面的三地址代码第一行，可以在编译的时候直接用<strong>30.0</strong>替换<strong>30</strong>，从而避免进行转型运算，中间步骤也可以优化，具体如下</p>
 <p><code>code1.2</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">t1 = id3 * 30.0</span><br><span class="line">id1 = id2 + t1</span><br></pre></td></tr></table></figure>
+
 <h4 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h4><p>即生成目标机器的语言。</p>
 <p>中间代码作为代码生成器的输入，映射到目标语言。如果目标机器的目标语言是机器代码，那么就需要合理分配寄存器以存放变量的值。</p>
 <p>例如，code1.2 可以被翻译成如下形式</p>
 <p><code>code1.3</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LDF R2,id3</span><br><span class="line">MULF R2,R2,#30.0</span><br><span class="line">LDF R1,id2</span><br><span class="line">ADDF R1,R2</span><br><span class="line">STF id1,R1</span><br></pre></td></tr></table></figure>
+
 <p><strong>自行理解</strong></p>
 <h4 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h4><p><strong>符号表是一种数据结构</strong>，可以存储变量的各个属性，例如变量的存储分配，变量类型，变量的作用域等等。</p>
 <h4 id="趟"><a href="#趟" class="headerlink" title="趟"></a>趟</h4><p>可以将多个步骤组合成一趟。例如前端步骤中的词法分析，语法分析，语义分析以及中间代码生成可以被组合成一趟，而代码优化可以作为一个可选择的趟。还可以有一个为特定目标机器生成代码的后端趟。</p>
@@ -598,7 +602,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

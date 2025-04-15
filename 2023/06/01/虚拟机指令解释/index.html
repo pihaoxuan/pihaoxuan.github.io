@@ -286,28 +286,41 @@
       
         <p>简易编译器中的虚拟机指令解释</p>
 <span id="more"></span>
+
 <h3 id="代码前定义"><a href="#代码前定义" class="headerlink" title="代码前定义"></a>代码前定义</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *src, *old_src;</span><br><span class="line"><span class="type">int</span> *bp, *sp, *pc; </span><br><span class="line"><span class="type">int</span> ax = <span class="number">0</span>; </span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> //枚举</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    LEA,IMM,JMP,CALL,JZ,JNZ,ENT,ADJ,LEV,LI,LC,SI,SC,PUSH,OR,XOR,AND,EQ,NE,LT,GT,LE,GE,SHL,SHR,ADD,SUB,MUL,DIV,MOD,OPEN,READ,CLOS,PRTF,MALC,MSET,MCMP,EXIT</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h3 id="IMM"><a href="#IMM" class="headerlink" title="IMM"></a>IMM</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (op == IMM)</span><br><span class="line">&#123;</span><br><span class="line">	ax = *pc++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>IMM</code>指令用于将一个<code>数</code>存放在寄存器<code>ax</code>中。</p>
 <p>其中<code>数</code>不一定是1，2，3，4等，可以是其它不同含义的数字，比如十六进制的<code>0xE4BDA0</code>在<code>utf-8</code>中表示中文字符<code>你</code>，也可以当作一个数存进寄存器<code>ax</code>中。</p>
 <p><code>pc</code>指向的是下一个指令的地址，地址本质上也是一个数，即可以存储到寄存器<code>ax</code>中。</p>
 <h3 id="LC"><a href="#LC" class="headerlink" title="LC"></a>LC</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LC)</span><br><span class="line">&#123;</span><br><span class="line">	ax = *(<span class="type">char</span> *)ax;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>LC</code>指令用于将对应地址中的字符载入<code>ax</code>中。</p>
-<p>执行指令前，<code>ax</code>中存放的是地址，一如IMM指令中所述，将该地址存放在<code>ax</code>中。现将<code>ax</code>中的地址强转为 <code>char *</code> （因为<code>ax</code>是<code>int</code>型） ，强转为<code>char *</code>只是告诉编译器，我下一次要取<code>ax</code>地址中对应的内容时，按照<code>char</code>的解析规则去解析，即随即而来的解引用操作，将<code>ax</code>中的地址值指向的内容，按照<code>char</code>的规则解析后，将其的编码（若是字母，则应该是ASCII码，如果是其它的字符，则是按照编码规则来存储的一些十六进制的码）存入<code>ax</code>中。</p>
+<p>执行指令前，<code>ax</code>中存放的是地址，一如IMM指令中所述，将该地址存放在<code>ax</code>中。现将<code>ax</code>中的地址强转为 <code>char *</code> （因为<code>ax</code>是<code>int</code>型） ，强转为<code>char * </code>只是告诉编译器，我下一次要取<code>ax</code>地址中对应的内容时，按照<code>char</code>的解析规则去解析，即随即而来的解引用操作，将<code>ax</code>中的地址值指向的内容，按照<code>char</code>的规则解析后，将其的编码（若是字母，则应该是ASCII码，如果是其它的字符，则是按照编码规则来存储的一些十六进制的码）存入<code>ax</code>中。</p>
 <h3 id="LI"><a href="#LI" class="headerlink" title="LI"></a>LI</h3><p><code>LI</code>指令用于将对应地址中的整数载入<code>ax</code>中，和<code>LC</code>类似</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LI)</span><br><span class="line">&#123;</span><br><span class="line">    ax = *(<span class="type">int</span> *)ax;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="SC"><a href="#SC" class="headerlink" title="SC"></a>SC</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SC)</span><br><span class="line">&#123;</span><br><span class="line">	ax = *(<span class="type">char</span> *)*sp++ = ax;<span class="comment">//sp++是压栈？</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>SC</code>指令用于将<code>ax</code>中的数据作为字符存放，且存放在栈顶。</p>
 <p>首先POP一下，即<code>sp++</code>，然后将<code>ax</code>存放在<code>sp</code>指向的内存中。完成之后，将该地址强转为 <code>char *</code>类型，之后再按照<code>char</code>的规则取该地址中的内容，然后存入<code>ax</code>中。</p>
 <p>简而言之，先将<code>ax</code>中的数存入<code>sp</code>栈顶中，然后将它转换成<code>char</code>类型，再更新<code>ax</code>中的值。</p>
 <p>其实可以写成这样：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(op == SC)</span><br><span class="line">&#123;</span><br><span class="line">    *sp++ = ax;</span><br><span class="line">    ax = *(<span class="type">char</span> *)*sp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="SI"><a href="#SI" class="headerlink" title="SI"></a>SI</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == SI)</span><br><span class="line">&#123;</span><br><span class="line">	*(<span class="type">int</span> *)*sp++ = ax;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>与<code>SC</code>类似，但是 是将<code>ax</code>中的数据以整数的形式重新存入<code>ax</code>中</p>
 <h3 id="PUSH"><a href="#PUSH" class="headerlink" title="PUSH"></a>PUSH</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == PUSH)</span><br><span class="line">&#123;</span><br><span class="line">	*--sp = ax;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>PUSH</code>即为压栈，先开辟空间，即sp向下走一位，然后将<code>ax</code>的值写进去</p>
 <h3 id="JMP"><a href="#JMP" class="headerlink" title="JMP"></a>JMP</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == JMP)</span><br><span class="line">&#123;</span><br><span class="line">	pc = (<span class="type">int</span> *)*pc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>JMP</code>的作用是跳转，即将<code>pc</code>指向的地址中的值改为下一块语句的地址。</p>
 <blockquote>
 <p><strong>注意</strong></p>
@@ -316,26 +329,32 @@
 </blockquote>
 <p><code>pc</code>中存放的是<strong>下一条指令的地址的地址</strong>，该操作是将下一条指令的地址直接赋给<code>pc</code>并以<code>int</code>规则解析该地址（因为<code>pc</code>本来就是<code>int *</code>类型）</p>
 <h3 id="JZ"><a href="#JZ" class="headerlink" title="JZ"></a>JZ</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == JZ)</span><br><span class="line">&#123;</span><br><span class="line">	pc = ax ? pc + <span class="number">1</span> : (<span class="type">int</span> *)*pc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>JZ</code>：jump if ax is zero</p>
 <p>即当<code>ax</code>为0时，使用<code>JZ</code>跳转到<code>(int *)*pc</code></p>
 <h3 id="JNZ"><a href="#JNZ" class="headerlink" title="JNZ"></a>JNZ</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == JNZ)</span><br><span class="line">&#123;</span><br><span class="line">	pc = ax ? (<span class="type">int</span> *)*pc : pc + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>JNZ</code>：jump if ax is not zero</p>
 <p>即当<code>ax</code>不为0时，使用<code>JNZ</code>跳转到<code>(int *)*pc</code></p>
 <h3 id="CALL"><a href="#CALL" class="headerlink" title="CALL"></a>CALL</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == CALL)</span><br><span class="line">&#123;</span><br><span class="line">	sp--;</span><br><span class="line">	*sp = (<span class="type">int</span>)(pc + <span class="number">1</span>);</span><br><span class="line">	pc = (<span class="type">int</span> *)*pc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>CALL</code>用于调用子函数。</p>
 <p>先将栈开辟一块空间，然后将顺序的下一句存进栈顶，然后实现一次<code>JMP</code>，跳转到子函数的地址。</p>
 <blockquote>
 <p>将顺序的下一句存入栈中，是因为等子函数执行完了之后，需要回过头来继续执行main函数</p>
 </blockquote>
 <h3 id="ENT"><a href="#ENT" class="headerlink" title="ENT"></a>ENT</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == ENT)</span><br><span class="line">&#123;</span><br><span class="line">	*--sp = (<span class="type">int</span>)bp;</span><br><span class="line">	bp = sp;</span><br><span class="line">	sp = sp - *pc++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>ENT</code>用于保存当前栈指针，然后分配一定空间给子函数运行</p>
 <p>先调用基址指针<code>bp</code>来帮忙代替一下<code>sp</code>的工作：总是指向栈顶。在这之前需要在栈中保存基址指针指向的地址，即先分配空间保存<code>bp</code>的指向内容，然后将<code>sp</code>的值赋给<code>bp</code>，然后<code>sp</code>划分<code>*pc++</code>个空间给子函数运行。</p>
 <blockquote>
 <p><code>pc++</code>是<code>CALL</code>之后<code>pc</code>的顺序的下一个指令地址，里面存储了该函数需要多少空间才能保证顺利运行，所以编译器可以直接按照这个数字给子函数开辟内存</p>
 </blockquote>
 <h3 id="ADJ"><a href="#ADJ" class="headerlink" title="ADJ"></a>ADJ</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == ADJ)</span><br><span class="line">&#123;</span><br><span class="line">	sp = sp + *pc++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>ADJ</code>函数用于回收给子函数分配的空间。</p>
 <h3 id="LEV"><a href="#LEV" class="headerlink" title="LEV"></a>LEV</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LEV)</span><br><span class="line">&#123;</span><br><span class="line">	sp = bp;</span><br><span class="line">	bp = (<span class="type">int</span> *)*sp++;</span><br><span class="line">	pc = (<span class="type">int</span> *)*sp++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>LEV</code>用于恢复没调用函数时的main函数的现场。</p>
 <p>在<code>CALL</code>指令中，将顺序执行的下一条语句地址暂存，在<code>ENT</code>指令中，将基址指针<code>bp</code>的指向地址暂存，然后<code>bp</code>代替<code>sp</code>先指一会儿栈顶。</p>
 <p>所以先将栈顶指针还给<code>sp</code>，然后带<code>bp</code>去找它之前指向的地址，然后把存该地址的空间消灭，接着就带<code>pc</code>去找顺序下一条语句的地址（因为中间插入的函数已经解决了），然后再将该空间消灭。</p>
@@ -343,6 +362,7 @@
 <p>先带<code>bp</code>，再带<code>pc</code>顺序不可乱，因为栈就是后进先出！！</p>
 </blockquote>
 <h3 id="LEA"><a href="#LEA" class="headerlink" title="LEA"></a>LEA</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (op == LEA)</span><br><span class="line">&#123;</span><br><span class="line">	ax = (<span class="type">int</span>)(bp + *pc++);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p><code>LEA</code>指令用于取函数参数。</p>
 <p><code>CALL</code>指令执行后，跳转至子函数执行，此时需要取子函数的参数。子函数的参数位置由基址指针<code>bp</code>和偏移量<code>*pc</code>决定，取完之后，将其存放到寄存器<code>ax</code>中</p>
 <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>①在<code>JZ</code>和<code>JNZ</code>中，已经确定了两种情况下的<code>ax</code>为什么还需要用三目操作符来判断<code>ax</code>的值并给出相应的操作，且不管<code>ax</code>是否为0，结果都是一样的，即进行一次<code>JMP</code></p>
@@ -618,7 +638,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

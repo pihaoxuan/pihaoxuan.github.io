@@ -298,26 +298,30 @@
       
         <p>一些关于<strong>git</strong>使用的心得</p>
 <span id="more"></span>
+
 <p><strong>说明：本文使用Ubuntu20.04系统和gitee操作，理论上来说Windows系统和github的操作方法是一样的，只是有些路径不太一样。</strong></p>
 <h3 id="预备条件"><a href="#预备条件" class="headerlink" title="预备条件"></a>预备条件</h3><p>首先需要有安装<code>git</code>（对于Windows平台来说，Linux应该是自带有git）</p>
 <p>其次需要有gitee账号和一个新建的仓库</p>
 <p>以上两项不会的自行查找资料，很简单的。(算了，我还是附上两（sì）个链接吧)</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mukes/article/details/115693833?ops_request_misc=%7B%22request%5Fid%22%3A%22169682895716800182799938%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=169682895716800182799938&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-115693833-null-null.142^v95^chatgptT3_1&amp;utm_term=git安装&amp;spm=1018.2226.3001.4187">Windows下的Git 详细安装教程——详细到你不想看</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_70102063/article/details/132166986?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=Linux下的git安装&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-132166986.142^v95^chatgptT3_1&amp;spm=1018.2226.3001.4187">Linux系统上安装Git详细步骤</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mukes/article/details/115693833?ops_request_misc=%7B%22request_id%22:%22169682895716800182799938%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169682895716800182799938&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-115693833-null-null.142%5Ev95%5EchatgptT3_1&utm_term=git%E5%AE%89%E8%A3%85&spm=1018.2226.3001.4187">Windows下的Git 详细安装教程——详细到你不想看</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_70102063/article/details/132166986?ops_request_misc=&request_id=&biz_id=102&utm_term=Linux%E4%B8%8B%E7%9A%84git%E5%AE%89%E8%A3%85&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-132166986.142%5Ev95%5EchatgptT3_1&spm=1018.2226.3001.4187">Linux系统上安装Git详细步骤</a></p>
 <p><strong>gitee账号创建：对不起太简单了，找不到教程</strong></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_73805125/article/details/130659347?ops_request_misc=%7B%22request%5Fid%22%3A%22169683556316800215058913%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=169683556316800215058913&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-130659347-null-null.142^v95^chatgptT3_1&amp;utm_term=gitee账号创建和仓库创建&amp;spm=1018.2226.3001.4187">怎么在Gitee中创建仓库</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_73805125/article/details/130659347?ops_request_misc=%7B%22request_id%22:%22169683556316800215058913%22,%22scm%22:%2220140713.130102334.pc_all.%22%7D&request_id=169683556316800215058913&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-2-130659347-null-null.142%5Ev95%5EchatgptT3_1&utm_term=gitee%E8%B4%A6%E5%8F%B7%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BB%93%E5%BA%93%E5%88%9B%E5%BB%BA&spm=1018.2226.3001.4187">怎么在Gitee中创建仓库</a></p>
 <h3 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h3><p><strong>第一步</strong>：初始化git</p>
 <p>在需要git管理的项目文件夹中执行命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
 <p>结果如下</p>
 <p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/init.jpg" alt="init"></p>
 <p>再执行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">la</span><br></pre></td></tr></table></figure>
+
 <p>就可以看见<code>.git</code>文件夹，证明初始化成功</p>
 <p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/la.jpg" alt="la"></p>
 <p><strong>第二步</strong>：生成公钥以连接远程git仓库</p>
 <p>执行命令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;你的gitee账号的主邮箱&quot;</span><br></pre></td></tr></table></figure>
+
 <p>如果之前执行过，或者连过远程仓库，那么会报错说已经有了密钥</p>
 <p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/key_already_exists.jpg" alt="error"></p>
 <p>如果没有过，那么<strong>注意</strong>：命令行会问你三个问题，别搭理他，直接回车让他尴尬就好了。之后会出现如图所示的奇怪图像</p>
@@ -332,15 +336,18 @@
 <p><strong>第三步</strong>：建立账号连接</p>
 <p>直接在命令行输入以下指令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@git.oschina.net</span><br></pre></td></tr></table></figure>
+
 <p>然后会显示啥呢？ 会和你问好，说你成功变成了作者balabala的，人还怪有礼貌的嘞！</p>
 <p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/successfully.jpg" alt="successfully"></p>
-<p>至此，就可以连接上你的<strong><code>gitee</code>账号</strong>了，但是！！！！<strong>仅仅是连接到了你的gitee账号，而非仓库</strong>，你还不能像高手一样<code>clone</code>、<code>push</code>和<code>pull</code>。</p>
+<p>至此，就可以连接上你的**<code>gitee</code>账号**了，但是！！！！<strong>仅仅是连接到了你的gitee账号，而非仓库</strong>，你还不能像高手一样<code>clone</code>、<code>push</code>和<code>pull</code>。</p>
 <p><strong>第四步</strong>：连接仓库，芜湖！</p>
 <p>打开网页，进入你开头新建的仓库看右边有个<code>克隆/下载</code>的明显的按钮，点击，选择<code>http</code>然后点击复制，这样就把这个仓库的网址复制下来了（其实点击SSH也行）</p>
 <p>然后在切回命令行那边（<strong>注意，我们一直是在你需要用<code>git</code>管理的文件路径下操作的</strong>）输入以下指令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin 你刚刚复制的url地址</span><br></pre></td></tr></table></figure>
+
 <p>然后检查一下</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+
 <p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/git_remote_-v.jpg" alt="git_remote_-v"></p>
 <p>出现这个就是成功了！</p>
 <blockquote>
@@ -349,22 +356,25 @@
 <p><strong>第五步</strong>：愉快地上传代码</p>
 <p>终于来到了经典的<code>push</code>三连了！</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git status //查看当前所做更改</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;message&quot;</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+
 <p>第一条：将需要push的代码加载到工作区（本地）<code>.</code>的意思是本级目录下所有文件，也可以换成文件名或者路径</p>
 <p>第二条：提交，但也是提交到本地，<code>message</code> 是你提交时候的备注，可以简要说明你做了啥，中英文都可以</p>
 <p>第三条：将本地的东西全都<code>push</code>到远程仓库去，就是<code>gitee</code>上你创建的仓库。</p>
 <blockquote>
 <p>如果出现报错说你仓库有东西，两种解决方法</p>
-<p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/push_error.jpg" alt></p>
+<p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/push_error.jpg"></p>
 <p>①先将仓库里的东西clone下来，修改后成你想要的之后再push上去</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone origin</span><br></pre></td></tr></table></figure>
+
 <p>②如果仓库的东西不要，直接在<code>gitee</code>网站上清空仓库（<strong>慎重</strong>）然后再<code>push</code>上去</p>
 </blockquote>
-<p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/push_succeed.jpg" alt></p>
+<p><img src="/2023/10/09/%E5%85%B3%E4%BA%8Egit%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/push_succeed.jpg"></p>
 <p>出现上图就是成功了。</p>
 <p>再去<code>gitee</code>上看，代码也成功push上去了！</p>
 <h3 id="圆满！！"><a href="#圆满！！" class="headerlink" title="圆满！！"></a>圆满！！</h3><p>PS:第一次push的时候会让你登录<code>gitee</code>，需要输入用户名和密码；用户名就是<code>gitee</code>的用户名,密码就是<code>gitee</code>账户的密码</p>
 <p>如果之后每次提交都需要重复上述操作，挺烦的，那么就可以打开你项目文件夹的<code>.git/config</code>文件，<code>.get</code>就是开头说的那个文件夹。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[remote &quot;origin]</span><br><span class="line">url = https://gitee啥啥啥的</span><br><span class="line"></span><br><span class="line">改为</span><br><span class="line"></span><br><span class="line">[remote &quot;origin]</span><br><span class="line">url = https://用户名:密码@gitee啥啥啥的</span><br></pre></td></tr></table></figure>
+
 <p><strong>注意：以上所有符号用英文！</strong></p>
 <p>END</p>
 
@@ -641,7 +651,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">71k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
