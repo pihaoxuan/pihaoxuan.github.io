@@ -287,82 +287,81 @@
       
         <p>着手设计</p>
 <span id="more"></span>
-
-<h4 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h4><p>学习<strong>手把手教你构建C语言编译器–设计</strong>部分</p>
+<h4 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a>1、概述</h4><p>学习<strong>手把手教你构建C语言编译器—设计</strong>部分</p>
 <p><a target="_blank" rel="noopener" href="https://lotabout.me/2015/write-a-C-interpreter-1/">手把手教你构建 C 语言编译器（1）- 设计 </a></p>
 <p>试写了文章中的代码，虽然成功了，但是有点问题。</p>
 <h4 id="2、概念"><a href="#2、概念" class="headerlink" title="2、概念"></a>2、概念</h4><p>编写一个编译器一般为<strong>①词法分析器；②语法分析器；③目标代码生成</strong>。以下为手写这些构成部分。</p>
 <p>一个编译器的框架首先是有</p>
 <blockquote>
 <p>编译器包含四个函数：</p>
-<p>1、next()函数，用于读取下一个标记，会自动忽略掉空格；	&#x2F;&#x2F;读程序</p>
-<p>2、program()函数，语法分析的入口，分析整个程序。本部分不写；	&#x2F;&#x2F;做语法分析</p>
-<p>3、expression(level)函数，用于解析一个表达式。本部分不写；	&#x2F;&#x2F;做语义分析</p>
+<p>1、next()函数，用于读取下一个标记，会自动忽略掉空格；    //读程序</p>
+<p>2、program()函数，语法分析的入口，分析整个程序。本部分不写；    //做语法分析</p>
+<p>3、expression(level)函数，用于解析一个表达式。本部分不写；    //做语义分析</p>
 <p>4、eval()函数，虚拟机接口，可以解释目标代码。</p>
 </blockquote>
 <h4 id="3、代码"><a href="#3、代码" class="headerlink" title="3、代码"></a>3、代码</h4><p>以下是代码块，和教程上的代码一模一样，，，，，</p>
 <p><code>code01</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> token;</span><br><span class="line"><span class="type">char</span> *src, *old_src;</span><br><span class="line"><span class="type">int</span> poolsize;</span><br><span class="line"><span class="type">int</span> line;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取src中下一个字符的ASCII码值</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">next</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    token = *src++;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表达式分析pewpwd</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">expression</span><span class="params">(<span class="type">int</span> level)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do nothing</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环读取文件，直到token小于0（因为token是ASCII，所以没有小于0 的情况，等于0就是结束符）</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">program</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    next(); <span class="comment">// get next token</span></span><br><span class="line">    <span class="keyword">while</span> (token &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;token is: %c\n&quot;</span>, token);</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 虚拟机接口</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">eval</span><span class="params">()</span></span><br><span class="line">&#123; <span class="comment">// do nothing yet</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> **argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i, fd;</span><br><span class="line"></span><br><span class="line">    argc--;</span><br><span class="line">    argv++;</span><br><span class="line"></span><br><span class="line">    poolsize = <span class="number">256</span> * <span class="number">1024</span>; <span class="comment">// arbitrary size</span></span><br><span class="line">    line = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((fd = open(*argv, <span class="number">0</span>)) &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not open(%s)\n&quot;</span>, *argv);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(src = old_src = <span class="built_in">malloc</span>(poolsize)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;could not malloc(%d) for source area\n&quot;</span>, poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// read the source file</span></span><br><span class="line">    <span class="keyword">if</span> ((i = read(fd, src, poolsize - <span class="number">1</span>)) &lt;= <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read() returned %d\n&quot;</span>, i);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    src[i] = <span class="number">0</span>; <span class="comment">// add EOF character</span></span><br><span class="line">    close(fd);</span><br><span class="line"></span><br><span class="line">    program();</span><br><span class="line">    <span class="keyword">return</span> eval();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <h4 id="4、问题"><a href="#4、问题" class="headerlink" title="4、问题"></a>4、问题</h4><p>①第三行 include 的 memory.h 好像没用到（可能之后会用到吧）</p>
 <p>②第52行，open函数中的参数，第一个参数是取用户输入的第一个参数，但是第二个参数不理解。</p>
 <p>翻看了函数原型，代码如下：</p>
 <p><code>code02</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">__fortify_function <span class="type">int</span></span><br><span class="line"><span class="title function_">open</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> *__path, <span class="type">int</span> __oflag, ...)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (__va_arg_pack_len () &gt; <span class="number">1</span>)</span><br><span class="line">    __open_too_many_args ();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (__builtin_constant_p (__oflag))</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> (__OPEN_NEEDS_MODE (__oflag) &amp;&amp; __va_arg_pack_len () &lt; <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	  __open_missing_mode ();</span><br><span class="line">	  <span class="keyword">return</span> __open_2 (__path, __oflag);</span><br><span class="line">	&#125;</span><br><span class="line">      <span class="keyword">return</span> __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (__va_arg_pack_len () &lt; <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> __open_2 (__path, __oflag);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> __open_alias (__path, __oflag, __va_arg_pack ());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>第二个参数是int类型没错，但是具体含义不知道。</p>
 <p>上网查后，解释是，第二个参数代表对该文件的操作权限，例如：只读，只写，读写。但是很神奇，这些权限的表示方法如下：</p>
 <blockquote>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="center">flags 参数</th>
-<th align="center">含义</th>
+<th style="text-align:center">flags 参数</th>
+<th style="text-align:center">含义</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="center">O_RDONLY</td>
-<td align="center">只读模式</td>
+<tbody>
+<tr>
+<td style="text-align:center">O_RDONLY</td>
+<td style="text-align:center">只读模式</td>
 </tr>
 <tr>
-<td align="center">O_WRONLY</td>
-<td align="center">只写模式</td>
+<td style="text-align:center">O_WRONLY</td>
+<td style="text-align:center">只写模式</td>
 </tr>
 <tr>
-<td align="center">O_RDWR</td>
-<td align="center">可读可写</td>
+<td style="text-align:center">O_RDWR</td>
+<td style="text-align:center">可读可写</td>
 </tr>
 <tr>
-<td align="center">O_APPEND</td>
-<td align="center">表示追加，如果原来文件里面有内容，则这次写入会写在文件的最末尾</td>
+<td style="text-align:center">O_APPEND</td>
+<td style="text-align:center">表示追加，如果原来文件里面有内容，则这次写入会写在文件的最末尾</td>
 </tr>
 <tr>
-<td align="center">O_CREAT</td>
-<td align="center">表示如果指定文件不存在，则创建这个文件</td>
+<td style="text-align:center">O_CREAT</td>
+<td style="text-align:center">表示如果指定文件不存在，则创建这个文件</td>
 </tr>
 <tr>
-<td align="center">O_EXCL</td>
-<td align="center">表示如果要创建的文件已存在，则出错，同时返回 -1，并且修改 errno 的值</td>
+<td style="text-align:center">O_EXCL</td>
+<td style="text-align:center">表示如果要创建的文件已存在，则出错，同时返回 -1，并且修改 errno 的值</td>
 </tr>
 <tr>
-<td align="center">O_TRUNC</td>
-<td align="center">表示截断，如果文件存在，并且以只写、读写方式打开，则将其长度截断为0</td>
+<td style="text-align:center">O_TRUNC</td>
+<td style="text-align:center">表示截断，如果文件存在，并且以只写、读写方式打开，则将其长度截断为0</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 </blockquote>
 <p>如表所示，并没有数字，不理解。。。。。。</p>
 <blockquote>
 <p><strong>解答</strong>：这些flags参数是在一个枚举类型中的常量，如下代码所示：</p>
 <p><code>code03</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">    O_RDONLY,   <span class="comment">// 只读打开</span></span><br><span class="line">    O_WRONLY,   <span class="comment">// 只写打开</span></span><br><span class="line">    O_RDWR,     <span class="comment">// 读写打开</span></span><br><span class="line">    O_APPEND,   <span class="comment">// 追加方式打开</span></span><br><span class="line">    O_CREAT,    <span class="comment">// 若文件不存在，则创建该文件</span></span><br><span class="line">    O_EXCL,     <span class="comment">// 与O_CREAT一同使用，如果文件已经存在则出错</span></span><br><span class="line">    O_TRUNC,    <span class="comment">// 截断文件长度为0</span></span><br><span class="line">    O_NOCTTY,   <span class="comment">// 不要把设备用作控制终端</span></span><br><span class="line">    O_NONBLOCK, <span class="comment">// 非阻塞模式</span></span><br><span class="line">    O_SYNC      <span class="comment">// 同步方式打开</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>上述代码就是一个枚举类型（包括之后的指令集也是枚举类型），从第一个到最后一个按照自然数（0或许不是自然数？）顺序排列，比如<code>O_RDONLY</code>就是<code>0</code>，以此类推。。。</p>
 </blockquote>
 <p>③当我运行这个文件时，即执行下列命令</p>
 <p><code>code04</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$$$ gcc 01.c -o 01</span><br><span class="line">$$$ ./01 01.c</span><br></pre></td></tr></table></figure>
-
-<p>逐个字符读取只读到了第11行的&#x2F;&#x2F;和其后的一个空格，程序就中止了，不知道为什么。。。。。。</p>
+<p>逐个字符读取只读到了第11行的//和其后的一个空格，程序就中止了，不知道为什么。。。。。。</p>
 <p>开始觉得是因为后面是中文字符，于是在“读取”前面随便加了几个字母，发现读取成功，但是<strong>将后面的所有中文语句换成英文之后又行不通了</strong></p>
 <p>又试了一下，一读到注释就不行了。</p>
 <blockquote>
@@ -666,7 +665,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">70k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
