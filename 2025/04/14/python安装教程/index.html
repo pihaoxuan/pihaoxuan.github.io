@@ -283,9 +283,8 @@
       
         <p>以下是为零基础学生编写的Windows系统Python与VSCode安装教程，所有步骤均配直观操作指引和常见问题解答，建议按顺序阅读。</p>
 <span id="more"></span>
-
 <h3 id="一、安装Python环境（耗时约15分钟）"><a href="#一、安装Python环境（耗时约15分钟）" class="headerlink" title="一、安装Python环境（耗时约15分钟）"></a>一、安装Python环境（耗时约15分钟）</h3><h4 id="步骤1：下载安装包（若使用备用地址，则可以直接下载）"><a href="#步骤1：下载安装包（若使用备用地址，则可以直接下载）" class="headerlink" title="步骤1：下载安装包（若使用备用地址，则可以直接下载）"></a>步骤1：下载安装包（若使用备用地址，则可以直接下载）</h4><ol>
-<li>打开浏览器访问<a target="_blank" rel="noopener" href="https://www.python.org/">Python官网</a>    <a target="_blank" rel="noopener" href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/python-3.13.3-amd64.exe">备用地址1-github源</a>   <a target="_blank" rel="noopener" href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile2.0/python-3.13.3-amd64.exe">备用地址2-gitee源</a></li>
+<li>打开浏览器访问<a target="_blank" rel="noopener" href="https://www.python.org">Python官网</a>    <a target="_blank" rel="noopener" href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/python-3.13.3-amd64.exe">备用地址1-github源</a>   <a target="_blank" rel="noopener" href="https://gitee.com/pi_haoxuan/pi_haoxuan/releases/download/downloadFile2.0/python-3.13.3-amd64.exe">备用地址2-gitee源</a></li>
 <li>点击顶部导航栏的 <strong>Downloads</strong> → 选择 <strong>Windows</strong> 系统标签（如图标有Windows标志）</li>
 <li>下载 <strong>Python 3.13</strong> 版本（推荐稳定版，如红框标注的最新安装包，若不知道选择哪一版本，推荐使用备用地址）</li>
 </ol>
@@ -295,15 +294,14 @@
 <li>点击 <strong>Install Now</strong>（保持默认安装路径）</li>
 <li>等待进度条完成，出现”Setup was successful”即安装成功</li>
 </ol>
-<img src="/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/安装流程.png" alt="安装流程" style="zoom:10%;">
-
+<p><img src="/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/安装流程.png" alt="安装流程" style="zoom:10%;"></p>
 <h4 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h4><ol>
 <li>按 <strong>Win+R</strong> 输入 <strong>cmd</strong> → 回车打开terminal（黑窗口）</li>
 <li>输入命令：<code>python --version</code><br>✅ 正确显示 <strong>Python 3.12.x</strong><br>❌ 若提示”找不到命令”，需重新安装并确认勾选PATH</li>
 </ol>
 <hr>
 <h3 id="二、安装VSCode编辑器（耗时约10分钟）"><a href="#二、安装VSCode编辑器（耗时约10分钟）" class="headerlink" title="二、安装VSCode编辑器（耗时约10分钟）"></a>二、安装VSCode编辑器（耗时约10分钟）</h3><h4 id="步骤1：获取安装程序"><a href="#步骤1：获取安装程序" class="headerlink" title="步骤1：获取安装程序"></a>步骤1：获取安装程序</h4><ol>
-<li>访问<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">VSCode官网</a>    <a target="_blank" rel="noopener" href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/VSCodeUserSetup-x64-1.99.2.exe">备用地址-github源</a></li>
+<li>访问<a target="_blank" rel="noopener" href="https://code.visualstudio.com">VSCode官网</a>    <a target="_blank" rel="noopener" href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/VSCodeUserSetup-x64-1.99.2.exe">备用地址-github源</a></li>
 <li>点击蓝色 <strong>Download for Windows</strong> 按钮（约100MB）</li>
 </ol>
 <h4 id="步骤2：完成安装"><a href="#步骤2：完成安装" class="headerlink" title="步骤2：完成安装"></a>步骤2：完成安装</h4><ol>
@@ -325,10 +323,7 @@
 </ol>
 <hr>
 <h3 id="四、创建第一个程序（经典案例教学）"><a href="#四、创建第一个程序（经典案例教学）" class="headerlink" title="四、创建第一个程序（经典案例教学）"></a>四、创建第一个程序（经典案例教学）</h3><h4 id="案例：诗歌生成器"><a href="#案例：诗歌生成器" class="headerlink" title="案例：诗歌生成器"></a>案例：诗歌生成器</h4><ol>
-<li>按 <strong>Ctrl+N</strong> 新建文件 → 输入：</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文学生专属问候程序</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;《数字时代的十四行诗》&quot;</span>)</span><br><span class="line">name = <span class="built_in">input</span>(<span class="string">&quot;请输入您的笔名：&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>，欢迎用代码书写诗意！\n——by 文学院数字人文实验室&quot;</span>)</span><br></pre></td></tr></table></figure>
-<ol start="2">
+<li>按 <strong>Ctrl+N</strong> 新建文件 → 输入：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文学生专属问候程序</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;《数字时代的十四行诗》&quot;</span>)</span><br><span class="line">name = <span class="built_in">input</span>(<span class="string">&quot;请输入您的笔名：&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>，欢迎用代码书写诗意！\n——by 文学院数字人文实验室&quot;</span>)</span><br></pre></td></tr></table></figure></li>
 <li>按 <strong>Ctrl+S</strong> 保存为 <strong>poem.py</strong>（注意后缀必须是.py）</li>
 <li>点击右上角 ▶️ 运行按钮查看效果</li>
 </ol>
@@ -613,7 +608,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">70k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

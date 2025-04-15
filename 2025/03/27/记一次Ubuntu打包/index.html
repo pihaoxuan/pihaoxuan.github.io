@@ -286,46 +286,36 @@
         <p>记一次Ubuntu打包</p>
 <p>前言：我的毕设是在Linux系统中开发一个对系统的全面检查软件，详情见网址<a target="_blank" rel="noopener" href="https://gitee.com/pi_haoxuan/graduation-project">graduation-project: this is my graduation project</a> ，写完后，我就在研究如何将这个从Qt中剥离打包出来，于是，好事发生。。</p>
 <span id="more"></span>
-
 <p>Qt中正常运行测试看效果是将左下角的电脑图标调成debug模式，然后点击左下角的第一个绿色按钮，即可运行程序，此时在项目根目录的同级目录会生成<code>build-项目名称-Desktop_Qt版本_GCCxxx-Debug</code>的目录文件。如果想将开发好的软件发布，则需将运行模式由Debug模式改为Release模式，如下图所示：</p>
 <p><img src="/2025/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1Ubuntu%E6%89%93%E5%8C%85/1.jpg" alt="测试运行"></p>
 <p>在Release模式下再次点击第一个绿色按钮，会经过一系列的长时间的编译，最后在项目根目录的同级目录会生成<code>build-项目名称-Desktop_Qt版本_GCCxxx-Release</code>的目录文件，其中就有编译好的二级制文件，在Release目录下执行命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./项目名称</span><br></pre></td></tr></table></figure>
-
 <p>即可运行发布版本的APP。</p>
 <p>但，这只是最基础的一步，这根本还没从Qt的环境中剥离出来，我想要的效果是一台刚装好的Linux机器也能运行，不需要再安装任何环境。接下来，继续打怪！</p>
 <p>在一番调研下发现有个工具可以直接将文件打包，可高兴坏了，直呼Qt真是太贴心了！</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install linuxdeployqt</span><br></pre></td></tr></table></figure>
-
 <p>上述工具，顾名思义，就是在Linux系统下部署Qt应用的工具。</p>
 <p>但是 我在执行上述命令时，遇到了错误[哭泣]，说是无法定位到这个包，于是我在网上狂找方法，但是找到最后发现，我已经安装了这个包，真的被自己蠢哭了[呜呜呜]。</p>
 <p>接下来，继续打怪！</p>
 <p>我高高兴兴地使用命令，开始打包【<strong>使用命令前，先将<code>Release</code>目录下的可执行文件先<code>cp</code>一份到任意新建的目录下然后在新建的目录下执行以下命令，为了方便描述，新建目录为与<code>Relese</code>目录同级的<code>new</code>目录</strong>】</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linuxdeployqt 项目名称 -appimage</span><br></pre></td></tr></table></figure>
-
 <p>但是，又出bug了，先是报两个ERROR说我的desktop文件和icon文件没有，然后自动给我建了这两类的default文件，网上一查发现这其实也不是什么大问题，按照编译的报错来说，最多算个warning。我以为这就结束了 ，但是，错误它又来了。</p>
 <p>在它报了前两个所谓的ERROR后，又报了一个信息行:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qmakePath 3= <span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
-
 <p>这次它没有加上ERROR:的前缀，正在我以为这是个无关紧要的Warning的时候，它竟然是是个fatal级的错误，于是我在查阅资料后，在上述命令后面显示指明了qmake的路径，即</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linuxdeployqt 项目名称 -appimage -qmake=/Qt安装路径/Qt版本号/gccxxx/bin/qmake</span><br></pre></td></tr></table></figure>
-
 <p>具体的qmake路径因人而异，寻找路劲的方法👆</p>
 <p>接下来，继续打怪！</p>
 <p>解决完qmake路径问题后，我再次执行上述命令，满心欢喜等成功，果不其然，出意外了。</p>
 <p>显示我的某个库not found，如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR: ldd outputLine: <span class="string">&quot;libodbc.so.2 =&gt; not found&quot;</span></span><br><span class="line">ERROR: <span class="keyword">for</span> binary: <span class="string">&quot;/mnt/sdb/qt5/5.12.9/gcc_64/plugins/sqldrivers/libqsqlodbc.so&quot;</span></span><br><span class="line">ERROR: Please ensure that all libraries can be found by ldd. Aborting.</span><br></pre></td></tr></table></figure>
-
 <p>我真的倦了，于是将其丢到deepseek中询问，它分析是因为ODBC的驱动库未安装（但为啥在Qt中可以运行呢？可能是Qt环境中包含？？），建议执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu/Debian系统执行</span></span><br><span class="line">sudo apt-get install unixodbc unixodbc-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS/RHEL系统执行</span></span><br><span class="line">sudo yum install unixODBC unixODBC-devel</span><br></pre></td></tr></table></figure>
-
 <p>接下来，继续打怪！</p>
 <p>我安装完了之后，它果然不报刚刚的错误了，我满心欢喜等成功，果不其然，出意外了。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ERROR: ldd outputLine: <span class="string">&quot;libpq.so.5 =&gt; not found&quot;</span></span><br><span class="line">ERROR: <span class="keyword">for</span> binary: <span class="string">&quot;/mnt/sdb/qt5/5.12.9/gcc_64/plugins/sqldrivers/libqsqlpsql.so&quot;</span></span><br><span class="line">ERROR: Please ensure that all libraries can be found by ldd. Aborting.</span><br></pre></td></tr></table></figure>
-
 <p>照猫画虎，我已经有deepseek这个得力助将了，于是deepseek建议我安装以下库：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ubuntu/Debian系统安装</span></span><br><span class="line">sudo apt-get install libpq5</span><br><span class="line"></span><br><span class="line"><span class="comment"># CentOS/RHEL系统安装</span></span><br><span class="line">sudo yum install postgresql-libs</span><br></pre></td></tr></table></figure>
-
 <p><strong>TIPS：出现类似库找不到的问题，大可以直接丢给DeepSeek，按照它的建议安装库即可</strong></p>
 <p>接下来，继续打怪！</p>
 <p>我安装完了之后，它果然不报刚刚的错误了，我满心欢喜等成功，果不其然，成功了！！！</p>
@@ -337,26 +327,20 @@
 <p>接下来，继续打怪！</p>
 <p>完成之后，在你喜欢的目录下用你喜欢的名字建一个目录（推荐家目录），在里面建两个文件夹：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ./DEBIAN</span><br><span class="line"><span class="built_in">mkdir</span> -p ./usr/src</span><br></pre></td></tr></table></figure>
-
 <p>将<code>new</code>文件夹中的文件全部copy到src中【为啥我的这个*看起来跟一朵花一样】：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> new的上级目录/new/* 你喜欢的目录/usr/src</span><br></pre></td></tr></table></figure>
-
 <p>回到同时装有<code>DEBIAN</code>和<code>usr</code>的目录下，也就是你建的你喜欢的目录下，</p>
 <p>在<code>DEBIAN</code>目录下建立一个文件<code>control</code>【这个应该不用命令示范了】</p>
 <p>在<code>control</code>文件中写以下内容【仅示例，不准确】：</p>
 <figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Package: mytest</span><br><span class="line">Version: 0.1.0</span><br><span class="line">Section: utils</span><br><span class="line">Priority: optional</span><br><span class="line">Architecture: amd64</span><br><span class="line">Depends:</span><br><span class="line">Installed-Size: 512</span><br><span class="line">Maintainer: 123@163.com</span><br><span class="line">Description: my test package</span><br></pre></td></tr></table></figure>
-
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhaominyong/article/details/139021721">control文件具体参考</a></p>
 <p>control文件搞定后，执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -b . 软件名称.deb</span><br></pre></td></tr></table></figure>
-
 <p>就会发现在与<code>DEBIAN</code>目录同级中奇迹般地出现了一个<code>项目名称.deb</code>的包，果不其然，成功了！</p>
 <p>可以快乐地使用命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i 软件名称.deb</span><br></pre></td></tr></table></figure>
-
 <p>就可以安装软件了，以下给出卸载命令，其余命令可以请教互联网其它文章，嘻嘻。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg -r packageName</span><br></pre></td></tr></table></figure>
-
 <p>其中<code>packageName</code>即为<code>DEBIAN</code>目录下<code>control</code>文件中的第一项，且不分大小写，如果你<code>control</code>文件中是大写，卸载时也需要写小写，不然会报错找不到或系统没安装。</p>
 <p>END</p>
 
@@ -632,7 +616,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">70k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
