@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/pen.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/pen.png">
+  <link rel="mask-icon" href="/images/website.svgs" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"pihaoxuan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="预取是提前将可能需要的数据或指令加载到cache中的技术，可以在一定程度上降低CPU因计算速度远高于内存和缓存的数据传输速度导致的时延。预取的数据或存放在cache中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软硬协同优化--软硬件预取技术">
+<meta property="og:url" content="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="PI&#39;s BLOG">
+<meta property="og:description" content="预取是提前将可能需要的数据或指令加载到cache中的技术，可以在一定程度上降低CPU因计算速度远高于内存和缓存的数据传输速度导致的时延。预取的数据或存放在cache中。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-08-06T08:12:55.000Z">
+<meta property="article:modified_time" content="2025-08-06T08:20:23.237Z">
+<meta property="article:author" content="Pi Haoxuan">
+<meta property="article:tag" content="优化">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软硬协同优化--软硬件预取技术 | PI's BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">PI's BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">WRITE BY PIHAOXUAN</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about4.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PI's BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软硬协同优化--软硬件预取技术
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-08-06 16:12:55 / 修改时间：16:20:23" itemprop="dateCreated datePublished" datetime="2025-08-06T16:12:55+08:00">2025-08-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">优化</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/08/06/软硬协同优化-软硬件预取技术/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>预取是提前将可能需要的数据或指令加载到cache中的技术，可以在一定程度上降低CPU因计算速度远高于内存和缓存的数据传输速度导致的时延。预取的数据或存放在cache中。</p>
+<span id="more"></span>
+<p>预取技术分为软件预取和硬件预取。</p>
+<p>软件预取又分为显示预取和隐式预取。显示预取即在代码中标注需要预取的数据，例如For循环时预取下一个循环需要的数据。隐式预取则是在编译阶段进行编译优化，通过静态分析程序特征，结合访存模式和数据依赖性，自动生成预取指令，达到优化目的。</p>
+<p>硬件预取是使用CPU内部的逻辑，预测程序的访存方式，主动预先加载预测数据。</p>
+<p>软硬协同优化，不需要CPU预测访存方式【编译时的静态分析可以获取该信息】。直接使用该信息，知道硬件预取引擎触发预取操作。</p>
+<h3 id="如何判定是否是需要预取的数据或指令？"><a href="#如何判定是否是需要预取的数据或指令？" class="headerlink" title="如何判定是否是需要预取的数据或指令？"></a>如何判定是否是需要预取的数据或指令？</h3><p>1️⃣根据程序的访存模式：有顺序访存，如遍历数组等场景；跨步访存，常发生在多维数组处理；复杂访存，例如指针等访存地址难以预测，不具有普遍规律的场景。对于前两种，运用时间空间局部性可以以较高准确率预测未来要使用的数据或指令。<br>2️⃣建立程序执行的AOE网，预取关健路径上的关键活动需要的数据或指令，以达到优化目的。</p>
+<h3 id="预取指令放在cache中会不会过多占用cache的空间？"><a href="#预取指令放在cache中会不会过多占用cache的空间？" class="headerlink" title="预取指令放在cache中会不会过多占用cache的空间？"></a>预取指令放在cache中会不会过多占用cache的空间？</h3><p>如果预测错误，预取的指令或数据没用上，则会造成缓存污染，同时，将无用数据换入换出也会占用带宽，压缩正常内存访问的可用带宽。</p>
+<p>可以提升预测的准确性来减轻缓存污染【使用机器学习，先训练后直接端到端】<br>也可以增加预取专用cache。</p>
+<h3 id="静态分析是怎么分析？能否动态分析？"><a href="#静态分析是怎么分析？能否动态分析？" class="headerlink" title="静态分析是怎么分析？能否动态分析？"></a>静态分析是怎么分析？能否动态分析？</h3><p>静态分析是指在编译程序时分析程序。例如，在编译阶段可以做数据流分析，依赖关系分析，访存模式分析等。动态分析是指在程序运行时不断收集运行时数据并以此对程序进行分析，例如采用机器学习的方式。或者采用动静结合的方式，在静态分析阶段生成基础预取【此时预取策略通常比较保守】，再根据动态分析的信息不断调整。<br>还需要考虑动态分析的运行时开销</p>
+<h3 id="一篇相关论文"><a href="#一篇相关论文" class="headerlink" title="一篇相关论文"></a>一篇相关论文</h3><p><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/10.1145/3701994">DTAP: AcceleratingStrongly-Typed Programs withData Type-Aware Hardware Prefetching</a></p>
+<p>基于数据类型感知的数据预取。</p>
+<p>在编译阶段识别数据类型并使用编译器自动标识并赋予type ID。并在编译阶段将load指令改成文中提到的拓展指令。与此同时，在片上维护一个片上类型表和一个预取缓冲区，在内存中也维护一个内存类型表，其内包含类型索引表和类型数组两部分【初次运行则安装上述两个表】。内存类型表会将所有表项扫描，并将重用一个ID的不同类型删除至只有一个，即实现片上类型表中的类型和ID一一对应关系。</p>
+<p>当带有拓展load指令的指令项进入DTAP时，先在片上类型表中识别是否存在，如果存在，则根据拓展load指令中的信息，计算指针成员地址【即存放指针的地址】，根据指针成员地址在预取缓冲区取指针成员的值【即取指针本身】，再根据指针进行递归的数据预取；如果不存在，则由type table walker对内存发出数据请求，即在类型索引表中获取数据在类型数组中的索引，再根据索引将类型数组中对应位置的全部信息加载到片上类型表。不论是否存在，在做出处理后都需要对片上类型表中的置信度、频率等做出相应的改变。其中频率采用以$\frac{1}{n}$的概率增加一的方式统计【即访问次数越多，越难增加，既可以防止频率统计字段益处，也可以反映出访问频率】，置信度在该类型第一次进入片上类型表时赋予初值，随后在后续的操作中对初值进行增减。</p>
+<p>由于片上类型表空间有限，文中提出用伪LRU算法策略将置信度为0且频率为0的类型淘汰出片上类型表，即文中提到的驱逐。该方法会选出4个最应该淘汰的，若这四个都是置信度为0且频率为0，则都淘汰，否则只淘汰四个中置信度为0且频率为0的，四个中其他的将其频率减一【？】，以突出该项的不重要性。</p>
+<p>对于预取深度，即指针层数的判断，文中根据三个指标：准确度，覆盖度和带宽利用率来判断预取深度的增减。此策略可以在运行时进行动态更新，以确保尽可能多预取且对系统影响尽可能小。但后续实验表明，随着预取深度的逐渐增加，预取数据的准确性会大大降低，尤其是在DTAP对树形结构进行预取的场景下。但这也只是引入了不必要的内存污染【或当预取深度过大时，会溢出导致舍弃预取数据】，并不会导致程序执行错误。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>Buy me a coffee……</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Pi Haoxuan 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Pi Haoxuan 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%BC%98%E5%8C%96/" rel="tag"># 优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96--%E9%AB%98%E5%B1%82%E7%BB%BC%E5%90%88%E7%BC%96%E8%AF%91%E6%8A%80%E6%9C%AF/" rel="prev" title="软硬协同优化--高层综合编译技术（HLS）">
+      <i class="fa fa-chevron-left"></i> 软硬协同优化--高层综合编译技术（HLS）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/" rel="next" title="软硬协同优化--动态二进制翻译技术">
+      软硬协同优化--动态二进制翻译技术 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%A4%E5%AE%9A%E6%98%AF%E5%90%A6%E6%98%AF%E9%9C%80%E8%A6%81%E9%A2%84%E5%8F%96%E7%9A%84%E6%95%B0%E6%8D%AE%E6%88%96%E6%8C%87%E4%BB%A4%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">如何判定是否是需要预取的数据或指令？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%8F%96%E6%8C%87%E4%BB%A4%E6%94%BE%E5%9C%A8cache%E4%B8%AD%E4%BC%9A%E4%B8%8D%E4%BC%9A%E8%BF%87%E5%A4%9A%E5%8D%A0%E7%94%A8cache%E7%9A%84%E7%A9%BA%E9%97%B4%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">预取指令放在cache中会不会过多占用cache的空间？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E6%98%AF%E6%80%8E%E4%B9%88%E5%88%86%E6%9E%90%EF%BC%9F%E8%83%BD%E5%90%A6%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">静态分析是怎么分析？能否动态分析？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%AF%87%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87"><span class="nav-number">4.</span> <span class="nav-text">一篇相关论文</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Pi Haoxuan"
+      src="/images/about4.jpg">
+  <p class="site-author-name" itemprop="name">Pi Haoxuan</p>
+  <div class="site-description" itemprop="description">pi's website</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pihaoxuan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pihaoxuan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io" rel="noopener" target="_blank"><i class="fab fa-gg fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:haoxuanapi@163.com" title="E-Mail → mailto:haoxuanapi@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://pihaoxuan.github.io/" title="https:&#x2F;&#x2F;pihaoxuan.github.io&#x2F;">PI's website</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yanweb.top/joy/eat/" title="https:&#x2F;&#x2F;www.yanweb.top&#x2F;joy&#x2F;eat&#x2F;" rel="noopener" target="_blank">今天吃点啥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yanweb.top/joy/colorcube/" title="https:&#x2F;&#x2F;www.yanweb.top&#x2F;joy&#x2F;colorcube&#x2F;" rel="noopener" target="_blank">找色差</a>
+        </li>
+    </ul>
+  </div>
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-硬件循环&#x2F;">软硬协同优化--硬件循环</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-code-size优化&#x2F;">软硬协同优化--code-size优化</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E6%8C%87%E4%BB%A4%E9%9B%86%E8%AE%BE%E8%AE%A1/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-指令集设计&#x2F;">软硬协同优化--指令集设计</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-动态二进制翻译技术&#x2F;">软硬协同优化--动态二进制翻译技术</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-软硬件预取技术&#x2F;">软硬协同优化--软硬件预取技术</a>
+        </li>
+    </ul>
+  </div>
+      </div>
+
+      
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-undefined">
+    <div class="links-of-blogroll-title">
+      <!-- modify icon to fire by szw -->
+      <i class="fa fa-history fa-" aria-hidden="true"></i>
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pi Haoxuan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">84k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:17</span>
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+function siteTime(){
+    setTimeout(siteTime, 1000);
+
+    var now   = new Date();
+    var t2    = Date.UTC(
+                  now.getFullYear(),
+                  now.getMonth(),      // 0–11，直接用 getMonth()，不要 +1
+                  now.getDate(),
+                  now.getHours(),
+                  now.getMinutes(),
+                  now.getSeconds()
+               );
+
+    // 如果要从 2023-05-04 20:27:02 开始算：
+    var t1 = Date.UTC(2023, 4, 4, 20, 27, 2);
+
+    var diffMs     = t2 - t1;
+    var days       = Math.floor(diffMs / (1000*60*60*24));
+    var hours      = Math.floor((diffMs / (1000*60*60)) % 24);
+    var minutes    = Math.floor((diffMs / (1000*60)) % 60);
+    var seconds    = Math.floor((diffMs / 1000) % 60);
+
+    document.getElementById("sitetime").innerHTML =
+      "PI's BLOG 已运行 " +
+      days + " 天 " +
+      hours + " 小时 " +
+      minutes + " 分钟 " +
+      seconds + " 秒";
+  }
+	siteTime();
+</script>
+<br>
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i>
+  <span id="busuanzi_container_site_uv">
+    本站总访客数:<span id="busuanzi_value_site_uv"></span>&nbsp;&nbsp;| 
+  </span>
+  <span id="busuanzi_container_site_pv">
+      &nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  </div>
+  </div>
+
+  <script>
+      var now = new Date(); 
+      function createtime() { 
+          var grt= new Date("03/12/2019 12:00:00");//此处修改你的建站时间或者网站上线时间 
+          now.setTime(now.getTime()+250); 
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+      } 
+  setInterval("createtime()",250);
+  </script>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+    //   自定义邮箱审核规则
+    document.body.addEventListener('click', function(e) {
+        if (e.target.classList.contains('vsubmit')) {
+            const email = document.querySelector('input[type=email]');
+            const nick = document.querySelector('input[name=nick]');
+            const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (!email.value || !nick.value || !reg.test(email.value)) {
+                const str = `<div class="valert text-center"><div class="vtext">请填写正确的昵称和邮箱！</div></div>`;
+                const vmark = document.querySelector('.vmark');
+                vmark.innerHTML = str;
+                vmark.style.display = 'block';
+                setTimeout(function() {
+                    vmark.style.display = 'none';
+                    vmark.innerHTML = '';
+                }, 2500);
+            }
+        }
+    })
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/";
+    this.page.identifier = "2025/08/06/软硬协同优化-软硬件预取技术/";
+    this.page.title = "软硬协同优化--软硬件预取技术";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+
+
+  
+</body>
+</html>

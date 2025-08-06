@@ -24,9 +24,140 @@
       </tags>
   </entry>
   <entry>
-    <title>软硬协同优化</title>
-    <url>/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96/</url>
-    <content><![CDATA[]]></content>
+    <title>软硬协同优化--硬件循环</title>
+    <url>/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/</url>
+    <content><![CDATA[<p>硬件循环，又称零开销循环。循环完全由硬件完成。</p>
+<span id="more"></span>
+<p>在硬件内维护一个循环计数器，当循环完成一次时，循环计数器自动对循环变量进行增减操作。此外，循环跳转机制也是在硬件内部跳转，无需指令开销。</p>
+<p>在编译器层面，需要识别出能转化为硬件循环的循环，例如需要满足循环次数确定，循环结束条件简单，循环体执行的操作简单（不能包含函数调用），循环出口单一，循环变量线性增减等。</p>
+<p>还可以讲循环变量的变化做优化，例如，循环变量从0到100递增，步长为2，则可以优化成从0到50，步长为1。若从50到0，每次递减1也可以等效为从0到50，每次递增1。上述步骤也称为循环变量的归一化操作。</p>
+<p>在汇编中显示标注起讫地址，循环次数，用于指导硬件重复执行若干次指定位置的指令。标注后，代码中的归纳变量和循环控制指令均可删除，只留下起讫地址，循环次数，循环体内容给硬件即可。</p>
+<h5 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h5><p>循环次数动态变化如何优化？<br>循环变量不规则变化如何优化？<br>循环体若有函数调用，可否分开优化？<br>循环出口不单一能否将固定部分进行硬件循环优化，将不确定性的部分返回给常规方式执行？又或者加入预测机制，将概率大的分支视作单一出口的循环转化为硬件循环？</p>
+]]></content>
+      <categories>
+        <category>优化</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软硬协同优化--code-size优化</title>
+    <url>/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<p>code-size：代码体积<br>代码体积的缩小有利于降低运行设备的功耗，提高程序性能【代码体积小，所占用的内存、寄存器等设备就少，从而达到降低功耗、提高性能的目的】。</p>
+<span id="more"></span>
+<p>常用的方式就是通过编译时加入-Os选项来优化。包括死代码消除、死参数消除、稀疏条件常量传播等。</p>
+<p>以下是code-size优化例子。<br>其中<code>noOptimization.s</code>使用<code>gcc -O0 -o noOptimization.s code.cpp</code>命令生成。<code>Optimization.s</code>使用<code>gcc -Os -o Optimizaiton.s code.cpp</code>命令生成。<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 未使用的全局变量（用于观察代码大小变化）</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> unused_global[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//未使用的函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">unused_function</span><span class="params">(<span class="type">int</span> a,<span class="type">int</span> b)</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> c = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">c = a + b;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> c;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 递归函数（用于观察优化效果）</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> <span class="title">factorial</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (n &lt;= <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> n * <span class="built_in">factorial</span>(n - <span class="number">1</span>); <span class="comment">// 非尾递归，优化后可能被内联/展开</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 未使用的局部变量（观察是否被删除）</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> unused_local[<span class="number">256</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算阶乘并输出</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> num = <span class="number">15</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">long</span> <span class="type">long</span> result = <span class="built_in">factorial</span>(num);</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Factorial of %d is %llu\n&quot;</span>, num, result);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">ls</span> -lh noOptimization.s Optimization.s </span><br><span class="line">-rw-rw-r-- 1 pihaoxuan pihaoxuan 2.2K 7月  19 15:52 noOptimization.s</span><br><span class="line">-rw-rw-r-- 1 pihaoxuan pihaoxuan 1.4K 7月  19 15:54 Optimization.s</span><br></pre></td></tr></table></figure>
+<p>可以看出优化后的汇编代码体量减少了很多，就是因为将没使用到的数组和函数优化掉了。</p>
+<p>在指令集层面，为了达到优化代码体积的目的，目前有许多方法：变长指令集、压缩指令、位域掩码立即数编码、寄存器编码重叠、融合指令、向量指令、硬件循环等方式。</p>
+<ol>
+<li>变长指令集：对于使用频率高的指令，采用更短的编码，使用频率更低的指令，采用更长的编码，这样就能以尽可能小的体积容纳尽可能多的操作，从而达到压缩代码体积的目的。</li>
+<li>压缩指令：在满足一定的特殊条件之后【例如指令本省表达的信息不多，16bit指令也能够表达等】，能够在编译阶段将32bit的指令压缩至16bit的指令，在硬件执行时再通过指令的标识位判断是否解码后再执行。一次达到压缩代码体积，减少硬件成本，提高执行效率的目的。</li>
+<li>位域掩码立即数编码：使用13位编码表示一个有明显重复规律的数，例如<code>0x00FF00FF00FF00FF</code>，可以表示为<code>00FF</code>重复4次，这些信息就以某种规则存放在13位编码中，即可以实现立即数表示的代码体积压缩。但是位域掩码立即数编码不能表示所有64bit的立即数，需要立即数有明显重复规律。</li>
+<li>寄存器编码重叠：将多个使用率较低的寄存器使用同一编码。但是，正由于多个寄存器使用同一编码，这些寄存器不能在一条指令中同时使用。可以通过特定指令➕该编码的形式区分寄存器。【例如0b1111既表示寄存器15，也表示寄存器16。但是只有在add指令下才是调用寄存器15，在mul指令下才是调用寄存器16。】其实也是将指令和寄存器编号合起来指令某一个寄存器，也能使用将使用频率低的寄存器用更复杂的编码方式表示这一原理解释。</li>
+<li>融合指令：使用一条指令表达多条指令的意义。即将执行频率较高的指令组合，打包并给一个短编码。例如FMA指令，现将两操作数相乘再与另一个操作数相加；ABS指令直接输出绝对值，而非常规的通过硬件异或计算出绝对值。还有其他的一次性读写两个寄存器的load-store pair等指令。但是在硬件层面会增加流水线的复杂程度，而且，在编译器层面，要识别这些指令并选择对应的融合指令替代，也增加了编译器的复杂程度。其次，增加融合指令，就需要额外的编码表示这些指令，会压缩可扩展的空间。</li>
+<li>向量指令：例如SIMD单指令多数据模式，可以用一条指令进行多条数据的处理，能够有效减少指令数量，从而减少代码体积。</li>
+<li>硬件循环：将需要多次执行的一个或一组指令完全交由硬件执行。常规循环场景为硬件执行完后，更新循环变量，然后使用跳转指令跳转到循环体指令开始位置重新执行。当进行循环展开优化后，虽然不用或减少了更新和跳转指令数量，但是会占用大量静态code-size，code-size体积增大。硬件循环是告诉硬件需要执行多少次后，完全由硬件自主完成循环的过程。这样既不会增加静态代码的体积，也能保证循环变量和指令地址跳转的零开销。【虽然硬件内部也需要维护一个循环变量，也需要地址跳转，但是维护的循环变量是内部专用的寄存器维护，可以并行处理且不需要指令驱动，同理，地址跳转也是内部地址跳转，无指令开销，无寄存器开销】<br>code-size的各种优化方法，虽然将代码体积降下去了，但是不可避免的增加了一些指令的复杂程度，例如融合指令，寄存器编码重叠等。变长指令集也是一个复杂编码的典型例子，指令是变长的意味着解码需要更加复杂的规则识别指令。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>优化</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软硬协同优化--指令集设计</title>
+    <url>/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E6%8C%87%E4%BB%A4%E9%9B%86%E8%AE%BE%E8%AE%A1/</url>
+    <content><![CDATA[<span id="more"></span>
+<p>指令集设计需要兼容性、通用性、高效性、安全性。</p>
+<p>兼容性：向前兼容，保证能够兼容基于以前的指令集开发的产物。<br>通用性：能够覆盖市场上大部分的需求，如果有少部分的专用需求，则可设计专用指令集。<br>高效性：需要便于硬件的设计和优化。可以采用复杂技术增加硬件复杂性来提升性能，也可以使用简单技术简化硬件，满足基本需求。<br>安全性：指令集必须足够安全，例如能够提供保护模式等。</p>
+<p>指令集分为堆栈型、累加器型和寄存器型。对于寄存器型来说，分为寄存器-存储器型、存储器-存储器型、载入-存储器型。</p>
+<p>对于寄存器-存储器型来说，访存无限制，任何指令都可以访存取数再进行计算等操作。这种指令，指令密度高【一条指令可以完成很多事情】，但是指令复杂，访问延迟不确定。【CISC指令集】</p>
+<p>对于载入-存储器型指令来说，访存只能由load/store指令完成。其他指令只能操作寄存器。这种指令限制访存，其他指令只能操作寄存器，延迟低且可预测。但是指令简单，使得代码体积增大。【RISC指令集】</p>
+<p>对于存储器-存储器型指令来说，无寄存器参与，直接在内存中完成计算等任务。性能极低。无使用价值。</p>
+<p>超长指令集（VLIW）：将多个无依赖的指令打包在一起并行执行，大大加快了指令执行速度。识别指令是否可以并行执行完全靠编译器的分析，因此也无需复杂的硬件设计。但是当程序的并行性本身就很低时，编译器再使用VLIW时就会将很多空操作打入少许的可以并行的基础指令中，一起打包成超长指令集，平添了指令数量，使得代码更加臃肿。</p>
+]]></content>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软硬协同优化--动态二进制翻译技术</title>
+    <url>/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<p>为了将基于其他指令集架构开发的软件能够在没有源代码等情况在另一种指令集架构机器上运行。提出二进制翻译技术。</p>
+<span id="more"></span>
+<p>二进制翻译技术可以广义上概括为：<br>将基于该指令集架构开发的可执行程序反汇编成IR，然后进行对应指令翻译，最后将翻译后的IR再生成新的适配目标指令集架构的可执行程序。</p>
+<p>二进制翻译技术分为动态二进制翻译技术和静态二进制翻译技术。动态二进制翻译技术和静态二进制翻译技术有一些区别。具体而言，静态二进制翻译技术是在执行程序前，将整个可执行程序全部反汇编生成IR，再整体翻译成适用于目标指令集架构的IR，最后生成新的二进制可执行程序；而动态二进制翻译技术则是将可执行程序划分为基本块等部分，在运行时按需进行反汇编、指令集翻译和执行。同时，将执行结果和部分翻译结果存入缓存区，便于后续取用。</p>
+<p>动态二进制翻译技术由于其实时性，可以在翻译时并行检测程序执行情况，将热指令等进行优化，以减少二进制翻译带来的损失。但是实时翻译、实时检测对于硬件来说都有额外开销。</p>
+<p>静态二进制翻译技术则有冷启动快的优势，因为是预先翻译好的新文件，可以极速启动，但是未经优化的翻译成果可能会带来更大的性能损耗。</p>
+<p>在部署角度来说，动态二进制翻译技术几乎不需要用户部署。安装并启动程序后，对应的翻译引擎会自动进行动态翻译，无语用户干预。而静态二进制翻译技术的翻译成果则需要用户干预。具体而言，静态翻译无法感知运行时的复杂情况，例如由网络数据交换所产生的地址跳转等，因而需要用户干预；此外，还有依赖库缺失等问题。</p>
+<h3 id="动态翻译如何划分基本块？划分依据是什么？划分方式是否对翻译的效率和运行时的性能有影响？"><a href="#动态翻译如何划分基本块？划分依据是什么？划分方式是否对翻译的效率和运行时的性能有影响？" class="headerlink" title="动态翻译如何划分基本块？划分依据是什么？划分方式是否对翻译的效率和运行时的性能有影响？"></a>动态翻译如何划分基本块？划分依据是什么？划分方式是否对翻译的效率和运行时的性能有影响？</h3><p>基本块是一个只有单一入口和单一出口的代码块【即块内不含分支跳转等】。</p>
+<p>以定义为依据划分，可以讲整个程序划分为若干基本块，然后按需进行翻译。这也是最基础的保守划分方式。单个块体量小翻译块，但是运行起来效率低，因为刚运行一会儿就要等待下一个块的翻译结果，再进行接续运行；且不能进行跨块区优化，例如循环展开优化。</p>
+<p>在此基础上，衍生出了踪迹缓存方式，即记录代码执行热点路径【需要动态分析，实时捕捉】，将一条路径上的若干个块合并成一个超块处理【例如将一个for循环算作一个超块】，此时翻译起来略慢，但是执行效率较高，且能体现出一定程度上的预测性，同时也支持优化。但是该方式冷启动性能差，需要时间将块翻译完毕，翻译的内存占用也高。</p>
+<p>另一种翻译则是区域翻译，即根据静态分析或预采样划分较大块。例如将整个函数调用连算作一块。这种方式支持运行时的全局优化，还能减少块间切换的开销，但是存在冗余翻译，且在函数间的跳转时处理不佳。</p>
+<p>BB块的划分可以动态进行，不一定需要在翻译前全部划分完毕。</p>
+<h3 id="动静结合翻译如何进行？"><a href="#动静结合翻译如何进行？" class="headerlink" title="动静结合翻译如何进行？"></a>动静结合翻译如何进行？</h3><p>猜想：可以借助机器学习的方式预测热代码，优化静态翻译结果，然后再冷启动静态翻译的结果，大大减少冷启动时间后，将动态翻译中的运行时检测优势结合，计算出热路径，同时并行进行二级优化翻译，替换静态翻译的部分结果，以实现更优的性能？</p>
+<p>除了机器学习优化的，Apple Rosetta已经干过上面其他所有事情了..</p>
+]]></content>
+      <categories>
+        <category>优化</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软硬协同优化--软硬件预取技术</title>
+    <url>/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<p>预取是提前将可能需要的数据或指令加载到cache中的技术，可以在一定程度上降低CPU因计算速度远高于内存和缓存的数据传输速度导致的时延。预取的数据或存放在cache中。</p>
+<span id="more"></span>
+<p>预取技术分为软件预取和硬件预取。</p>
+<p>软件预取又分为显示预取和隐式预取。显示预取即在代码中标注需要预取的数据，例如For循环时预取下一个循环需要的数据。隐式预取则是在编译阶段进行编译优化，通过静态分析程序特征，结合访存模式和数据依赖性，自动生成预取指令，达到优化目的。</p>
+<p>硬件预取是使用CPU内部的逻辑，预测程序的访存方式，主动预先加载预测数据。</p>
+<p>软硬协同优化，不需要CPU预测访存方式【编译时的静态分析可以获取该信息】。直接使用该信息，知道硬件预取引擎触发预取操作。</p>
+<h3 id="如何判定是否是需要预取的数据或指令？"><a href="#如何判定是否是需要预取的数据或指令？" class="headerlink" title="如何判定是否是需要预取的数据或指令？"></a>如何判定是否是需要预取的数据或指令？</h3><p>1️⃣根据程序的访存模式：有顺序访存，如遍历数组等场景；跨步访存，常发生在多维数组处理；复杂访存，例如指针等访存地址难以预测，不具有普遍规律的场景。对于前两种，运用时间空间局部性可以以较高准确率预测未来要使用的数据或指令。<br>2️⃣建立程序执行的AOE网，预取关健路径上的关键活动需要的数据或指令，以达到优化目的。</p>
+<h3 id="预取指令放在cache中会不会过多占用cache的空间？"><a href="#预取指令放在cache中会不会过多占用cache的空间？" class="headerlink" title="预取指令放在cache中会不会过多占用cache的空间？"></a>预取指令放在cache中会不会过多占用cache的空间？</h3><p>如果预测错误，预取的指令或数据没用上，则会造成缓存污染，同时，将无用数据换入换出也会占用带宽，压缩正常内存访问的可用带宽。</p>
+<p>可以提升预测的准确性来减轻缓存污染【使用机器学习，先训练后直接端到端】<br>也可以增加预取专用cache。</p>
+<h3 id="静态分析是怎么分析？能否动态分析？"><a href="#静态分析是怎么分析？能否动态分析？" class="headerlink" title="静态分析是怎么分析？能否动态分析？"></a>静态分析是怎么分析？能否动态分析？</h3><p>静态分析是指在编译程序时分析程序。例如，在编译阶段可以做数据流分析，依赖关系分析，访存模式分析等。动态分析是指在程序运行时不断收集运行时数据并以此对程序进行分析，例如采用机器学习的方式。或者采用动静结合的方式，在静态分析阶段生成基础预取【此时预取策略通常比较保守】，再根据动态分析的信息不断调整。<br>还需要考虑动态分析的运行时开销</p>
+<h3 id="一篇相关论文"><a href="#一篇相关论文" class="headerlink" title="一篇相关论文"></a>一篇相关论文</h3><p><a href="https://dl.acm.org/doi/10.1145/3701994">DTAP: AcceleratingStrongly-Typed Programs withData Type-Aware Hardware Prefetching</a></p>
+<p>基于数据类型感知的数据预取。</p>
+<p>在编译阶段识别数据类型并使用编译器自动标识并赋予type ID。并在编译阶段将load指令改成文中提到的拓展指令。与此同时，在片上维护一个片上类型表和一个预取缓冲区，在内存中也维护一个内存类型表，其内包含类型索引表和类型数组两部分【初次运行则安装上述两个表】。内存类型表会将所有表项扫描，并将重用一个ID的不同类型删除至只有一个，即实现片上类型表中的类型和ID一一对应关系。</p>
+<p>当带有拓展load指令的指令项进入DTAP时，先在片上类型表中识别是否存在，如果存在，则根据拓展load指令中的信息，计算指针成员地址【即存放指针的地址】，根据指针成员地址在预取缓冲区取指针成员的值【即取指针本身】，再根据指针进行递归的数据预取；如果不存在，则由type table walker对内存发出数据请求，即在类型索引表中获取数据在类型数组中的索引，再根据索引将类型数组中对应位置的全部信息加载到片上类型表。不论是否存在，在做出处理后都需要对片上类型表中的置信度、频率等做出相应的改变。其中频率采用以$\frac{1}{n}$的概率增加一的方式统计【即访问次数越多，越难增加，既可以防止频率统计字段益处，也可以反映出访问频率】，置信度在该类型第一次进入片上类型表时赋予初值，随后在后续的操作中对初值进行增减。</p>
+<p>由于片上类型表空间有限，文中提出用伪LRU算法策略将置信度为0且频率为0的类型淘汰出片上类型表，即文中提到的驱逐。该方法会选出4个最应该淘汰的，若这四个都是置信度为0且频率为0，则都淘汰，否则只淘汰四个中置信度为0且频率为0的，四个中其他的将其频率减一【？】，以突出该项的不重要性。</p>
+<p>对于预取深度，即指针层数的判断，文中根据三个指标：准确度，覆盖度和带宽利用率来判断预取深度的增减。此策略可以在运行时进行动态更新，以确保尽可能多预取且对系统影响尽可能小。但后续实验表明，随着预取深度的逐渐增加，预取数据的准确性会大大降低，尤其是在DTAP对树形结构进行预取的场景下。但这也只是引入了不必要的内存污染【或当预取深度过大时，会溢出导致舍弃预取数据】，并不会导致程序执行错误。</p>
+]]></content>
+      <categories>
+        <category>优化</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软硬协同优化--高层综合编译技术（HLS）</title>
+    <url>/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96--%E9%AB%98%E5%B1%82%E7%BB%BC%E5%90%88%E7%BC%96%E8%AF%91%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<p>HLS（高层综合技术）是将高层次语言（C、C++等）描述的逻辑结构自动转化为RTL代码的过程，可以让硬件工程师以软件层面工作，也可以让软件工程师利用硬件加速。</p>
+<span id="more"></span>
+<p>高层综合编译技术流程分为前端编译、资源分配、时序调度和资源绑定四个部分。</p>
+<p>前端编译与编译器的前端编译并无差别，都是先后经过词法分析、语法分析和语义分析后形成IR语言。</p>
+<p>在资源分配阶段，主要设置两种约束条件：<br>1️⃣来自硬件器件特性的约束：例如开发版的固有功能单元的数量，固有时延等因素；<br>2️⃣来自用户的参数约束：类比于 -O1 -O2 -O3优化。</p>
+<p>通过资源分配，AST上的节点就有了时延属性和面积属性等具体数值，可以给之后的时序调度提供时序依据，也可以在调度中根据上述数值进行优化。在分配时，也需要考虑用户给出的参数，若用户需要更少的硬件，则优先复用硬件单元，此时时延可能偏大；当用户注重性能时，优先分配低延迟高性能硬件，少复用硬件，此时占用大量硬件。资源分配并非静态，后续可以动态调整。</p>
+<p>时序调度阶段，根据资源分配结果，指定某一个运算操作在哪个时钟周期执行。在保证数据依赖关系正确的前提下，可以引入调度算法，减少整个程序的执行时间。</p>
+<p>资源绑定阶段，仍然需要根据资源分配阶段分配的资源进行运算操作的绑定。例如，在一个需要两次计算的程序中，如果来自硬件的约束或者用户的约束只能分配到一个加法器，则需要实现加法器的复用【例如添加数据选择器】，即将两次加法运算绑定到同一个加法器上。<br>由于资源分配中实现了具体开销的数值表示，于是就可以在确定绑定关系后，计算整个程序的开销，以及形成将绑定开销作为权重的图【即穷举每个操作和每个功能单元绑定后的开销，选取最优值】，从而优化程序开销。<br>事实上，资源绑定和时序调度可以并行进行。<br><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/icntuIQtpSJV3AsibOZ0kuA1p02r4FP6PJwhgm6yOVzlVDTiblErfFKxrpQ4PCwBSpsyCm8Us9ZD9okQnC4ClxLrw/640?wx_fmt=png&amp;tp=wxpic&amp;wxfrom=5&amp;wx_lazy=1" alt="图片"></p>
+<h3 id="HLS适用于没有特定指令集架构的硬件，需要编译器根据可用资源，结合实际约束条件，自行进行资源分配决策。"><a href="#HLS适用于没有特定指令集架构的硬件，需要编译器根据可用资源，结合实际约束条件，自行进行资源分配决策。" class="headerlink" title="HLS适用于没有特定指令集架构的硬件，需要编译器根据可用资源，结合实际约束条件，自行进行资源分配决策。"></a>HLS适用于没有特定指令集架构的硬件，需要编译器根据可用资源，结合实际约束条件，自行进行资源分配决策。</h3><p>对于有特定指令集架构的硬件，是否可以结合该方法，实现更优的表现？把指令集的功能模块当作资源单位，从而实现更优的乱序执行？</p>
+<p>1994年有篇论文是这样干的？<br><a href="http://www.cs.york.ac.uk/rts/docs/SIGDA-Compendium-1994-2004/papers/1994/iccad94/pdffiles/06b_2.pdf">http://www.cs.york.ac.uk/rts/docs/SIGDA-Compendium-1994-2004/papers/1994/iccad94/pdffiles/06b_2.pdf</a></p>
+<p>再加上机器学习呢？？</p>
+<p>END</p>
+]]></content>
+      <categories>
+        <category>优化</category>
+      </categories>
+      <tags>
+        <tag>优化</tag>
+      </tags>
   </entry>
   <entry>
     <title>Windows分盘</title>

@@ -306,7 +306,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/about4.jpg">
@@ -320,7 +320,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">软硬协同优化</a>
+            <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">软硬协同优化--硬件循环</a>
         </h2>
 
         <div class="post-meta">
@@ -332,7 +332,16 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-07-23 14:06:10 / 修改时间：14:06:17" itemprop="dateCreated datePublished" datetime="2025-07-23T14:06:10+08:00">2025-07-23</time>
+              <time title="创建时间：2025-08-06 16:25:46 / 修改时间：16:26:50" itemprop="dateCreated datePublished" datetime="2025-08-06T16:25:46+08:00">2025-08-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">优化</span></a>
+                </span>
             </span>
 
           
@@ -344,8 +353,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/07/23/软硬协同优化/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/08/06/软硬协同优化-硬件循环/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -355,7 +364,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>484</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -374,7 +383,532 @@
     <div class="post-body" itemprop="articleBody">
 
       
+          <p>硬件循环，又称零开销循环。循环完全由硬件完成。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about4.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PI's BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
           
+            <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/" class="post-title-link" itemprop="url">软硬协同优化--code-size优化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-08-06 16:24:20 / 修改时间：16:25:12" itemprop="dateCreated datePublished" datetime="2025-08-06T16:24:20+08:00">2025-08-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">优化</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/08/06/软硬协同优化-code-size优化/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>code-size：代码体积<br>代码体积的缩小有利于降低运行设备的功耗，提高程序性能【代码体积小，所占用的内存、寄存器等设备就少，从而达到降低功耗、提高性能的目的】。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E6%8C%87%E4%BB%A4%E9%9B%86%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about4.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PI's BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E6%8C%87%E4%BB%A4%E9%9B%86%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">软硬协同优化--指令集设计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-08-06 16:22:40 / 修改时间：16:23:29" itemprop="dateCreated datePublished" datetime="2025-08-06T16:22:40+08:00">2025-08-06</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E6%8C%87%E4%BB%A4%E9%9B%86%E8%AE%BE%E8%AE%A1/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/08/06/软硬协同优化-指令集设计/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>625</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <span id="more"></span>
+<p>指令集设计需要兼容性、通用性、高效性、安全性。</p>
+<p>兼容性：向前兼容，保证能够兼容基于以前的指令集开发的产物。<br>通用性：能够覆盖市场上大部分的需求，如果有少部分的专用需求，则可设计专用指令集。<br>高效性：需要便于硬件的设计和优化。可以采用复杂技术增加硬件复杂性来提升性能，也可以使用简单技术简化硬件，满足基本需求。<br>安全性：指令集必须足够安全，例如能够提供保护模式等。</p>
+<p>指令集分为堆栈型、累加器型和寄存器型。对于寄存器型来说，分为寄存器-存储器型、存储器-存储器型、载入-存储器型。</p>
+<p>对于寄存器-存储器型来说，访存无限制，任何指令都可以访存取数再进行计算等操作。这种指令，指令密度高【一条指令可以完成很多事情】，但是指令复杂，访问延迟不确定。【CISC指令集】</p>
+<p>对于载入-存储器型指令来说，访存只能由load/store指令完成。其他指令只能操作寄存器。这种指令限制访存，其他指令只能操作寄存器，延迟低且可预测。但是指令简单，使得代码体积增大。【RISC指令集】</p>
+<p>对于存储器-存储器型指令来说，无寄存器参与，直接在内存中完成计算等任务。性能极低。无使用价值。</p>
+<p>超长指令集（VLIW）：将多个无依赖的指令打包在一起并行执行，大大加快了指令执行速度。识别指令是否可以并行执行完全靠编译器的分析，因此也无需复杂的硬件设计。但是当程序的并行性本身就很低时，编译器再使用VLIW时就会将很多空操作打入少许的可以并行的基础指令中，一起打包成超长指令集，平添了指令数量，使得代码更加臃肿。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about4.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PI's BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">软硬协同优化--动态二进制翻译技术</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-08-06 16:20:34 / 修改时间：16:22:26" itemprop="dateCreated datePublished" datetime="2025-08-06T16:20:34+08:00">2025-08-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">优化</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/08/06/软硬协同优化-动态二进制翻译技术/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>为了将基于其他指令集架构开发的软件能够在没有源代码等情况在另一种指令集架构机器上运行。提出二进制翻译技术。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about4.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PI's BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">软硬协同优化--软硬件预取技术</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-08-06 16:12:55 / 修改时间：16:20:23" itemprop="dateCreated datePublished" datetime="2025-08-06T16:12:55+08:00">2025-08-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">优化</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/08/06/软硬协同优化-软硬件预取技术/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>预取是提前将可能需要的数据或指令加载到cache中的技术，可以在一定程度上降低CPU因计算速度远高于内存和缓存的数据传输速度导致的时延。预取的数据或存放在cache中。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96--%E9%AB%98%E5%B1%82%E7%BB%BC%E5%90%88%E7%BC%96%E8%AF%91%E6%8A%80%E6%9C%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about4.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PI's BLOG">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96--%E9%AB%98%E5%B1%82%E7%BB%BC%E5%90%88%E7%BC%96%E8%AF%91%E6%8A%80%E6%9C%AF/" class="post-title-link" itemprop="url">软硬协同优化--高层综合编译技术（HLS）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-07-23 14:06:10" itemprop="dateCreated datePublished" datetime="2025-07-23T14:06:10+08:00">2025-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-08-06 16:15:07" itemprop="dateModified" datetime="2025-08-06T16:15:07+08:00">2025-08-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">优化</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96--%E9%AB%98%E5%B1%82%E7%BB%BC%E5%90%88%E7%BC%96%E8%AF%91%E6%8A%80%E6%9C%AF/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/07/23/软硬协同优化--高层综合编译技术/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>964</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>HLS（高层综合技术）是将高层次语言（C、C++等）描述的逻辑结构自动转化为RTL代码的过程，可以让硬件工程师以软件层面工作，也可以让软件工程师利用硬件加速。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96--%E9%AB%98%E5%B1%82%E7%BB%BC%E5%90%88%E7%BC%96%E8%AF%91%E6%8A%80%E6%9C%AF/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -701,530 +1235,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/about4.jpg">
-      <meta itemprop="name" content="Pi Haoxuan">
-      <meta itemprop="description" content="pi's website">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PI's BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">python安装教程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-                
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2025-04-14 16:47:41" itemprop="dateCreated datePublished" datetime="2025-04-14T16:47:41+08:00">2025-04-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-05-27 23:13:36" itemprop="dateModified" datetime="2025-05-27T23:13:36+08:00">2025-05-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/04/14/python安装教程/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>以下是为零基础学生编写的Windows系统Python与VSCode安装教程，所有步骤均配直观操作指引和常见问题解答，建议按顺序阅读。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/03/27/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/about4.jpg">
-      <meta itemprop="name" content="Pi Haoxuan">
-      <meta itemprop="description" content="pi's website">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PI's BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/03/27/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">一些git使用方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-                
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-03-27 22:09:41 / 修改时间：22:11:56" itemprop="dateCreated datePublished" datetime="2025-03-27T22:09:41+08:00">2025-03-27</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2025/03/27/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/03/27/一些git使用方法/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>一些git的使用方法（主要是<code>git push</code> 和 <code>pull</code> 之间的矛盾）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/03/27/%E4%B8%80%E4%BA%9Bgit%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1Ubuntu%E6%89%93%E5%8C%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/about4.jpg">
-      <meta itemprop="name" content="Pi Haoxuan">
-      <meta itemprop="description" content="pi's website">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PI's BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1Ubuntu%E6%89%93%E5%8C%85/" class="post-title-link" itemprop="url">记一次Ubuntu打包</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-                
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-03-27 20:36:26 / 修改时间：22:15:06" itemprop="dateCreated datePublished" datetime="2025-03-27T20:36:26+08:00">2025-03-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ubuntu/" itemprop="url" rel="index"><span itemprop="name">Ubuntu</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2025/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1Ubuntu%E6%89%93%E5%8C%85/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/03/27/记一次Ubuntu打包/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>记一次Ubuntu打包</p>
-<p>前言：我的毕设是在Linux系统中开发一个对系统的全面检查软件，详情见网址<a target="_blank" rel="noopener" href="https://gitee.com/pi_haoxuan/graduation-project">graduation-project: this is my graduation project</a> ，写完后，我就在研究如何将这个从Qt中剥离打包出来，于是，好事发生。。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/03/27/%E8%AE%B0%E4%B8%80%E6%AC%A1Ubuntu%E6%89%93%E5%8C%85/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2024/12/30/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8D%E8%83%BD%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87%E9%97%AE%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/about4.jpg">
-      <meta itemprop="name" content="Pi Haoxuan">
-      <meta itemprop="description" content="pi's website">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PI's BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/12/30/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8D%E8%83%BD%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">解决Ubuntu不能输入中文问题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-                
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-12-30 20:52:42 / 修改时间：21:19:26" itemprop="dateCreated datePublished" datetime="2024-12-30T20:52:42+08:00">2024-12-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ubuntu/" itemprop="url" rel="index"><span itemprop="name">Ubuntu</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2024/12/30/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8D%E8%83%BD%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87%E9%97%AE%E9%A2%98/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/12/30/解决Ubuntu不能输入中文问题/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>338</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>解决Ubuntu不能输入中文问题<br></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/30/%E8%A7%A3%E5%86%B3Ubuntu%E4%B8%8D%E8%83%BD%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87%E9%97%AE%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2024/04/15/20240416%E5%B0%8F%E6%95%99-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/about4.jpg">
-      <meta itemprop="name" content="Pi Haoxuan">
-      <meta itemprop="description" content="pi's website">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="PI's BLOG">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/15/20240416%E5%B0%8F%E6%95%99-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-title-link" itemprop="url">20240416小教-人工智能</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-                
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-15 15:25:02" itemprop="dateCreated datePublished" datetime="2024-04-15T15:25:02+08:00">2024-04-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-12-25 14:07:41" itemprop="dateModified" datetime="2024-12-25T14:07:41+08:00">2024-12-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/course/" itemprop="url" rel="index"><span itemprop="name">course</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2024/04/15/20240416%E5%B0%8F%E6%95%99-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2024/04/15/20240416小教-人工智能/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>85</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>NLP and digital Image Processing</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/04/15/20240416%E5%B0%8F%E6%95%99-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1296,20 +1306,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1351,19 +1361,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2025/07/23/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96/" title="2025&#x2F;07&#x2F;23&#x2F;软硬协同优化&#x2F;">软硬协同优化</a>
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-硬件循环&#x2F;">软硬协同优化--硬件循环</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2025/07/23/Windows%E5%88%86%E7%9B%98/" title="2025&#x2F;07&#x2F;23&#x2F;Windows分盘&#x2F;">Windows分盘</a>
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-code-size优化&#x2F;">软硬协同优化--code-size优化</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" title="2025&#x2F;07&#x2F;23&#x2F;Windows电脑新机注意事项&#x2F;">Windows电脑新机注意事项</a>
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E6%8C%87%E4%BB%A4%E9%9B%86%E8%AE%BE%E8%AE%A1/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-指令集设计&#x2F;">软硬协同优化--指令集设计</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2025/05/27/Mac%E4%B8%8A%E7%9A%84%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E5%A4%84%E7%90%86/" title="2025&#x2F;05&#x2F;27&#x2F;Mac上的定时任务处理&#x2F;">Mac上的定时任务处理</a>
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E5%8A%A8%E6%80%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BF%BB%E8%AF%91%E6%8A%80%E6%9C%AF/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-动态二进制翻译技术&#x2F;">软硬协同优化--动态二进制翻译技术</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2025/04/14/python%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B/" title="2025&#x2F;04&#x2F;14&#x2F;python安装教程&#x2F;">python安装教程</a>
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E9%A2%84%E5%8F%96%E6%8A%80%E6%9C%AF/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-软硬件预取技术&#x2F;">软硬协同优化--软硬件预取技术</a>
         </li>
     </ul>
   </div>
@@ -1431,12 +1441,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">77k</span>
+    <span title="站点总字数">84k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:10</span>
+    <span title="站点阅读时长">1:17</span>
 </div>
 
 <span id="sitetime"></span>
