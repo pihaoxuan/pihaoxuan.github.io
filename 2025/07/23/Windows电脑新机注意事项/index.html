@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://pihaoxuan.github.io/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/%E4%B8%8B%E8%BD%BD%E5%90%8E.png">
 <meta property="og:image" content="https://pihaoxuan.github.io/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80.png">
 <meta property="article:published_time" content="2025-07-23T05:37:37.000Z">
-<meta property="article:modified_time" content="2025-07-23T06:02:50.637Z">
+<meta property="article:modified_time" content="2025-08-19T09:02:37.017Z">
 <meta property="article:author" content="Pi Haoxuan">
 <meta property="article:tag" content="Windows">
 <meta name="twitter:card" content="summary">
@@ -231,10 +231,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2025-07-23 13:37:37 / 修改时间：14:02:50" itemprop="dateCreated datePublished" datetime="2025-07-23T13:37:37+08:00">2025-07-23</time>
+              <time title="创建时间：2025-07-23 13:37:37" itemprop="dateCreated datePublished" datetime="2025-07-23T13:37:37+08:00">2025-07-23</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-08-19 17:02:37" itemprop="dateModified" datetime="2025-08-19T17:02:37+08:00">2025-08-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -272,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -313,10 +319,10 @@
 <h2 id="硬件检查"><a href="#硬件检查" class="headerlink" title="硬件检查"></a>硬件检查</h2><ol>
 <li>检查CPU、内存、磁盘信息。按住<code>ctrl+shift+ESC</code>进入任务管理器。点击左侧<strong>性能</strong>，能够看到CPU、内存、磁盘的信息。注意对比CPU是否和购买时所看的CPU一致。内存指的是运行空间，并不是存储空间。磁盘指的是存储空间。例如<code>16G + 1T</code>则内存为<code>16G</code>，磁盘空间为<code>1T</code>。如下图（从上到下分别是CPU信息、内存信息、磁盘信息）：<br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/CPU信息.png" alt="CPU信息"><br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/内存信息.png" alt="内存信息"><br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/磁盘信息.png" alt="磁盘信息"><br>⚠我这里有两块磁盘才会显示两个<code>disk</code>，新机一般只有一块磁盘。右边红色框中可以看磁盘的容量。因为需要格式化，所以一般会比标注容量小。例如我这是一块<code>512G</code>的固态，但是实际容量为<code>477G</code>。如果是<code>1T</code>的固态，实际容量大概为<code>931G</code>。<br>事实上，这个界面也可以查看GPU的信息。如下图：<br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/GPU信息.png" alt="GPU信息"><br>但是第二步中的更为详细。</li>
 <li>检查GPU信息。上一步的界面可以关闭。按下<code>Windows</code>，等待Windows菜单弹出，输入<code>Nvidia</code>后，打开出现的<code>Nvidia Control Panel</code>。<br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/Windows菜单.png" alt="Windows菜单"><br>打开后点击左下角的系统信息，就能出现非常详细的GPU信息，例如GPU的名称、驱动版本号、驱动类型、<code>CUDA</code>内核、最大功率等等信息，以后有需要也可以在这里查看。<br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/点击系统信息.png" alt="点击系统信息"><br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/详细信息.png" alt="详细信息"></li>
-<li>查看磁盘分区，判断是否需要人为分区。按住<code>Windows+E</code>，点击左侧的此电脑，此时会出现C盘。如果整个电脑只有C盘，则需要分盘。如果是其他情况，也可以根据自己的喜好进行合并划分处理。具体操作请看<a href="https://pihaoxuan.github.io/2025/07/23/Windows%E5%88%86%E7%9B%98/">Windows分盘</a></li>
+<li>查看磁盘分区，判断是否需要人为分区。按住<code>Windows+E</code>，点击左侧的此电脑，此时会出现C盘。如果整个电脑只有C盘，则可以考虑分盘。如果是其他情况，也可以根据自己的喜好进行合并划分处理。具体操作请看<a href="https://pihaoxuan.github.io/2025/07/23/Windows%E5%88%86%E7%9B%98/">Windows分盘</a></li>
 </ol>
 <h2 id="软件下载和安装【以火绒为例】"><a href="#软件下载和安装【以火绒为例】" class="headerlink" title="软件下载和安装【以火绒为例】"></a>软件下载和安装【以火绒为例】</h2><ol>
-<li>不建议在电脑自带的商城下载，因为会把软件下在C盘。</li>
+<li>不建议在电脑自带的商城下载，因为会把软件下在C盘【并非下到C盘不好，而是默认的数据也会存储到C盘，久而久之，C盘容易红】。</li>
 <li>建议前往浏览器查找需要下载的软件，然后下载<code>exe</code>安装包。注意辨别非官方网站，一般看网址分辨。不会的可以往下拉看TIPS1。</li>
 <li>分盘后可以在磁盘中划出一部分空间专门用于软件安装和存放软件产生的数据。也可以直接新建一个文件夹存放。</li>
 <li>在第三步中的位置新建文件夹，装什么软件就叫什么名字，建议英文名，不会就拼音也行。</li>
@@ -329,6 +335,7 @@
 <p>另外国内环境建议使用<code>Bing</code>搜索引擎进行搜索，众所周知，百度靠投放广告赚钱。如果有条件，也可以使用<code>Google</code>进行搜索，<code>Bing</code>和<code>Google</code>搜索出来的内容会纯净很多。该设置项在Windows自带的浏览器Edge中可以找到。Bing也是微软自家的搜索引擎。</p>
 <h2 id="TIPS2-浏览器直达下载文件夹"><a href="#TIPS2-浏览器直达下载文件夹" class="headerlink" title="TIPS2 浏览器直达下载文件夹"></a>TIPS2 浏览器直达下载文件夹</h2><p>点击下载后，右上角会有个下载的动画，抓住机会，鼠标悬浮在下载项右边，有个文件夹的图标，点开就能打开该下载项所在的文件夹。<br>如果没抓住机会，也可以在浏览器界面按住<code>Ctrl+J</code>打开下载界面。<br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/下载时.png" alt="下载时"><br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/下载后.png" alt="下载后"></p>
 <h2 id="TIPS3-打开文件后缀"><a href="#TIPS3-打开文件后缀" class="headerlink" title="TIPS3 打开文件后缀"></a>TIPS3 打开文件后缀</h2><p>按住<code>Windows+E</code>打开文件资源管理器，找到工具栏中的<strong>视图</strong>，点击<strong>视图</strong>，找到最下面的<strong>展示</strong>，点击<strong>展示</strong>后，可以看到有个<strong>文件扩展名</strong>，勾选上就能显示文件后缀了。<br><img src="/2025/07/23/Windows%E7%94%B5%E8%84%91%E6%96%B0%E6%9C%BA%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/文件后缀.png" alt="文件后缀"></p>
+<h2 id="TIPS4-关于软件是否需要下载到C盘"><a href="#TIPS4-关于软件是否需要下载到C盘" class="headerlink" title="TIPS4 关于软件是否需要下载到C盘"></a>TIPS4 关于软件是否需要下载到C盘</h2><p>网上很多说法是将软件盘和系统盘区分，例如系统盘在C盘，则将软件全部放入D盘，将软件和系统区分开。原因是系统盘东西存多了会影响电脑的运行速度。但是事实上，抛开剂量谈毒性都是耍流氓。上述说法也一样，如果系统盘变红了，那无论软件是否存放在系统盘，都会影响电脑的运行速度；换言之，如果C盘没有变红，那软件下载到C盘反而在一定程度上能够加快电脑系统对软件的读取，从而加快软件的运行速度。<strong>所以，问题的根源在于在初始时，应该给C盘划分多少空间，而非在意软件是否安装在C盘。</strong><br>但是，<strong>许多软件默认存放数据的地方也就是安装的地方</strong>。例如，将微信安装在C盘后，那么微信的聊天记录，所看过的图片视频也全部存放在C盘，这无疑会加剧C盘红温的速度，所以，可以将微信的数据存放在C盘以外的硬盘。<br>值得注意的是，当前新电脑基本默认一块物理硬盘（就是拆开来只有一块存数据的硬盘），分盘只是逻辑上划分成两块，实际上还是只是存放在那一块物理硬盘上。所以，分盘只是为了方便管理，并不是为了提高速度。当然，如果自己加装了一块盘，那么就确实能够分开存储。<br>再者，如果后续可能会重装系统，则无论是否有多块物理硬盘，都可以将数据存储在系统盘以外的盘。这样重装系统时，只需要格式化系统盘，即可完成重装，其他盘的数据不会丢失。例如，如果只有一块物理硬盘，可以将其划分为CD盘，C盘为系统盘，D盘为数据盘。当把微信的聊天数据存放在D盘时，即便微信安装在C盘，电脑C盘格式化后，将微信重新下载安装，仍然可以读取D盘中的聊天数据。<br><strong>综上所述，分盘可以根据需求为之。</strong></p>
 <h2 id="软件建议"><a href="#软件建议" class="headerlink" title="软件建议"></a>软件建议</h2><h5 id="建议下载："><a href="#建议下载：" class="headerlink" title="建议下载："></a>建议下载：</h5><ol>
 <li><a target="_blank" rel="noopener" href="https://www.huorong.cn/">火绒安全</a></li>
 <li>Chrome</li>
@@ -341,7 +348,7 @@
 <h5 id="不建议下载："><a href="#不建议下载：" class="headerlink" title="不建议下载："></a>不建议下载：</h5><ol>
 <li>搜狗输入法（有广告，用微软自带的输入法就行，喜欢皮肤那就得忍受广告）</li>
 <li>360安全卫士（有广告，而且会占用大量内存，建议使用火绒，其实360全家桶都不建议碰，只要碰一个，搞不好就会强制安装所有）</li>
-<li>鲁大师（有广告，卸不掉，建议使用火绒）</li>
+<li>鲁大师（有广告，轻易卸不掉，建议使用火绒）</li>
 </ol>
 <p>END</p>
 
@@ -473,7 +480,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">验机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">开机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E6%A3%80%E6%9F%A5"><span class="nav-number">3.</span> <span class="nav-text">硬件检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85%E3%80%90%E4%BB%A5%E7%81%AB%E7%BB%92%E4%B8%BA%E4%BE%8B%E3%80%91"><span class="nav-number">4.</span> <span class="nav-text">软件下载和安装【以火绒为例】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIPS1-%E8%BE%A8%E5%88%AB%E7%BD%91%E7%AB%99%E6%98%AF%E5%90%A6%E5%AE%98%E6%96%B9"><span class="nav-number">5.</span> <span class="nav-text">TIPS1  辨别网站是否官方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIPS2-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B4%E8%BE%BE%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">6.</span> <span class="nav-text">TIPS2 浏览器直达下载文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIPS3-%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80"><span class="nav-number">7.</span> <span class="nav-text">TIPS3 打开文件后缀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%BB%BA%E8%AE%AE"><span class="nav-number">8.</span> <span class="nav-text">软件建议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE%E4%B8%8B%E8%BD%BD%EF%BC%9A"><span class="nav-number">8.0.0.1.</span> <span class="nav-text">建议下载：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%B8%8B%E8%BD%BD%EF%BC%9A"><span class="nav-number">8.0.0.2.</span> <span class="nav-text">不建议下载：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E6%9C%BA"><span class="nav-number">1.</span> <span class="nav-text">验机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">开机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E6%A3%80%E6%9F%A5"><span class="nav-number">3.</span> <span class="nav-text">硬件检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85%E3%80%90%E4%BB%A5%E7%81%AB%E7%BB%92%E4%B8%BA%E4%BE%8B%E3%80%91"><span class="nav-number">4.</span> <span class="nav-text">软件下载和安装【以火绒为例】</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIPS1-%E8%BE%A8%E5%88%AB%E7%BD%91%E7%AB%99%E6%98%AF%E5%90%A6%E5%AE%98%E6%96%B9"><span class="nav-number">5.</span> <span class="nav-text">TIPS1  辨别网站是否官方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIPS2-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9B%B4%E8%BE%BE%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">6.</span> <span class="nav-text">TIPS2 浏览器直达下载文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIPS3-%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%90%8E%E7%BC%80"><span class="nav-number">7.</span> <span class="nav-text">TIPS3 打开文件后缀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TIPS4-%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E4%B8%8B%E8%BD%BD%E5%88%B0C%E7%9B%98"><span class="nav-number">8.</span> <span class="nav-text">TIPS4 关于软件是否需要下载到C盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%BB%BA%E8%AE%AE"><span class="nav-number">9.</span> <span class="nav-text">软件建议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE%E4%B8%8B%E8%BD%BD%EF%BC%9A"><span class="nav-number">9.0.0.1.</span> <span class="nav-text">建议下载：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8D%E5%BB%BA%E8%AE%AE%E4%B8%8B%E8%BD%BD%EF%BC%9A"><span class="nav-number">9.0.0.2.</span> <span class="nav-text">不建议下载：</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -624,7 +631,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">84k</span>
+    <span title="站点总字数">85k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
