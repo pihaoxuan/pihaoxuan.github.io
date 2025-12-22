@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/pen.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/pen.png">
+  <link rel="mask-icon" href="/images/website.svgs" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"pihaoxuan.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":"ture"},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="将SPEC2017安装并配置好，使其能够在LoongArch64上能够运行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LoongArch64上配置SPEC2017">
+<meta property="og:url" content="https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/index.html">
+<meta property="og:site_name" content="PI&#39;s BLOG">
+<meta property="og:description" content="将SPEC2017安装并配置好，使其能够在LoongArch64上能够运行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/001.png">
+<meta property="og:image" content="https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/002.png">
+<meta property="og:image" content="https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/003.png">
+<meta property="article:published_time" content="2025-11-18T08:56:47.000Z">
+<meta property="article:modified_time" content="2025-11-20T13:09:56.051Z">
+<meta property="article:author" content="Pi Haoxuan">
+<meta property="article:tag" content="LoongArch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/001.png">
+
+<link rel="canonical" href="https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>LoongArch64上配置SPEC2017 | PI's BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">PI's BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">WRITE BY PIHAOXUAN</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about4.jpg">
+      <meta itemprop="name" content="Pi Haoxuan">
+      <meta itemprop="description" content="pi's website">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PI's BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LoongArch64上配置SPEC2017
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+                
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-11-18 16:56:47" itemprop="dateCreated datePublished" datetime="2025-11-18T16:56:47+08:00">2025-11-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-11-20 21:09:56" itemprop="dateModified" datetime="2025-11-20T21:09:56+08:00">2025-11-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LoongArch/" itemprop="url" rel="index"><span itemprop="name">LoongArch</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2025/11/18/LoongArch64上配置SPEC2017/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>将SPEC2017安装并配置好，使其能够在LoongArch64上能够运行<br><span id="more"></span></p>
+<h2 id="前置条件："><a href="#前置条件：" class="headerlink" title="前置条件："></a>前置条件：</h2><ol>
+<li><p>拥有SPEC2017镜像。注意一定是.iso结尾的镜像文件。iso镜像文件里面包含了所有官方支持的架构的预置的编译好的二进制工具，如果当前需要运行SPEC的指令集架构和操作系统是官方支持的，直接在SPEC的根目录下执行（二选一）：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> shrc</span><br><span class="line">bash ./install.sh</span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> cshrc</span><br><span class="line">./install.bat</span><br></pre></td></tr></table></figure>
+<p> 就可以直接安装好对应指令集架构的二进制文件，然后就能直接跑benchmarks了。</p>
+<p> 如果你的指令集架构或者操作系统不是官方支持的，那么就更能体现iso镜像文件的重要性了。</p>
+<p> iso镜像文件挂载后，会有一个<code>install_archives</code>文件夹，其内的结构大概如下：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">total 1472948</span><br><span class="line">drwxr-xr-x 2 pihaoxuan sudo       4096 Nov 10 12:36 benchball</span><br><span class="line">-rwxr-xr-x 1 pihaoxuan sudo 1338517332 Nov 10 12:36 cpu2017.tar.xz</span><br><span class="line">-rwxr-xr-x 1 pihaoxuan sudo         49 Nov 10 12:36 cpu2017.tar.xz.md5</span><br><span class="line">-rwxr-xr-x 1 pihaoxuan sudo         81 Nov 10 12:36 cpu2017.tar.xz.sha256</span><br><span class="line">-rwxr-xr-x 1 pihaoxuan sudo        145 Nov 10 12:36 cpu2017.tar.xz.sha512</span><br><span class="line">-rwxr-xr-x 1 pihaoxuan sudo       3801 Nov 10 12:36 release_control</span><br><span class="line">drwxrwxr-x 3 pihaoxuan sudo         19 Nov 12 20:08 temp</span><br><span class="line">-rwxr-xr-x 1 pihaoxuan sudo  169758720 Nov 10 12:36 tools-src.tar</span><br></pre></td></tr></table></figure>
+<p> 其中非常重要的一个文件就是<code>tools-src.tar</code>，这是整个工具链的源码。如果当前需要跑SPEC的指令集架构或者是操作系统是官方不支持的，那么就需要手动编译这个压缩包中的源代码，从而生成支持当前指令集架构或者操作系统的二进制工具。如果要使用<code>runcpu</code>指令跑SPEC，那么不可缺少的就是<code>specperl</code>工具。</p>
+</li>
+<li><p>拥有LoongArch64架构的机器，例如3A6000</p>
+</li>
+</ol>
+<h2 id="本文用语说明"><a href="#本文用语说明" class="headerlink" title="本文用语说明"></a>本文用语说明</h2><ol>
+<li><code>$SPEC</code>指的是SPEC的根目录。例如：如果将SPEC放到/home/jhon/下，那么本文的<code>$SPEC</code>指的就是<code>/home/jhon/SPEC/</code></li>
+</ol>
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><ol>
+<li><p>将上述的<code>tools-src.tar</code>文件解压到<code>$SPEC</code>下.<code>$SPEC</code>下本身就有一个<code>tools</code>文件夹，可以将其使用以下命令改成<code>tools.bak</code>，这样后面SPEC就不会识别到这个文件夹。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> tools tools.bak</span><br></pre></td></tr></table></figure>
+<p> 将解压后的文件夹用同样的方法将其改名为<code>tools</code>，当然如果解压出来的就是叫<code>tools</code>则不用改名。</p>
+<p> 解压后，<code>tools</code>文件夹中有一个<code>src</code>子文件夹，这就是放源码的地方。</p>
+</li>
+<li><p>找到<code>src</code>文件夹中的<code>buildtools</code>文件，这个文件是一个bash脚本文件，本身的权限是可执行的，进入后直接使用命令<code>./buildtools</code>即可开始编译工具链，但是通常不建议这样。</p>
+<p> 一般来说，直接使用命令<code>./buildtools</code>是直接编译全套工具，但是在编译工具链时，建议先编译一个工具，试试能否跑通，如果可以，那么再编译全套工具链也不迟。<br> 可以使用<code>SKIPALL=1 DOMAKE=1 ./buildtools</code>来只编译<code>make</code>工具，而跳过其他所有工具。同理，也可以使用一下命令组合来选择编译其他工具，或使用命令<code>TOBUILD=&quot;spectar specxz specsha512sum specsha256sum&quot; ./buildtools</code>来指定编译某些工具</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">SKIPALL - turns off everything. If you like, <span class="built_in">set</span> this, <span class="keyword">then</span> turn individual phases on by setting them.</span><br><span class="line"></span><br><span class="line">DOTOOLSRM - Remove previously installed tools</span><br><span class="line"></span><br><span class="line">DOCLEAN - Run <span class="string">&#x27;make clean&#x27;</span>, <span class="string">&#x27;make distclean&#x27;</span>, and <span class="string">&#x27;make realclean&#x27;</span> <span class="keyword">in</span> all <span class="built_in">source</span> directories.</span><br><span class="line"></span><br><span class="line">DOMAKE - build make</span><br><span class="line"></span><br><span class="line">DOXZ - build xz</span><br><span class="line"></span><br><span class="line">DOTAR - build tar</span><br><span class="line"></span><br><span class="line">DOMD5 - build specmd5sum</span><br><span class="line"></span><br><span class="line">DOSPECINVOKE - build specinvoke</span><br><span class="line"></span><br><span class="line">DORXP - build rxp</span><br><span class="line"></span><br><span class="line">DOEXPAT - build the expat XML parser, used by XML::SAX::ExpatXS</span><br><span class="line"></span><br><span class="line">DOPERL - build perl</span><br><span class="line"></span><br><span class="line">DOPERL2 - build perl modules</span><br><span class="line"></span><br><span class="line">DOCOPY - copy the results to <span class="variable">$SPEC</span>/bin and fix shbangs</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="编译工具链过程中遇到的错误"><a href="#编译工具链过程中遇到的错误" class="headerlink" title="编译工具链过程中遇到的错误"></a>编译工具链过程中遇到的错误</h2><h3 id="识别不了LoongArch"><a href="#识别不了LoongArch" class="headerlink" title="识别不了LoongArch"></a>识别不了LoongArch</h3><p>GNU make工具和其他一些库的构建识别不了loongArch，需要手动更新其中的配置文件。分别是<code>config.guess</code>和<code>config.sub</code>。<a target="_blank" rel="noopener" href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/config.guess">点我下载<code>config.guess</code></a> <a target="_blank" rel="noopener" href="https://github.com/pihaoxuan/pihaoxuan.github.io/releases/download/v1.0/config.sub">点我下载<code>config.sub</code></a>。将<code>$SPEC/tools/src/make-4.2.1/config/</code>中的两个原文件分别替换成新下载的文件。如果不放心，可以使用上面将文件名后加<code>.bak</code>的方法，备份原文件。</p>
+<p>当然不止<code>$SPEC/tools/src/make-4.2.1/</code>中需要改，还有其他三四个工具的文件夹中也有这两个文件需要更新，可以使用<code>find</code>命令找出并逐个替换</p>
+<h3 id="老旧函数不支持"><a href="#老旧函数不支持" class="headerlink" title="老旧函数不支持"></a>老旧函数不支持</h3><p>SPEC2017中有一些代码使用的是以前的库函数，但是现在的库中并不支持这些函数。例如<code>__alloca</code>和<code>__stat</code>函数。解决方法就是在相应的文件的开头部分，加上<code>#define old_fun new_fun</code>。相应的文件可以在报错信息中找到，然后结合报错信息和AI，查询到当前的等价函数即可。</p>
+<h3 id="make-check自测过不了"><a href="#make-check自测过不了" class="headerlink" title="make check自测过不了"></a>make check自测过不了</h3><p>报错信息显示的是<code>run_make_tests.pl Can&#39;t locate test_driver.pl</code>，但是在<code>$SPEC/tools/src/make-4.2.1/tests/</code>中两个文件都存在。不知道为什么会报错。其实自测不通过不影响<code>make</code>工具的编译成功。所以我的解决方法是将make自测，也就是<code>$SPEC/tools/src/make-4.2.1/</code>中的<code>build.sh</code>文件中的相关命令注释掉。可以直接在里面查询<code>make check</code>，将其注释掉。</p>
+<h3 id="Perl工具自测出现问题"><a href="#Perl工具自测出现问题" class="headerlink" title="Perl工具自测出现问题"></a>Perl工具自测出现问题</h3><p>我这里在2236个测试中只出现了一个问题，就是机器时间与程序定义的时间对不上，差了536s，但是Perl工具的自测提供了忽略失败测试的功能，如下图：<br><img src="/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/001.png" alt="跳过失败测试"><br>此时程序会等一定时间，让用户输入。若输入<code>y</code>，则可以直接跳过该自测，若长时间不输入，可能会直接终止程序。</p>
+<h3 id="报错print函数有冗余的参数"><a href="#报错print函数有冗余的参数" class="headerlink" title="报错print函数有冗余的参数"></a>报错print函数有冗余的参数</h3><p>其实是一个shell脚本中的语法错误，按照语法改正即可。</p>
+<h3 id="runcpu指令报错没有specperl"><a href="#runcpu指令报错没有specperl" class="headerlink" title="runcpu指令报错没有specperl"></a>runcpu指令报错没有specperl</h3><p>上述工具链编译成功后，在<code>$SPEC</code>目录下执行命令就可以使用SPEC自带的命令<code>runcpu</code>了。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> shrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用命令测试runcpu</span></span><br><span class="line">runcpu -v</span><br></pre></td></tr></table></figure><br>测试<code>runcpu</code>命令会出现报错：没有找到<code>specperl</code>，但是刚刚进行的工具链编译是有<code>specperl</code>工具的。此时切换到<code>$SPEC/tools/bin</code>中将<code>spec</code>该名成<code>specperl</code>即可。</p>
+<p>如果<code>$SPEC/tools/</code>中没有<code>bin</code>文件夹，那么进入到<code>$SPEC/tools/output</code>中，将里面的<code>bin</code>文件夹拷贝到<code>$SPEC/tools/</code>目录，完成后<code>bin</code>目录和<code>output</code>、<code>src</code>目录是同级的。</p>
+<h3 id="sepcperl没有TimeTime-HiRes模块"><a href="#sepcperl没有TimeTime-HiRes模块" class="headerlink" title="sepcperl没有TimeTime::HiRes模块"></a>sepcperl没有TimeTime::HiRes模块</h3><p>这个问题暂时也没有解决，它自己莫名其妙好了。报错如下图：<br><img src="/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/002.png" alt="sepcperl没有TimeTime::HiRes模块"><br>我在网上找了Time::HiRes的源码后，把它放入相应的文件夹，又报错有多个该模块：<br><img src="/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/003.png" alt="报错有多个该模块"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>Buy me a coffee……</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="Pi Haoxuan 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Pi Haoxuan 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/LoongArch/" rel="tag"># LoongArch</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/09/14/20250914-25yangClassShare/" rel="prev" title="20250914-25yangClassShare">
+      <i class="fa fa-chevron-left"></i> 20250914-25yangClassShare
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">前置条件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E7%94%A8%E8%AF%AD%E8%AF%B4%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">本文用语说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%BC%8F%E5%BC%80%E5%A7%8B"><span class="nav-number">3.</span> <span class="nav-text">正式开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E9%93%BE%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E9%94%99%E8%AF%AF"><span class="nav-number">4.</span> <span class="nav-text">编译工具链过程中遇到的错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%86%E5%88%AB%E4%B8%8D%E4%BA%86LoongArch"><span class="nav-number">4.1.</span> <span class="nav-text">识别不了LoongArch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%81%E6%97%A7%E5%87%BD%E6%95%B0%E4%B8%8D%E6%94%AF%E6%8C%81"><span class="nav-number">4.2.</span> <span class="nav-text">老旧函数不支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#make-check%E8%87%AA%E6%B5%8B%E8%BF%87%E4%B8%8D%E4%BA%86"><span class="nav-number">4.3.</span> <span class="nav-text">make check自测过不了</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Perl%E5%B7%A5%E5%85%B7%E8%87%AA%E6%B5%8B%E5%87%BA%E7%8E%B0%E9%97%AE%E9%A2%98"><span class="nav-number">4.4.</span> <span class="nav-text">Perl工具自测出现问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99print%E5%87%BD%E6%95%B0%E6%9C%89%E5%86%97%E4%BD%99%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">4.5.</span> <span class="nav-text">报错print函数有冗余的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#runcpu%E6%8C%87%E4%BB%A4%E6%8A%A5%E9%94%99%E6%B2%A1%E6%9C%89specperl"><span class="nav-number">4.6.</span> <span class="nav-text">runcpu指令报错没有specperl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sepcperl%E6%B2%A1%E6%9C%89TimeTime-HiRes%E6%A8%A1%E5%9D%97"><span class="nav-number">4.7.</span> <span class="nav-text">sepcperl没有TimeTime::HiRes模块</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Pi Haoxuan"
+      src="/images/about4.jpg">
+  <p class="site-author-name" itemprop="name">Pi Haoxuan</p>
+  <div class="site-description" itemprop="description">pi's website</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/pihaoxuan" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;pihaoxuan" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://pi_haoxuan.gitee.io/" title="BLOG → https:&#x2F;&#x2F;pi_haoxuan.gitee.io" rel="noopener" target="_blank"><i class="fab fa-gg fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:haoxuanapi@163.com" title="E-Mail → mailto:haoxuanapi@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友链
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://pihaoxuan.github.io/" title="https:&#x2F;&#x2F;pihaoxuan.github.io&#x2F;">PI's website</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yanweb.top/joy/eat/" title="https:&#x2F;&#x2F;www.yanweb.top&#x2F;joy&#x2F;eat&#x2F;" rel="noopener" target="_blank">今天吃点啥</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.yanweb.top/joy/colorcube/" title="https:&#x2F;&#x2F;www.yanweb.top&#x2F;joy&#x2F;colorcube&#x2F;" rel="noopener" target="_blank">找色差</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://whitemozj.github.io/" title="https:&#x2F;&#x2F;whitemozj.github.io&#x2F;" rel="noopener" target="_blank">zj的blog</a>
+        </li>
+    </ul>
+  </div>
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/" title="2025&#x2F;11&#x2F;18&#x2F;LoongArch64上配置SPEC2017&#x2F;">LoongArch64上配置SPEC2017</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/09/14/20250914-25yangClassShare/" title="2025&#x2F;09&#x2F;14&#x2F;20250914-25yangClassShare&#x2F;">20250914-25yangClassShare</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E7%A1%AC%E4%BB%B6%E5%BE%AA%E7%8E%AF/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-硬件循环&#x2F;">软硬协同优化--硬件循环</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-code-size%E4%BC%98%E5%8C%96/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-code-size优化&#x2F;">软硬协同优化--code-size优化</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/08/06/%E8%BD%AF%E7%A1%AC%E5%8D%8F%E5%90%8C%E4%BC%98%E5%8C%96-%E6%8C%87%E4%BB%A4%E9%9B%86%E8%AE%BE%E8%AE%A1/" title="2025&#x2F;08&#x2F;06&#x2F;软硬协同优化-指令集设计&#x2F;">软硬协同优化--指令集设计</a>
+        </li>
+    </ul>
+  </div>
+      </div>
+
+      
+
+  <div class="links-of-blogroll motion-element links-of-blogroll-undefined">
+    <div class="links-of-blogroll-title">
+      <!-- modify icon to fire by szw -->
+      <i class="fa fa-history fa-" aria-hidden="true"></i>
+      
+    </div>
+    <ul class="links-of-blogroll-list">
+      
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+        <li class="recent_posts_li">
+          <a href="/" title="" target="_blank"></a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Pi Haoxuan</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">88k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:20</span>
+</div>
+
+<span id="sitetime"></span>
+<script language=javascript>
+function siteTime(){
+    setTimeout(siteTime, 1000);
+
+    var now   = new Date();
+    var t2    = Date.UTC(
+                  now.getFullYear(),
+                  now.getMonth(),      // 0–11，直接用 getMonth()，不要 +1
+                  now.getDate(),
+                  now.getHours(),
+                  now.getMinutes(),
+                  now.getSeconds()
+               );
+
+    // 如果要从 2023-05-04 20:27:02 开始算：
+    var t1 = Date.UTC(2023, 4, 4, 20, 27, 2);
+
+    var diffMs     = t2 - t1;
+    var days       = Math.floor(diffMs / (1000*60*60*24));
+    var hours      = Math.floor((diffMs / (1000*60*60)) % 24);
+    var minutes    = Math.floor((diffMs / (1000*60)) % 60);
+    var seconds    = Math.floor((diffMs / 1000) % 60);
+
+    document.getElementById("sitetime").innerHTML =
+      "PI's BLOG 已运行 " +
+      days + " 天 " +
+      hours + " 小时 " +
+      minutes + " 分钟 " +
+      seconds + " 秒";
+  }
+	siteTime();
+</script>
+<br>
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i>
+  <span id="busuanzi_container_site_uv">
+    本站总访客数:<span id="busuanzi_value_site_uv"></span>&nbsp;&nbsp;| 
+  </span>
+  <span id="busuanzi_container_site_pv">
+      &nbsp;本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+  </div>
+  </div>
+
+  <script>
+      var now = new Date(); 
+      function createtime() { 
+          var grt= new Date("03/12/2019 12:00:00");//此处修改你的建站时间或者网站上线时间 
+          now.setTime(now.getTime()+250); 
+          days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+          hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+          if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+          mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+          seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+          snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+          document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+          document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+      } 
+  setInterval("createtime()",250);
+  </script>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+    //   自定义邮箱审核规则
+    document.body.addEventListener('click', function(e) {
+        if (e.target.classList.contains('vsubmit')) {
+            const email = document.querySelector('input[type=email]');
+            const nick = document.querySelector('input[name=nick]');
+            const reg = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            if (!email.value || !nick.value || !reg.test(email.value)) {
+                const str = `<div class="valert text-center"><div class="vtext">请填写正确的昵称和邮箱！</div></div>`;
+                const vmark = document.querySelector('.vmark');
+                vmark.innerHTML = str;
+                vmark.style.display = 'block';
+                setTimeout(function() {
+                    vmark.style.display = 'none';
+                    vmark.innerHTML = '';
+                }, 2500);
+            }
+        }
+    })
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://pihaoxuan.github.io/2025/11/18/LoongArch64%E4%B8%8A%E9%85%8D%E7%BD%AESPEC2017/";
+    this.page.identifier = "2025/11/18/LoongArch64上配置SPEC2017/";
+    this.page.title = "LoongArch64上配置SPEC2017";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://https-pi-haoxuan-gitee-io.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+
+
+
+  
+</body>
+</html>
