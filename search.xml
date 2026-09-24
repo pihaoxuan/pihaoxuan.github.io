@@ -50,7 +50,7 @@
 <h4 id="如何把工具和后端模型结合起来？"><a href="#如何把工具和后端模型结合起来？" class="headerlink" title="如何把工具和后端模型结合起来？"></a>如何把工具和后端模型结合起来？</h4><p>前面诸多赘述，但都只是讲到前端工具层面。现在正式进入到后端模型层面。<br>前端工具往往在安装目录有一个配置文件，里面记录了工具需要的配置，最与使用者息息相关的就是请求的地址和密钥，行业内称<code>baseURL</code>和<code>key</code>。以codex为例，npm安装后，在home目录下有一个隐藏文件夹<code>.codex</code>，其中有配置文件名为：<code>config.toml</code>，如下图：<br><img src="/2026/09/24/AI-tools-install&use/6.png" alt="codex配置文件" style="zoom:100%;"><br>其中有一项内容是<code>model_providers</code>，即配置用户电脑上的codex使用的后端模型的供应商。从正规渠道来说，codex只能使用ChatGPT，并且需要登陆你的chatGPT账号，想要有足够的额度需要开通GPT plus等。但是CC-Switch可以将配置文件一键更改，改成别的供应商，使用其他模型。</p>
 <p><img src="/2026/09/24/AI-tools-install&use/7.png" alt="配置文件内容" style="zoom:100%;"></p>
 <p><strong>所以这就是为什么CC-Switch很重要，因为它可以自动识别你安装的是什么工具并且找到对应的配置文件，改成你在CC-Switch中点两下就完成的配置。即CC-Swtich简化了你对前端工具接入后端模型的配置。只要你在CC-Switch中设置好了，它会自动给你配置好这个文件</strong></p>
-<h4 id="如何获得baseURL-和-API-key？"><a href="#如何获得baseURL-和-API-key？" class="headerlink" title="如何获得baseURL 和 API key？"></a>如何获得baseURL 和 API key？</h4><p>花钱，有推<a href="https://pihaoxuan.github.io/about/">荐渠道</a></p>
+<h4 id="如何获得baseURL-和-API-key？"><a href="#如何获得baseURL-和-API-key？" class="headerlink" title="如何获得baseURL 和 API key？"></a>如何获得baseURL 和 API key？</h4><p>花钱，有<a href="https://pihaoxuan.github.io/about/">推荐渠道</a></p>
 <h3 id="CC-Switch的使用"><a href="#CC-Switch的使用" class="headerlink" title="CC-Switch的使用"></a>CC-Switch的使用</h3><h3 id="codex的基础使用方法"><a href="#codex的基础使用方法" class="headerlink" title="codex的基础使用方法"></a>codex的基础使用方法</h3>]]></content>
       <categories>
         <category>AI</category>
