@@ -51,7 +51,15 @@
 <p><img src="/2026/09/24/AI-tools-install&use/7.png" alt="配置文件内容" style="zoom:100%;"></p>
 <p><strong>所以这就是为什么CC-Switch很重要，因为它可以自动识别你安装的是什么工具并且找到对应的配置文件，改成你在CC-Switch中点两下就完成的配置。即CC-Swtich简化了你对前端工具接入后端模型的配置。只要你在CC-Switch中设置好了，它会自动给你配置好这个文件</strong></p>
 <h4 id="如何获得baseURL-和-API-key？"><a href="#如何获得baseURL-和-API-key？" class="headerlink" title="如何获得baseURL 和 API key？"></a>如何获得baseURL 和 API key？</h4><p>花钱，有<a href="https://pihaoxuan.github.io/about/">推荐渠道</a></p>
-<h3 id="CC-Switch的使用"><a href="#CC-Switch的使用" class="headerlink" title="CC-Switch的使用"></a>CC-Switch的使用</h3><h3 id="codex的基础使用方法"><a href="#codex的基础使用方法" class="headerlink" title="codex的基础使用方法"></a>codex的基础使用方法</h3>]]></content>
+<h3 id="CC-Switch的使用"><a href="#CC-Switch的使用" class="headerlink" title="CC-Switch的使用"></a>CC-Switch的使用</h3><p>CC-Switch主页面如图所示：<br><img src="/2026/09/24/AI-tools-install&use/8.png" alt="CC-Switch主界面" style="zoom:100%;"><br>图中标注出的是CC-Switch支持的各类工具，可以点击到对应工具的模块，从而添加你的供应商。注意：Claude、codex、gemin、gork等默认的第一个是官方接口。如果当你某一天暴富之后，想使用官方的接口，直接启用这个即可。</p>
+<h4 id="如何添加自己的供应商？"><a href="#如何添加自己的供应商？" class="headerlink" title="如何添加自己的供应商？"></a>如何添加自己的供应商？</h4><p>点击右上角的<code>➕</code>，可以进入自定义的编辑界面（它会根据你当前所处的模块，例如下图是我进入到codex模块后点击<code>➕</code>的界面），如图所示：<br><img src="/2026/09/24/AI-tools-install&use/9.png" alt="CC-Switch自定义界面" style="zoom:100%;"></p>
+<p>可以看到，下面有一系列的预设供应商，可以找到你获取API key的对应渠道，这些预设的都是将baseURL设置好了的，只需要填入你获取的API key 然后保存即可。</p>
+<p>当然便宜的注定更折腾，更便宜（或者说第三方）的供应商往往是没有预设的，此时需要进入<code>自定义配置</code>进行配置（当然进去默认就是自定义配置）。</p>
+<p>最基础的配制项如图：<br><img src="/2026/09/24/AI-tools-install&use/10.png" alt="CC-Switch基础配置项" style="zoom:100%;"><br>即只需要填写供应商名称（这都可以乱填），备注和官网链接选填，重要的只有API key 和baseURL，这些在你花钱之后都能获取。填写完成后，可以下滑到下图位置，点击<code>获取模型列表</code>进行测试。</p>
+<p><img src="/2026/09/24/AI-tools-install&use/11.png" alt="CC-Switch获取模型列表测试" style="zoom:100%;"></p>
+<p>测试成功后有一个绿色的弹窗提示成功，然后保存即可。保存后返回CC-Switch主页，找到刚才添加的配置项，点击启用即可。稍微注意一下，启用后最好完全关掉APP或者完全退出CLI工具，然后再打开。</p>
+<p>通常来讲，使用官方的API key则只能使用它一家的模型，例如codex使用官方的，则只能使用GPT。如果使用第三方提供的服务，则不仅能使用GPT，还能使用较为便宜的DeepSeek等模型。具体有什么模型，则需要看你的第三方供应商提供。</p>
+<h3 id="codex的基础使用方法"><a href="#codex的基础使用方法" class="headerlink" title="codex的基础使用方法"></a>codex的基础使用方法</h3>]]></content>
       <categories>
         <category>AI</category>
       </categories>
